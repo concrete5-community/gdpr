@@ -3,7 +3,6 @@
 namespace Concrete\Package\Gdpr\Controller\SinglePage\Dashboard\Gdpr\DataBreach;
 
 use A3020\Gdpr\Controller\DashboardController;
-use Concrete\Core\Config\Repository\Repository;
 use Concrete\Core\Database\Connection\Connection;
 use Concrete\Core\Routing\Redirect;
 use Concrete\Core\User\Group\Group;
@@ -14,13 +13,10 @@ final class NotifyUsers extends DashboardController
 {
     public function view()
     {
-        /** @var Repository $config */
-        $config = $this->app->make(Repository::class);
-
-        $fromName = $config->get('concrete.email.default.name');
+        $fromName = $this->config->get('concrete.email.default.name');
 
         $this->set('fromName', $fromName ? $fromName : $this->config->get('site.sites.default.name'));
-        $this->set('fromEmail', $config->get('concrete.email.default.address'));
+        $this->set('fromEmail', $this->config->get('concrete.email.default.address'));
 
         $this->set('userGroups', $this->getUserGroups());
         $this->set('defaultMessage', t('We value your business and respect the privacy of your information, which is why, as a '.

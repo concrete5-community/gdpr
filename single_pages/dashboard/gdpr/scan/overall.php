@@ -78,7 +78,7 @@ $app->make('help')->display(
                 <i class="fa fa-warning"></i>
                 <?php
                 echo t("Database queries are logged in concrete5. You probably want this to be disabled on production as it slows down each request and because the queries might contain personal data.").' '.
-                    t("Consider disabling this the logging via the %sLogging Settings%s.",
+                    t("Consider disabling this via the %sLogging Settings%s.",
                         '<a href="'.Url::to('/dashboard/system/environment/logging').'">', '</a>'
                     );
                 ?>

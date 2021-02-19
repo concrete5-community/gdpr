@@ -55,6 +55,9 @@ class GdprServiceProvider implements ApplicationAwareInterface
             '/ccm/system/gdpr/scan/table/status/{tableName}' => [
                 '\A3020\Gdpr\Ajax\Scan\Tables::status',
             ],
+            '/ccm/system/gdpr/data_transfer/requests' => [
+                '\A3020\Gdpr\Ajax\DataTransfer\Requests::view',
+            ],
         ]);
     }
 
