@@ -72,6 +72,11 @@ $app->make('help')->display(
                 <th><?php echo t('Why') ?></th>
                 <th>
                     <?php
+                    echo t('Status');
+                    ?>
+                </th>
+                <th>
+                    <?php
                     echo t('Core');
                     ?>
 
@@ -86,7 +91,9 @@ $app->make('help')->display(
 
 <script>
 $(document).ready(function() {
-    $('#tbl-blocks').DataTable({
+    var DataTableElement = $('#tbl-blocks');
+
+    var DataTable = DataTableElement.DataTable({
         ajax: '<?php echo Url::to('/ccm/system/gdpr/scan/blocks') ?>',
         lengthMenu: [[15, 40, 80, -1], [15, 40, 80, '<?php echo t('All') ?>']],
         columns: [
@@ -101,6 +108,7 @@ $(document).ready(function() {
                         'href="<?php echo Url::to('/dashboard/blocks/types/inspect/') ?>/' + row.block_type_id+'">' +
                         row.block_type +
                     '</a><br><small class="text-muted">' + row.block_type_handle + '</small>';
+
                 }
             },
             {
@@ -113,11 +121,42 @@ $(document).ready(function() {
             },
             {
                 data: function(row, type, val) {
+                    var html = '<a href="#"  data-dialog="status" data-page-id="'+row.page_id+'" data-block-type="'+row.block_type_handle+'" class="btn btn-default">';
+
+                    if (row.fixed) {
+                        html += '<i class="fa fa-check">';
+                    } else {
+                        html += '<i class="fa fa-warning">';
+                    }
+
+                    html += '</i></a>';
+
+                    return html;
+                }
+            },
+            {
+                data: function(row, type, val) {
                     return row.is_core_block === true ? '<?php echo t('Yes') ?>' : '<?php echo t('No') ?>';
                 }
             }
         ],
         order: [[ 4, "asc" ]]
+    });
+
+    DataTableElement.on('click', '[data-dialog]', function() {
+        var blockType = $(this).data('block-type');
+        var pageId = $(this).data('page-id');
+
+        jQuery.fn.dialog.open({
+            href: '<?php echo Url::to('/ccm/system/gdpr/scan/block') ?>/'+blockType+'/'+pageId,
+            modal: true,
+            width: 650,
+            height: 350,
+            title: '<?php echo t('Change block status') ?>',
+            onClose: function() {
+                DataTable.ajax.reload();
+            }
+        });
     });
 });
 </script>

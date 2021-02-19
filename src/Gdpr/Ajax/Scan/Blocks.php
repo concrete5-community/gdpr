@@ -3,11 +3,17 @@
 namespace A3020\Gdpr\Ajax\Scan;
 
 use A3020\Gdpr\Controller\AjaxController;
+use A3020\Gdpr\Entity\BlockScanStatus;
+use A3020\Gdpr\Scan\Block\StatusRepository;
 use Concrete\Core\Block\BlockType\BlockType;
 use Concrete\Core\Config\Repository\Repository;
 use Concrete\Core\Database\Connection\Connection;
+use Concrete\Core\Http\Response;
 use Concrete\Core\Http\ResponseFactory;
 use Concrete\Core\Page\Page;
+use Concrete\Core\Support\Facade\Url;
+use Concrete\Core\View\View;
+use Exception;
 
 class Blocks extends AjaxController
 {
@@ -16,6 +22,64 @@ class Blocks extends AjaxController
         $json['data'] = $this->getRecords();
 
         return $this->app->make(ResponseFactory::class)->json($json);
+    }
+
+    public function status($blockType = null, $pageId = null)
+    {
+        /** @var StatusRepository $statusRepository */
+        $statusRepository = $this->app->make(StatusRepository::class);
+
+        $status = $statusRepository->findBy($blockType, $pageId);
+        $status = $status ? $status : new BlockScanStatus();
+
+        $view = new View('scan/blocks/status');
+        $view->setPackageHandle('gdpr');
+        $view->addScopeItems([
+            'action' => Url::to('/ccm/system/gdpr/scan/block/save'),
+            'token' => $this->app->make('token'),
+            'form' => $this->app->make('helper/form'),
+            'blockTypeHandle' => $blockType,
+            'pageId' => $pageId,
+            'status' => $status,
+        ]);
+
+        return Response::create($view->render());
+    }
+    
+    public function saveStatus()
+    {
+        if (!$this->app->make('token')->validate('gdpr.scan.blocks.status')) {
+            throw new Exception(t('Invalid form token'));
+        }
+
+        /** @var StatusRepository $statusRepository */
+        $statusRepository = $this->app->make(StatusRepository::class);
+
+        if ($this->post('id')) {
+            $status = $statusRepository->find($this->post('id'));
+            if (!$status) {
+                throw new Exception('Invalid request');
+            }
+        } else {
+            $status = new BlockScanStatus();
+            $status->setBlockTypeHandle($this->post('blockTypeHandle'));
+            $status->setPageId($this->post('pageId'));
+        }
+
+        $status->setFixed($this->post('fixed'));
+        $status->setFixedOnAllPages($this->post('fixedOnAllPages'));
+        $status->setComments($this->post('comments'));
+
+        $statusRepository->save($status);
+
+        $statusRepository->updateFixedOnAllPages(
+            $this->post('blockTypeHandle'),
+            $this->post('fixedOnAllPages')
+        );
+
+        return $this->app->make(ResponseFactory::class)->json([
+            'success' => true,
+        ]);
     }
 
     /**
@@ -29,6 +93,9 @@ class Blocks extends AjaxController
 
         $ignoreCoreBlocks = (bool) $this->config->get('gdpr.scan.block_types.ignore_core_blocks', false);
 
+        /** @var StatusRepository $statusRepository */
+        $statusRepository = $this->app->make(StatusRepository::class);
+
         foreach ($this->getBlockTypes() as $handle => $why) {
             /** @var \Concrete\Core\Entity\Block\BlockType\BlockType $blockType */
             $blockType = BlockType::getByHandle($handle);
@@ -41,8 +108,11 @@ class Blocks extends AjaxController
                 continue;
             }
 
+            $blockTypeFixed = $statusRepository->isBlockTypeFixed($blockType->getBlockTypeHandle());
+
             foreach ($this->getPagesWhereBlockIsUsed($blockType->getBlockTypeID()) as $page) {
                 $records[] = [
+                    'page_id' => $page->getCollectionID(),
                     'page_name' => $page->getCollectionName(),
                     'page_url' => $page->getCollectionLink(),
                     'block_type_id' => $blockType->getBlockTypeID(),
@@ -51,6 +121,7 @@ class Blocks extends AjaxController
                     'block_icon' => $this->getBlockTypeIcon($blockType),
                     'is_core_block' => $isCoreBlock,
                     'why' => $why,
+                    'fixed' => $blockTypeFixed ? $blockTypeFixed : $statusRepository->isBlockTypeFixedOnPage($blockType->getBlockTypeHandle(), $page->getCollectionID()),
                 ];
             }
         }

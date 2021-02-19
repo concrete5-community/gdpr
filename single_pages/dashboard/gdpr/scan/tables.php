@@ -141,7 +141,7 @@ $(document).ready(function() {
             modal: true,
             width: 960,
             height: 600,
-            title: '<?php echo t('Table preview:') ?> '+ tableName
+            title: '<?php echo t('Table preview') ?>: '+ tableName
         });
     });
 });
