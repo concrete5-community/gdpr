@@ -2,9 +2,11 @@
 
 namespace Concrete\Package\Gdpr\Job;
 
-use A3020\Gdpr\Express\DeleteFormEntries;
+use A3020\Gdpr\Express\Delete\DeleteFormEntries;
+use Concrete\Core\Config\Repository\Repository;
 use Concrete\Core\Job\Job;
 use Concrete\Core\Support\Facade\Application;
+use DateTime;
 use Throwable;
 
 final class GdprRemoveFormSubmissions extends Job
@@ -26,7 +28,7 @@ final class GdprRemoveFormSubmissions extends Job
         try {
             /** @var DeleteFormEntries $helper */
             $helper = $app->make(DeleteFormEntries::class);
-            $deletedSubmissions = $helper->delete();
+            $deletedSubmissions = $helper->delete($this->getOptions());
         } catch (Throwable $e) {
             \Log::addError($e->getMessage());
 
@@ -38,5 +40,18 @@ final class GdprRemoveFormSubmissions extends Job
             '%d form submissions have been deleted.',
             $deletedSubmissions
         );
+    }
+
+    private function getOptions()
+    {
+        $app = Application::getFacadeApplication();
+        $config = $app->make(Repository::class);
+
+        $keepDays = (int) $config->get('gdpr.settings.express_forms.keep_days', 0);
+
+        $now = new DateTime();
+        return [
+            'created_before' => $now->sub(new \DateInterval('P'.$keepDays.'D')),
+        ];
     }
 }

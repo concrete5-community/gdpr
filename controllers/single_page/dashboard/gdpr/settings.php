@@ -32,6 +32,7 @@ final class Settings extends DashboardController
         $this->set('disableTrackingCode', (bool) $this->config->get('gdpr.settings.tracking.disabled', false));
 
         $this->set('enableJobToRemoveFormSubmissions', $this->jobInstallService->isInstalled('gdpr_remove_form_submissions'));
+        $this->set('expressFormsKeepDays', $this->config->get('gdpr.settings.express_forms.keep_days'));
     }
 
     public function save()
@@ -58,6 +59,9 @@ final class Settings extends DashboardController
 
         // Automated Jobs
         $this->jobInstallService->installOrDeinstall('gdpr_remove_form_submissions', $this->post('enableJobToRemoveFormSubmissions'));
+
+        $keepDays = $this->post('expressFormsKeepDays');
+        $this->config->save('gdpr.settings.express_forms.keep_days', $keepDays !== '' ? (int) $keepDays : null);
 
         $this->flash('success', t('Your settings have been saved.'));
 

@@ -3,7 +3,7 @@
 namespace Concrete\Package\Gdpr\Controller\SinglePage\Dashboard\Gdpr\Cleanup;
 
 use A3020\Gdpr\Controller\DashboardController;
-use A3020\Gdpr\Express\DeleteFormEntries;
+use A3020\Gdpr\Express\Delete\DeleteFormEntries;
 use A3020\Gdpr\Express\ExpressForm;
 use Concrete\Core\Express\EntryList;
 use Concrete\Core\Routing\Redirect;
