@@ -63,18 +63,16 @@ class CookieServiceProvider implements ApplicationAwareInterface
             });
         }
 
+        $al = AssetList::getInstance();
         if ($this->config->get('gdpr.cookies.consent.enabled', false)) {
-            $al = AssetList::getInstance();
-
             $al->register('javascript', 'gdpr/gdpr-cookie', 'js/gdpr-cookie.js', [], 'gdpr');
             $al->register('javascript', 'gdpr/cookieconsent', 'js/cookieconsent.min.js', [], 'gdpr');
             $al->register('css', 'gdpr/cookieconsent', 'css/cookieconsent.min.css', [], 'gdpr');
 
-            $view = View::getInstance();
-            // We always need this assets, even if consent has been given, to reset the cookie status
-            // To reset the cookie, one can use a button e.g.:
-            // <button class="gdpr-reset-cookie-consent">Reset Cookie Consent</button>
-            $view->requireAsset('javascript', 'gdpr/gdpr-cookie');
+            if ($this->shouldLoadCookieJavaScript()) {
+                $view = View::getInstance();
+                $view->requireAsset('javascript', 'gdpr/gdpr-cookie');
+            }
         }
     }
 
@@ -115,6 +113,8 @@ class CookieServiceProvider implements ApplicationAwareInterface
     }
 
     /**
+     * Whether the actual popup should be initialized
+     *
      * @return bool
      */
     private function shouldShowCookieConsent()
@@ -123,20 +123,7 @@ class CookieServiceProvider implements ApplicationAwareInterface
             return false;
         }
 
-        /** @var Request $request */
-        $request = $this->app->make(Request::class);
-
-        // Disable in admin area
-        if (stripos($request->getRequestUri(), '/dashboard') !== false) {
-            return false;
-        }
-
-        // Disable for AJAX requests
-        if ($request->isXmlHttpRequest()) {
-            return false;
-        }
-
-        if ($this->isWhitelisted($request)) {
+        if ($this->disableForCurrentRequest()) {
             return false;
         }
 
@@ -177,5 +164,60 @@ class CookieServiceProvider implements ApplicationAwareInterface
         $requestUri = rtrim($requestUri, '/');
 
         return in_array($requestUri, $disabledPages);
+    }
+
+    /**
+     * Should the 'gdpr-cookie.js' file be loaded?
+     *
+     * Even if consent has been given, we might need this to reset the cookie status
+     * To reset the cookie, one can use a button e.g.:
+     * <button class="gdpr-reset-cookie-consent">Reset Cookie Consent</button>
+     *
+     * However, we only want it to be injected on normal pages (e.g. not ajax calls)
+     *
+     * @return bool
+     */
+    private function shouldLoadCookieJavaScript()
+    {
+        if ($this->disableForCurrentRequest()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Should it be disabled for the current request?
+     *
+     * We don't want to inject JavaScript for example if
+     * the request is an ajax call, or in the dashboard, etc.
+     *
+     * @return bool
+     */
+    private function disableForCurrentRequest()
+    {
+        /** @var Request $request */
+        $request = $this->app->make(Request::class);
+
+        // Disable in admin area
+        foreach([
+                '/dashboard',
+                '/index.php/tools',
+            ] as $needle) {
+            if (stripos($request->getRequestUri(), $needle) !== false) {
+                return true;
+            }
+        }
+
+        // Disable for AJAX requests
+        if ($request->isXmlHttpRequest()) {
+            return true;
+        }
+
+        if ($this->isWhitelisted($request)) {
+            return true;
+        }
+
+        return false;
     }
 }
