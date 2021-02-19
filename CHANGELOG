@@ -1,3 +1,6 @@
+1.8.1
+- Fix redirect to first child pages.
+
 1.8.0
 - Add compatibility changes for 8.5.x due to changes in the Logger.
 - Change minimum version required to 8.4.4 to make it easier to apply changes without risking backward compatibility issues.

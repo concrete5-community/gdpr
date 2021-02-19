@@ -13,7 +13,7 @@ final class Controller extends Package
 {
     protected $pkgHandle = 'gdpr';
     protected $appVersionRequired = '8.4.4';
-    protected $pkgVersion = '1.8.0';
+    protected $pkgVersion = '1.8.1';
     protected $pkgAutoloaderRegistries = [
         'src/Gdpr' => '\A3020\Gdpr',
     ];
