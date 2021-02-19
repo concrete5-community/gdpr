@@ -1,3 +1,7 @@
+1.7.2
+- When a user is deleted, associated logs might also be deleted. This version fixes 3 queries in that event.
+- Use Filesystem class to 'unlink' a file, to fix linter error.
+
 1.7.1
 - Add redirect setting for Welcome page to improve privacy.
 

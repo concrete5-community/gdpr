@@ -6,6 +6,7 @@ use A3020\Gdpr\DataTransfer\File\FileRepository;
 use A3020\Gdpr\Entity\DataTransferFile;
 use Concrete\Core\Logging\Logger;
 use Exception;
+use Illuminate\Filesystem\Filesystem;
 
 class DeleteDataTransferFiles
 {
@@ -19,10 +20,16 @@ class DeleteDataTransferFiles
      */
     private $logger;
 
-    public function __construct(FileRepository $fileRepository, Logger $logger)
+    /**
+     * @var Filesystem
+     */
+    protected $fileSystem;
+
+    public function __construct(FileRepository $fileRepository, Logger $logger, Filesystem $fileSystem)
     {
         $this->fileRepository = $fileRepository;
         $this->logger = $logger;
+        $this->fileSystem = $fileSystem;
     }
 
     /**
@@ -60,6 +67,6 @@ class DeleteDataTransferFiles
             return false;
         }
 
-        return @unlink($file);
+        return $this->fileSystem->delete($file);
     }
 }

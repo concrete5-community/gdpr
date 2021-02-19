@@ -4,6 +4,7 @@ namespace A3020\Gdpr\Listener\OnUserDelete;
 
 use Concrete\Core\Config\Repository\Repository;
 use Concrete\Core\Database\Connection\Connection;
+use Concrete\Core\Logging\Logger;
 use Exception;
 
 class DeleteLogs
@@ -18,10 +19,16 @@ class DeleteLogs
      */
     private $config;
 
-    public function __construct(Connection $db, Repository $config)
+    /**
+     * @var Logger
+     */
+    private $logger;
+
+    public function __construct(Connection $db, Repository $config, Logger $logger)
     {
         $this->db = $db;
         $this->config = $config;
+        $this->logger = $logger;
     }
 
     /**
@@ -46,22 +53,22 @@ class DeleteLogs
                 $this->deleteBasedOnEmailAddress($ui->getUserEmail());
             }
         } catch (Exception $e) {
-            \Log::addDebug($e->getMessage());
+            $this->logger->addDebug($e->getMessage());
         }
     }
 
     private function deleteBasedOnUserId($userId)
     {
-        $this->db->executeQuery("DELETE FROM Logs WHERE uID = ?", $userId);
+        $this->db->executeQuery("DELETE FROM Logs WHERE uID = ?", [$userId]);
     }
 
     private function deleteBasedOnUsername($username)
     {
-        $this->db->executeQuery("DELETE FROM Logs WHERE message LIKE '%?%'", $username);
+        $this->db->executeQuery("DELETE FROM Logs WHERE message LIKE '%?%'", [$username]);
     }
 
     private function deleteBasedOnEmailAddress($emailAddress)
     {
-        $this->db->executeQuery("DELETE FROM Logs WHERE message LIKE '%?%'", $emailAddress);
+        $this->db->executeQuery("DELETE FROM Logs WHERE message LIKE '%?%'", [$emailAddress]);
     }
 }
