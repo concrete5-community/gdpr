@@ -1,3 +1,6 @@
+1.6.5
+- Fix a small boolean bug when disabling the cookie consent.
+
 1.6.4
 - Fix bug that consent route was incorrect on installations loaded from a sub directory.
 

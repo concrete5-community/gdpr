@@ -83,11 +83,13 @@ class CookieServiceProvider implements ApplicationAwareInterface
      */
     private function shouldDisableTrackingCode()
     {
-        if ($this->config->get('gdpr.settings.tracking.disabled', false)) {
+        // If tracking is disabled, we disable the tracking code
+        if ((bool) $this->config->get('gdpr.settings.tracking.disabled', false)) {
             return true;
         }
 
-        if ($this->config->get('gdpr.cookies.consent.enabled', false) === false) {
+        // If cookie consent is disabled, we don't disable the tracking code
+        if ((bool) $this->config->get('gdpr.cookies.consent.enabled', false) === false) {
             return false;
         }
 
