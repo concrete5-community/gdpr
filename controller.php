@@ -13,7 +13,7 @@ final class Controller extends Package
 {
     protected $pkgHandle = 'gdpr';
     protected $appVersionRequired = '8.2.1';
-    protected $pkgVersion = '1.6.6';
+    protected $pkgVersion = '1.6.7';
     protected $pkgAutoloaderRegistries = [
         'src/Gdpr' => '\A3020\Gdpr',
     ];
@@ -73,6 +73,7 @@ final class Controller extends Package
     {
         $config = $this->app->make(Repository::class);
 
+        // See also src/Gdpr/Cookie/Configuration.php
         $message = $config->get('gdpr.cookies.consent.message');
         $dismissButtonText = $config->get('gdpr.cookies.consent.dismiss_button_text');
         $allowButtonText = $config->get('gdpr.cookies.consent.allow_button_text');

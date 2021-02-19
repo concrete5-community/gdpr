@@ -67,29 +67,25 @@ class Configuration
         }
 
         $message = $this->config->get('gdpr.cookies.consent.message');
-        if (!empty($message)) {
-            $this->configuration->set('configuration.content.message', tc('CookieBar', $message));
-        }
+        $message = !empty($message) ? $message : 'This website uses cookies to ensure you get the best experience on our website.';
 
         $dismiss = $this->config->get('gdpr.cookies.consent.dismiss_button_text');
-        if (!empty($dismiss)) {
-            $this->configuration->set('configuration.content.dismiss', tc('CookieBar', $dismiss));
-        }
+        $dismiss = !empty($dismiss) ? $dismiss : 'Got it!';
 
         $allow = $this->config->get('gdpr.cookies.consent.allow_button_text');
-        if (!empty($allow)) {
-            $this->configuration->set('configuration.content.allow', tc('CookieBar', $allow));
-        }
+        $allow = !empty($allow) ? $allow : 'Allow cookies';
 
         $deny = $this->config->get('gdpr.cookies.consent.deny_button_text');
-        if (!empty($deny)) {
-            $this->configuration->set('configuration.content.deny', tc('CookieBar', $deny));
-        }
+        $deny = !empty($deny) ? $deny : 'Decline';
 
         $readMoreLinkText = $this->config->get('gdpr.cookies.consent.policy_link_text');
-        if (!empty($readMoreLinkText)) {
-            $this->configuration->set('configuration.content.link', tc('CookieBar', $readMoreLinkText));
-        }
+        $readMoreLinkText = !empty($readMoreLinkText) ? $readMoreLinkText : 'Learn more';
+
+        $this->configuration->set('configuration.content.message', tc('CookieBar', $message));
+        $this->configuration->set('configuration.content.dismiss', tc('CookieBar', $dismiss));
+        $this->configuration->set('configuration.content.allow', tc('CookieBar', $allow));
+        $this->configuration->set('configuration.content.deny', tc('CookieBar', $deny));
+        $this->configuration->set('configuration.content.link', tc('CookieBar', $readMoreLinkText));
 
         $this->configuration->set('configuration.compliance', $this->getCompliance());
     }
