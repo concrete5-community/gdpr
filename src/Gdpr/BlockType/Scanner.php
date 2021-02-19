@@ -2,25 +2,24 @@
 
 namespace A3020\Gdpr\BlockType;
 
+use Concrete\Core\Application\ApplicationAwareInterface;
+use Concrete\Core\Application\ApplicationAwareTrait;
 use Concrete\Core\Package\PackageService;
 use Symfony\Component\Finder\Finder;
 
-class Scanner
+class Scanner implements ApplicationAwareInterface
 {
+    use ApplicationAwareTrait;
+
     /**
      * @var PackageService
      */
     private $packageService;
 
-    /**
-     * @var Finder
-     */
-    private $finder;
-
-    public function __construct(PackageService $packageService, Finder $finder)
+    // We don't use DI for the Finder object, because it needs to reset the internal state
+    public function __construct(PackageService $packageService)
     {
         $this->packageService = $packageService;
-        $this->finder = $finder;
     }
 
     public function getBlockTypes($options = [])
@@ -91,7 +90,9 @@ class Scanner
      */
     private function findFilesWithForm(array $directories)
     {
-        return $this->finder
+        $finder = $this->app->make(Finder::class);
+
+        return $finder
             ->files()
             ->name('view.php')
             ->contains('<form')
@@ -105,10 +106,12 @@ class Scanner
      */
     private function findFilesWithEmail(array $directories)
     {
-        return $this->finder
+        $finder = $this->app->make(Finder::class);
+
+        return $finder
             ->files()
             ->name('*.php')
-            ->contains("/mail\(|make\('mail'\)|make\('helper\/mail'\)/")
+            ->contains("/\smail\(|make\('mail'\)|make\('helper\/mail'\)/")
             ->in($directories);
     }
 

@@ -1,3 +1,7 @@
+1.2.2
+- Fix to prevent false-positives for mail() function scan.
+- Make sure Finder object isn't reused, otherwise internal state is not reset.
+
 1.2.1
 - Fix regular expression bug for block mail scan.
 
