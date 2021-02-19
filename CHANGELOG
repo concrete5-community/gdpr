@@ -1,3 +1,6 @@
+1.2.3
+- Update help text on Scan > Blocks page.
+
 1.2.2
 - Fix to prevent false-positives for mail() function scan.
 - Make sure Finder object isn't reused, otherwise internal state is not reset.

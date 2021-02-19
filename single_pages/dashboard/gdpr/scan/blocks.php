@@ -10,7 +10,7 @@ $app = Application::getFacadeApplication();
 $app->make('help')->display(
     t("This page shows a list of pages that contain blocks that might process user data. Please check the pages manually to verify they are GDPR compliant.") .'<br><br>'.
     t("A hand crafted list of block types is used for this, but you can also add your own block type handles in the settings.").'<br><br>'.
-    t('In the future this page might actually scan the blocks directory for certain keywords.')
+    t('Also the block folders are scanned for certain keywords. E.g. whether mail is sent, and whether form-tags are used in template files.')
 );
 ?>
 
