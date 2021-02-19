@@ -3,13 +3,11 @@
 defined('C5_EXECUTE') or die('Access Denied.');
 
 use Concrete\Core\Support\Facade\Application;
-use Concrete\Core\Support\Facade\Url;
 
 $app = Application::getFacadeApplication();
 
 $app->make('help')->display(
-    t("If a checkbox is checked, the value is stored. This page serves as a progress indicator. Additional checks can be added via a config file.").'<br><br>'.
-    t("The checklist is probably not complete. Don't interpret a completely checked off list as being GDPR compliant.")
+    t("The cookie consent solution is as-is. It's technically very challenging to come up with a solution that is GDPR compliant, built within acceptable time, and easy to use.")
 );
 
 /** @var \Concrete\Core\Form\Service\Widget\Color $colorPicker */

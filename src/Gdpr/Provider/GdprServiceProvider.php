@@ -7,6 +7,7 @@ use Concrete\Core\Application\ApplicationAwareInterface;
 use Concrete\Core\Application\ApplicationAwareTrait;
 use Concrete\Core\Asset\AssetList;
 use Concrete\Core\Config\Repository\Repository;
+use Concrete\Core\Http\Request;
 use Concrete\Core\Routing\RouterInterface;
 
 class GdprServiceProvider implements ApplicationAwareInterface
@@ -81,8 +82,9 @@ class GdprServiceProvider implements ApplicationAwareInterface
             });
         }
 
+
         // Show / enable cookie consent if needed
-        if ($this->config->get('gdpr.cookies.consent.enabled', false)) {
+        if ($this->shouldLoadCookieConsent()) {
             $this->app['director']->addListener('on_before_render', function ($event) {
                 /** @var \A3020\Gdpr\Listener\OnBeforeRender\AddCookieConsent $listener */
                 $listener = $this->app->make(\A3020\Gdpr\Listener\OnBeforeRender\AddCookieConsent::class);
@@ -93,7 +95,7 @@ class GdprServiceProvider implements ApplicationAwareInterface
 
     private function registerAssets()
     {
-        if (!$this->config->get('gdpr.cookies.consent.enabled', false)) {
+        if (!$this->shouldLoadCookieConsent()) {
             return;
         }
 
@@ -133,5 +135,27 @@ class GdprServiceProvider implements ApplicationAwareInterface
 
         // notice
         return false;
+    }
+
+    private function shouldLoadCookieConsent()
+    {
+        if (!$this->config->get('gdpr.cookies.consent.enabled', false)) {
+            return false;
+        }
+
+        /** @var Request $request */
+        $request = $this->app->make(Request::class);
+
+        // Disable in admin area
+        if (strpos($request->getRequestUri(), '/dashboard') !== false) {
+            return false;
+        }
+
+        // Disable for AJAX requests
+        if ($request->isXmlHttpRequest()) {
+            return false;
+        }
+
+        return true;
     }
 }
