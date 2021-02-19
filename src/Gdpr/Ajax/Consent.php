@@ -45,6 +45,9 @@ class Consent extends \Concrete\Core\Controller\Controller implements Applicatio
         $this->deleteAllCookies();
     }
 
+    /**
+     * This method removes all cookies, except those needed for C5.
+     */
     private function deleteAllCookies()
     {
         if (!isset($_SERVER['HTTP_COOKIE'])) {
@@ -63,6 +66,7 @@ class Consent extends \Concrete\Core\Controller\Controller implements Applicatio
                 continue;
             }
 
+            // Be careful here. getResponseCookies is not in all 8.x versions!
             $jar->set($name, null, time() - 1000, '');
             $jar->set($name, null, time() - 1000, '/');
         }

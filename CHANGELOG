@@ -1,3 +1,6 @@
+1.8.3
+- Fix cookie consent check. Formerly this only worked based on the session cookie. Now it also inspects the cookieconsent_status cookie.
+
 1.8.2
 - Fix saving the Cookie settings. In higher versions of concrete5, a 'Call to a member function get() on null' error occurred.
 
