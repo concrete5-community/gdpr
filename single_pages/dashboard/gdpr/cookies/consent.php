@@ -31,7 +31,7 @@ $app->make('help')->display(
             <?php
             /** @var array $complianceTypeOptions */
             echo $form->label('type', t('Compliance type').' *');
-            echo $form->select('type', $complianceTypeOptions, $config->get('gdpr.cookies.consent.type', 'notice'));
+            echo $form->select('type', $complianceTypeOptions, $config->get('gdpr.cookies.consent.type', 'opt-in'));
             ?>
         </div>
 

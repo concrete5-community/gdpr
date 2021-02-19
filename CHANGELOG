@@ -1,3 +1,7 @@
+1.6.1
+- Make "Opt-in" the default compliant type.
+- Add a route to 'reset' the cookie status.
+
 1.6.0
 - Move Express Forms settings to Cleanup > Express Forms page.
 - Add Cleanup > Legacy Forms page.

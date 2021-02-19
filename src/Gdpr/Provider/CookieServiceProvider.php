@@ -11,6 +11,7 @@ use Concrete\Core\Cookie\CookieJar;
 use Concrete\Core\Http\Request;
 use Concrete\Core\Page\Page;
 use Concrete\Core\Routing\RouterInterface;
+use Concrete\Core\View\View;
 
 class CookieServiceProvider implements ApplicationAwareInterface
 {
@@ -54,18 +55,26 @@ class CookieServiceProvider implements ApplicationAwareInterface
         }
 
         // Show / enable cookie consent if needed
-        if ($this->shouldLoadCookieConsent()) {
+        if ($this->shouldShowCookieConsent()) {
             $this->app['director']->addListener('on_before_render', function ($event) {
                 /** @var \A3020\Gdpr\Listener\OnBeforeRender\AddCookieConsent $listener */
                 $listener = $this->app->make(\A3020\Gdpr\Listener\OnBeforeRender\AddCookieConsent::class);
                 $listener->handle($event);
             });
+        }
 
+        if ($this->config->get('gdpr.cookies.consent.enabled', false)) {
             $al = AssetList::getInstance();
 
             $al->register('javascript', 'gdpr/gdpr-cookie', 'js/gdpr-cookie.js', [], 'gdpr');
             $al->register('javascript', 'gdpr/cookieconsent', 'js/cookieconsent.min.js', [], 'gdpr');
             $al->register('css', 'gdpr/cookieconsent', 'css/cookieconsent.min.css', [], 'gdpr');
+
+            $view = View::getInstance();
+            // We always need this assets, even if consent has been given, to reset the cookie status
+            // To reset the cookie, one can use a button e.g.:
+            // <button class="gdpr-reset-cookie-consent">Reset Cookie Consent</button>
+            $view->requireAsset('javascript', 'gdpr/gdpr-cookie');
         }
     }
 
@@ -106,7 +115,7 @@ class CookieServiceProvider implements ApplicationAwareInterface
     /**
      * @return bool
      */
-    private function shouldLoadCookieConsent()
+    private function shouldShowCookieConsent()
     {
         if (!$this->config->get('gdpr.cookies.consent.enabled', false)) {
             return false;

@@ -2,6 +2,15 @@
     var consentRoute = CCM_REL + CCM_DISPATCHER_FILENAME + '/ccm/system/gdpr/consent';
 
     var GdprCookie = {
+        reset: function() {
+            document.cookie = 'cookieconsent_status=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+
+            $.post(consentRoute, {
+                'consent': 'reset'
+            }).done(function(){
+                window.location.reload();
+            });
+        },
         allowCookies: function() {
             $.post(consentRoute, {
                 'consent': 'allow'
@@ -48,5 +57,9 @@
 
     $(document).on('click', '.cc-compliance .cc-deny', function() {
         GdprCookie.denyCookies();
+    });
+
+    $(document).on('click', '.gdpr-reset-cookie-consent', function() {
+        GdprCookie.reset();
     });
 })();

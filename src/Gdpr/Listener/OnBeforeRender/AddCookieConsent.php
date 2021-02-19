@@ -20,11 +20,9 @@ class AddCookieConsent
     public function handle($event)
     {
         $view = View::getInstance();
-
-        $view->addFooterItem($this->getCookieJs());
-        $view->requireAsset('javascript', 'gdpr/gdpr-cookie');
         $view->requireAsset('javascript', 'gdpr/cookieconsent');
         $view->requireAsset('css', 'gdpr/cookieconsent');
+        $view->addFooterItem($this->getCookieJs());
     }
 
     public function getCookieJs()

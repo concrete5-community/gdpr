@@ -14,15 +14,20 @@ class Consent extends \Concrete\Core\Controller\Controller implements Applicatio
 
     public function store()
     {
-        if ($this->post('consent') === 'allow') {
-            $this->allow();
-        } else {
-            $this->deny();
+        switch ($this->post('consent')) {
+            case 'allow':
+                $this->allow();
+            break;
+            case 'deny':
+                $this->deny();
+            break;
+            case 'reset':
+                $this->reset();
         }
 
         return $this->app->make(ResponseFactory::class)->json([
             'success' => true,
-            'consent' => $this->post('consent') === 'allow' ? 'allow' : 'deny',
+            'consent' => $this->post('consent'),
         ]);
     }
 
@@ -61,5 +66,17 @@ class Consent extends \Concrete\Core\Controller\Controller implements Applicatio
             $jar->set($name, null, time() - 1000, '');
             $jar->set($name, null, time() - 1000, '/');
         }
+    }
+
+    /**
+     * Pretend like the user has never given any type of consent
+     *
+     * This will remove the session variable
+     */
+    private function reset()
+    {
+        /** @var \Symfony\Component\HttpFoundation\Session\Session $session */
+        $session = $this->app->make('session');
+        $session->remove('gdpr.cookies');
     }
 }
