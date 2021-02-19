@@ -1,3 +1,6 @@
+1.8.2
+- Fix saving the Cookie settings. In higher versions of concrete5, a 'Call to a member function get() on null' error occurred.
+
 1.8.1
 - Fix redirect to first child pages.
 

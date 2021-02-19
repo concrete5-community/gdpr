@@ -3,6 +3,7 @@
 namespace Concrete\Package\Gdpr\Controller\SinglePage\Dashboard\Gdpr\Cookies;
 
 use A3020\Gdpr\Controller\DashboardController;
+use Concrete\Core\Routing\Redirect;
 use Exception;
 
 final class Consent extends DashboardController
@@ -58,7 +59,7 @@ final class Consent extends DashboardController
 
         $this->flash('success', t('Settings saved'));
 
-        return $this->action('/dashboard/gdpr/cookies/consent');
+        return Redirect::to('/dashboard/gdpr/cookies/consent');
     }
 
     /**
