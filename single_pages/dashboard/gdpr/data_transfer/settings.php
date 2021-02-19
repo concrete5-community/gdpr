@@ -1,7 +1,5 @@
 <?php
-
 defined('C5_EXECUTE') or die('Access Denied.');
-
 ?>
 
 <div class="ccm-dashboard-content-inner">
@@ -11,7 +9,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
         echo $token->output('a3020.gdpr.data_transfer.settings');
         ?>
 
-        <div class="form-group alert alert-success">
+        <div class="form-group">
             <label class="control-label launch-tooltip"
                    title="<?php echo t("This will install an Automated Job. The job will build a ZIP file and sends the download link to the user.") ?>"
                    for="enableJobToProcessDataTransferRequests">
@@ -23,7 +21,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
             </label>
         </div>
 
-        <div class="form-group alert alert-success">
+        <div class="form-group">
             <label class="control-label launch-tooltip"
                    title="<?php echo t("This will install a '%s' block. You can add it on the profile page, for example. The logged in user can click on the button which will then create a data transfer request. If you uncheck this option, the block will be removed and uninstalled.", t('GDPR - Data Transfer Request')) ?>"
                    for="enableInstallBlock">
@@ -35,7 +33,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
             </label>
         </div>
 
-        <div class="form-group alert alert-success">
+        <div class="form-group">
             <label class="control-label launch-tooltip"
                    title="<?php echo t("Disable this option if you or other add-ons take care of what data should be included in the zip file.") ?>"
                    for="enableSubmittingDefaultData">
@@ -47,10 +45,8 @@ defined('C5_EXECUTE') or die('Access Denied.');
             </label>
         </div>
 
-        <div class="form-group alert alert-success">
-            <label class="control-label launch-tooltip"
-                   title="<?php echo t("") ?>"
-                   for="dataTransferDownloadDaysValid">
+        <div class="form-group">
+            <label class="control-label" for="dataTransferDownloadDaysValid">
                 <?php echo t('Number of days the download should be valid'); ?>
                 <?php
                 /** @var int $dataTransferDownloadDaysValid */

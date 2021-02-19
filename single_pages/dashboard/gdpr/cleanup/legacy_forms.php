@@ -22,7 +22,7 @@ $app->make('help')->display(
         ?>
 
         <section class="settings-section">
-            <div class="form-group alert alert-success">
+            <div class="form-group">
                 <label class="control-label launch-tooltip"
                        title="<?php echo t("Form submissions are always stored. To remove form submissions automatically, you can run and schedule the job via Automated Tasks. If you uncheck this option, the job will be uninstalled.") ?>"
                        for="enableJobToRemoveLegacyFormSubmissions">
@@ -34,7 +34,7 @@ $app->make('help')->display(
                 </label>
             </div>
 
-            <div class="form-group alert alert-success <?php echo $enableJobToRemoveLegacyFormSubmissions ? '' : 'hide' ?>" id="container-legacy-forms-keep-days">
+            <div class="form-group <?php echo $enableJobToRemoveLegacyFormSubmissions ? '' : 'hide' ?>" id="container-legacy-forms-keep-days">
                 <label class="control-label launch-tooltip"
                        title="<?php echo t('You can control how long the submissions may be stored before they are deleted.') ?>"
                        for="legacyFormsKeepDays">
@@ -70,7 +70,7 @@ $app->make('help')->display(
             <?php
             echo t('Legacy form submissions can be deleted via the %sForm Results%s page.',
                 '<a target="_blank" href="'.Url::to('/dashboard/reports/forms/legacy').'">',
-                '</a>'
+                ' <i class="fa fa-external-link"></i></a>'
             );
             ?>
         </p>

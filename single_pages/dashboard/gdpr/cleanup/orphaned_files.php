@@ -75,6 +75,7 @@ $app->make('help')->display(
                             <td>
                                 <a href="<?php echo $file['url'] ?>" target="_blank">
                                     <?php echo e($file['name']); ?>
+                                    <i class="fa fa-external-link"></i>
                                 </a>
                             </td>
                             <td>

@@ -12,12 +12,12 @@ defined('C5_EXECUTE') or die('Access Denied.');
     ?>
 </label>
 
-<div class="alert alert-danger" id="consent">
+<div class="alert alert-warning" id="consent">
     <i class="fa fa-warning"></i>
     <strong>
-    <?php
-    echo "Only use this add-on if you've been given a free license or if you've bought a license. ";
-    ?>
+        <?php
+        echo "Only use this add-on if you've been given a free license or if you've bought a license. ";
+        ?>
     </strong>
     <?php
 

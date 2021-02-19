@@ -1,7 +1,5 @@
 <?php
-
 defined('C5_EXECUTE') or die('Access Denied.');
-
 ?>
 
 <div class="ccm-dashboard-content-inner">
@@ -14,7 +12,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
         <section class="settings-section">
             <header><?php echo t('User logs'); ?></header>
 
-            <div class="form-group alert alert-success">
+            <div class="form-group">
                 <label class="control-label launch-tooltip"
                        title="<?php echo t('This will automatically remove associated user logs when a user is deleted. This is done based on the %1$s column in the %2$s table.', 'uID', 'Logs'); ?>"
                        for="removeBasedOnUserId">
@@ -26,7 +24,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
                 </label>
             </div>
 
-            <div class="form-group alert alert-success">
+            <div class="form-group">
                 <label class="control-label launch-tooltip"
                        title="<?php echo t('Say the email address of the deleted user is %s, then all Logs that contain %s will be deleted.', 'john.doe@gmail.com', 'john.doe@gmail.com'); ?>"
                        for="removeBasedOnEmailAddress">
@@ -38,7 +36,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
                 </label>
             </div>
 
-            <div class="form-group alert alert-warning">
+            <div class="form-group">
                 <label class="control-label launch-tooltip"
                        title="<?php echo t('Say the username of the deleted user is %s, then all Logs that contain %s will be deleted. This option is probably not recommended if you allow users with a short username.', 'john.doe', 'john.doe'); ?>"
                        for="removeBasedOnUsername">
@@ -60,7 +58,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
         <section class="settings-section">
             <header><?php echo t('Tracking'); ?></header>
 
-            <div class="form-group alert alert-success">
+            <div class="form-group">
                 <label class="control-label launch-tooltip"
                        title="<?php echo t("concrete5 might pull background images from an external server for the login page. This could leak the visitor's IP address.") ?>"
                        for="disableConcreteBackground">
@@ -72,7 +70,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
                 </label>
             </div>
 
-            <div class="form-group alert alert-success">
+            <div class="form-group">
                 <label class="control-label launch-tooltip"
                        title="<?php echo t("This will disable tracking code(s) defined on %s. If you uninstall the add-on or uncheck this option, the tracking code will become active again.",
                            t('System & Settings > SEO & Statistics > Tracking Codes')
@@ -103,4 +101,3 @@ defined('C5_EXECUTE') or die('Access Denied.');
         </div>
     </form>
 </div>
-

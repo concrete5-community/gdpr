@@ -22,7 +22,7 @@ $app->make('help')->display(
         ?>
 
         <section class="settings-section">
-            <div class="form-group alert alert-warning">
+            <div class="form-group">
                 <label class="control-label launch-tooltip"
                        title="<?php echo t("In case your form has an upload field, you may want to delete the associated files as well. Please note that these files might be used elsewhere in the system.") ?>"
                        for="deleteAssociatedFiles">
@@ -34,7 +34,7 @@ $app->make('help')->display(
                 </label>
             </div>
 
-            <div class="form-group alert alert-success">
+            <div class="form-group">
                 <label class="control-label launch-tooltip"
                        title="<?php echo t("Form submissions are always stored. To remove form submissions automatically, you can run and schedule the job via Automated Tasks. If you uncheck this option, the job will be uninstalled.") ?>"
                        for="enableJobToRemoveFormSubmissions">
@@ -46,7 +46,7 @@ $app->make('help')->display(
                 </label>
             </div>
 
-            <div class="form-group alert alert-success <?php echo $enableJobToRemoveFormSubmissions ? '' : 'hide' ?> express-form-toggle">
+            <div class="form-group <?php echo $enableJobToRemoveFormSubmissions ? '' : 'hide' ?> express-form-toggle">
                 <label class="control-label launch-tooltip"
                        title="<?php echo t('You can control how long the submissions may be stored before they are deleted.') ?>"
                        for="expressFormsKeepDays">
@@ -85,10 +85,12 @@ $app->make('help')->display(
                     ?>
                     <tr>
                         <td>
-                            <a title="<?php echo t('View Entries') ?>" href="<?php echo Url::to('/dashboard/reports/forms/view/'.$form['id']) ?>">
+                            <a target="_blank" title="<?php echo t('View Entries') ?>" href="<?php echo Url::to('/dashboard/reports/forms/view/'.$form['id']) ?>">
                                 <?php
                                 echo e($form['name']);
                                 ?>
+
+                                <i class="fa fa-external-link"></i>
                             </a>
                         </td>
                         <td><?php echo $form['entries'] ?></td>
