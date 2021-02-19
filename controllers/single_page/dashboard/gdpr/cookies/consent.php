@@ -12,9 +12,9 @@ final class Consent extends DashboardController
     {
         $this->set('config', $this->config);
         $this->set('complianceTypeOptions', [
-            'notice' => t('Notice'),
             'opt-in' => t('Opt-in'),
             'opt-out' => t('Opt-out'),
+            'notice' => t('Notice'),
         ]);
         $this->set('positionOptions', [
             'bottom' => t('Banner bottom'),

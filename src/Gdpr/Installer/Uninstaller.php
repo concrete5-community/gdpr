@@ -24,6 +24,8 @@ class Uninstaller
             $this->connection->executeQuery("DROP TABLE IF EXISTS GdprChecks");
             $this->connection->executeQuery("DROP TABLE IF EXISTS GdprBlockScanStatus");
             $this->connection->executeQuery("DROP TABLE IF EXISTS GdprTableScanStatus");
+            $this->connection->executeQuery("DROP TABLE IF EXISTS GdprDataTransferFiles");
+            $this->connection->executeQuery("DROP TABLE IF EXISTS GdprDataTransferRequests");
         } catch (Exception $e) {
             Log::addDebug($e->getMessage());
         }

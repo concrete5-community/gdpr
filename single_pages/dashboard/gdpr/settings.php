@@ -112,6 +112,46 @@ defined('C5_EXECUTE') or die('Access Denied.');
             </div>
         </section>
 
+        <section class="settings-section">
+            <header><?php echo t('Data Transfer'); ?></header>
+
+            <div class="form-group alert alert-success">
+                <label class="control-label launch-tooltip"
+                       title="<?php echo t("This will install an Automated Job. The job will build a ZIP file and sends the download link to the user.") ?>"
+                       for="enableJobToProcessDataTransferRequests">
+                    <?php
+                    /** @var bool $enableJobToProcessDataTransferRequests */
+                    echo $form->checkbox('enableJobToProcessDataTransferRequests', 1, $enableJobToProcessDataTransferRequests);
+                    ?>
+                    <?php echo t('Enable an Automated Job that can process Data Transfer Requests'); ?>
+                </label>
+            </div>
+
+            <div class="form-group alert alert-success">
+                <label class="control-label launch-tooltip"
+                       title="<?php echo t("Disable this option if you or other add-ons take care of what data should be included in the zip file.") ?>"
+                       for="enableSubmittingDefaultData">
+                    <?php
+                    /** @var bool $enableSubmittingDefaultData */
+                    echo $form->checkbox('enableSubmittingDefaultData', 1, $enableSubmittingDefaultData);
+                    ?>
+                    <?php echo t('Submit default data to .zip file'); ?>
+                </label>
+            </div>
+
+            <div class="form-group alert alert-success">
+                <label class="control-label launch-tooltip"
+                       title="<?php echo t("") ?>"
+                       for="dataTransferDownloadDaysValid">
+                    <?php echo t('Number of days the download should be valid'); ?>
+                    <?php
+                    /** @var int $dataTransferDownloadDaysValid */
+                    echo $form->number('dataTransferDownloadDaysValid', $dataTransferDownloadDaysValid);
+                    ?>
+                </label>
+            </div>
+        </section>
+
         <div class="ccm-dashboard-form-actions-wrapper">
             <div class="ccm-dashboard-form-actions">
                 <button class="pull-right btn btn-primary" type="submit"><?php echo t('Save') ?></button>

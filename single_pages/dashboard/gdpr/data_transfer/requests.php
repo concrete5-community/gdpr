@@ -8,7 +8,8 @@ use Concrete\Core\Support\Facade\Url;
 $app = Application::getFacadeApplication();
 
 $app->make('help')->display(
-    t("A user should have the right to request his/her data. This page shows all data requests.")
+    t("A user should have the right to request his/her data. This page shows all data requests.").'<br><br>'.
+    t("Data transfer requests can be created via the %s event.", "on_gdpr_process_data_transfer_request")
 );
 ?>
 
@@ -16,9 +17,9 @@ $app->make('help')->display(
     <table class="table" id="tbl-requests">
         <thead>
             <tr>
-                <th><?php echo t('Date') ?></th>
+                <th><?php echo t('Requested at') ?></th>
                 <th><?php echo t('User') ?></th>
-                <th><?php echo t('Sent') ?></th>
+                <th><?php echo t('Mailed at') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -27,7 +28,6 @@ $app->make('help')->display(
     </table>
 </div>
 
-
 <script>
 $(document).ready(function() {
     var DataTableElement = $('#tbl-requests');
@@ -35,6 +35,17 @@ $(document).ready(function() {
     var DataTable = DataTableElement.DataTable({
         ajax: '<?php echo Url::to('/ccm/system/gdpr/data_transfer/requests') ?>',
         lengthMenu: [[15, 40, 80, -1], [15, 40, 80, '<?php echo t('All') ?>']],
+        columns: [
+            {
+                data: "requested_at"
+            },
+            {
+                data: "user_name"
+            },
+            {
+                data: "mailed_at"
+            }
+        ],
         language: {
             emptyTable: '<?php echo t('There are no data transfer requests.') ?>'
         }

@@ -1,3 +1,13 @@
+1.5.0
+- Make opt-in cookie consent the default.
+- Add GdprDataTransferRequests table / entity.
+- Add GdprDataTransferFiles table / entity.
+- Show data transfer requests on Data Transfer Requests page.
+- Add 'Process data transfer requests' automated job.
+- Build zip file with user data.
+- Add on_gdpr_data_transfer_request and on_gdpr_process_data_transfer_request events.
+- Create a Data Transfer Request if the on_gdpr_data_transfer_request event is fired.
+
 1.4.1
 - Improve warning when no blocks, packages, or database tables have been found in a scan.
 - Change the 'opt-in' cookie consent: display 'Decline' and 'Allow' buttons instead of 'Dismiss' and 'Allow' buttons.

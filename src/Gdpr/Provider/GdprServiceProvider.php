@@ -31,6 +31,9 @@ class GdprServiceProvider implements ApplicationAwareInterface
         $router = $this->app->make(RouterInterface::class);
 
         $router->registerMultiple([
+            '/gdpr/data_transfer/download/{hash}' => [
+                '\A3020\Gdpr\Controller\DataTransfer\Download::download',
+            ],
             '/ccm/system/gdpr/scan/tables' => [
                 '\A3020\Gdpr\Ajax\Scan\Tables::view',
             ],
@@ -66,6 +69,18 @@ class GdprServiceProvider implements ApplicationAwareInterface
         $this->app['director']->addListener('on_user_delete', function($event) {
             /** @var \A3020\Gdpr\Listener\OnUserDelete\DeleteLogs $listener */
             $listener = $this->app->make(\A3020\Gdpr\Listener\OnUserDelete\DeleteLogs::class);
+            $listener->handle($event);
+        });
+
+        $this->app['director']->addListener('on_gdpr_data_transfer_request', function($event) {
+            /** @var \A3020\Gdpr\Listener\OnDataTransferRequest\Store $listener */
+            $listener = $this->app->make(\A3020\Gdpr\Listener\OnDataTransferRequest\Store::class);
+            $listener->handle($event);
+        });
+
+        $this->app['director']->addListener('on_gdpr_process_data_transfer_request', function($event) {
+            /** @var \A3020\Gdpr\Listener\OnProcessDataTransferRequest\SubmitData $listener */
+            $listener = $this->app->make(\A3020\Gdpr\Listener\OnProcessDataTransferRequest\SubmitData::class);
             $listener->handle($event);
         });
     }
