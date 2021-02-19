@@ -8,10 +8,9 @@ use Concrete\Core\Support\Facade\Url;
 $app = Application::getFacadeApplication();
 
 $app->make('help')->display(
-    t("Form submissions often contain personal data. Most likely you've been sending the submissions to an email address. ".
-        "However, the data might still be in concrete5. ".
-        "On this page you can install a job that automatically removes legacy form submissions."
-    )
+    t("Form submissions often contain personal data. Most likely you've been sending the submissions to an email address. However, the data might still be in concrete5.")
+    . ' ' .
+    t("On this page you can install a job that automatically removes legacy form submissions.")
 );
 ?>
 
@@ -37,7 +36,7 @@ $app->make('help')->display(
 
             <div class="form-group alert alert-success <?php echo $enableJobToRemoveLegacyFormSubmissions ? '' : 'hide' ?>" id="container-legacy-forms-keep-days">
                 <label class="control-label launch-tooltip"
-                       title="<?php echo t("You can control how long Legacy Form submission may be stored before they are deleted.") ?>"
+                       title="<?php echo t('You can control how long the submissions may be stored before they are deleted.') ?>"
                        for="legacyFormsKeepDays">
                     <?php echo t('Keep form submissions for x-number of days'); ?>
                 </label>

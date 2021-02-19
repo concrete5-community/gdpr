@@ -1,3 +1,6 @@
+1.6.9
+- Improve t-strings / translations.
+
 1.6.8
 - Disable flex for compliance buttons in cookie bar. This fixes an issue with text overflow for longer custom texts.
 

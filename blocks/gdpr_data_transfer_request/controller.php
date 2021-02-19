@@ -70,8 +70,9 @@ class Controller extends BlockController
             return $this->view();
         }
 
-        if (!$this->app->make('token')->validate('gdpr.data_transfer_request')) {
-            $this->error->add(t('Invalid token'));
+        $token = $this->app->make('token');
+        if (!$token->validate('gdpr.data_transfer_request')) {
+            $this->error->add($token->getErrorMessage());
         }
 
         if (!$this->error->has() && !$this->hasPendingRequest($user)) {

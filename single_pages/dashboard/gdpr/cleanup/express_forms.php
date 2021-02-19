@@ -8,10 +8,9 @@ use Concrete\Core\Support\Facade\Url;
 $app = Application::getFacadeApplication();
 
 $app->make('help')->display(
-    t("Form submissions often contain personal data. Most likely you've been sending the submissions to an email address. ".
-        "However, the data might still be in concrete5. ".
-        "Because not all concrete5 versions support bulk deletion of Express Form Results, you can do that here."
-    )
+    t("Form submissions often contain personal data. Most likely you've been sending the submissions to an email address. However, the data might still be in concrete5.")
+    . ' ' .
+    t("Because not all concrete5 versions support bulk deletion of Express Form Results, you can do that here.")
 );
 ?>
 
@@ -49,7 +48,7 @@ $app->make('help')->display(
 
             <div class="form-group alert alert-success <?php echo $enableJobToRemoveFormSubmissions ? '' : 'hide' ?> express-form-toggle">
                 <label class="control-label launch-tooltip"
-                       title="<?php echo t("You can control how long Express Form submission may be stored before they are deleted.") ?>"
+                       title="<?php echo t('You can control how long the submissions may be stored before they are deleted.') ?>"
                        for="expressFormsKeepDays">
                     <?php echo t('Keep form submissions for x-number of days'); ?>
                 </label>

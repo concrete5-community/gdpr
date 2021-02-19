@@ -66,7 +66,7 @@ class Tables extends AjaxController
     public function saveStatus()
     {
         if (!$this->app->make('token')->validate('gdpr.scan.tables.status')) {
-            throw new Exception(t('Invalid form token'));
+            throw new Exception($this->token->getErrorMessage());
         }
 
         /** @var StatusRepository $statusRepository */

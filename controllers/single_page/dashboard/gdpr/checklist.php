@@ -25,7 +25,7 @@ final class Checklist extends DashboardController
         if (!$entity) {
             return $this->app->make(ResponseFactory::class)->json([
                 'success' => false,
-                'error' => t('Check not found'),
+                'error' => 'Check not found',
             ], Response::HTTP_BAD_REQUEST);
         }
 

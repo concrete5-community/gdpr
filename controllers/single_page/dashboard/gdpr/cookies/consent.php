@@ -35,7 +35,7 @@ final class Consent extends DashboardController
     public function save()
     {
         if (!$this->token->validate('gdpr.cookies.consent')) {
-            throw new Exception(t('Invalid form token'));
+            throw new Exception($this->token->getErrorMessage());
         }
 
         $this->config->save('gdpr.cookies.consent.enabled', (bool) $this->post('enabled'));

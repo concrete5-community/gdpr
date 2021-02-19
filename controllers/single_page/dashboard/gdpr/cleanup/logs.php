@@ -41,7 +41,7 @@ final class Logs extends DashboardController
     public function bulk()
     {
         if (!$this->token->validate('gdpr.cleanup.logs.bulk')) {
-            $this->flash('error', t('Invalid form token'));
+            $this->flash('error', $this->token->getErrorMessage());
 
             return Redirect::to('/dashboard/gdpr/cleanup/logs');
         }

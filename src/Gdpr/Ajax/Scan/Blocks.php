@@ -50,7 +50,7 @@ class Blocks extends AjaxController
     public function saveStatus()
     {
         if (!$this->app->make('token')->validate('gdpr.scan.blocks.status')) {
-            throw new Exception(t('Invalid form token'));
+            throw new Exception($this->token->getErrorMessage());
         }
 
         $blockType = BlockType::getByID($this->post('btId'));

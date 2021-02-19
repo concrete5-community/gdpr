@@ -21,7 +21,7 @@ final class OrphanedFiles extends DashboardController
     public function bulk()
     {
         if (!$this->token->validate('gdpr.cleanup.orphaned_files.bulk')) {
-            $this->flash('error', t('Invalid form token'));
+            $this->flash('error', $this->token->getErrorMessage());
 
             return Redirect::to('/dashboard/gdpr/cleanup/orphaned_files');
         }

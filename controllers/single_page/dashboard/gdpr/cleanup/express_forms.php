@@ -70,7 +70,7 @@ final class ExpressForms extends DashboardController
     public function deleteEntries($nodeId = null, $token = null)
     {
         if (!$this->token->validate('gdpr.cleanup.express_forms.delete', $token)) {
-            $this->flash('error', t("Invalid form token. Please try again."));
+            $this->flash('error', $this->token->getErrorMessage());
 
             return Redirect::to('/dashboard/gdpr/cleanup/express_forms');
         }
