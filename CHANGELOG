@@ -1,3 +1,6 @@
+1.2.1
+- Fix regular expression bug for block mail scan.
+
 1.2.0
 - Scan directories (application/blocks and package_handle/blocks) for view files that contain:
   - a <form> tag

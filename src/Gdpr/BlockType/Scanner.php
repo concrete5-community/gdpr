@@ -108,7 +108,7 @@ class Scanner
         return $this->finder
             ->files()
             ->name('*.php')
-            ->contains("/|make('mail')|make('helper\/mail')/")
+            ->contains("/mail\(|make\('mail'\)|make\('helper\/mail'\)/")
             ->in($directories);
     }
 
