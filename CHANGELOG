@@ -1,3 +1,8 @@
+1.0.4
+- Add option to ignore / hide blocks that have been marked as GDPR compliant. (Blocks scan)
+- Change 'Comments' field to 'Notes'.
+- Change caption to 'Mark as GDPR compliant on all pages'.
+
 1.0.3
 - Add foreign key to the block type in the GdprBlockScanStatus table.
 - Make sure entries are removed when a block type is removed.

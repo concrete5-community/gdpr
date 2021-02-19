@@ -27,6 +27,17 @@ $app->make('help')->display(
             ?>
 
             <div class="form-group">
+                <label class="control-label" for="ignoreFixedBlocks">
+                    <?php
+                    /** @var $ignoreFixedBlocks bool */
+                    echo $form->checkbox('ignoreFixedBlocks', 1, $ignoreFixedBlocks);
+                    ?>
+
+                    <?php echo t("Ignore blocks that are marked as compliant"); ?>
+                </label>
+            </div>
+
+            <div class="form-group">
                 <label class="control-label" for="ignoreCoreBlocks">
                     <?php
                     /** @var $ignoreCoreBlocks bool */

@@ -18,6 +18,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
         echo $form->hidden('btId', $blockType->getBlockTypeID());
         echo $form->hidden('pageId', $pageId);
         ?>
+
         <div class="form-group">
             <label for="fixed" class="control-label">
                 <?php
@@ -31,14 +32,14 @@ defined('C5_EXECUTE') or die('Access Denied.');
             <label for="fixedOnAllPages" class="control-label">
                 <?php
                 echo $form->checkbox('fixedOnAllPages', 1, $status->isFixedOnAllPages());
-                echo ' '.t('Mark as fixed on all pages');
+                echo ' '.t('Mark as GDPR compliant on all pages');
                 ?>
             </label>
         </div>
 
         <div class="form-group">
             <?php
-            echo $form->label('comments', t('Comments'));
+            echo $form->label('comments', t('Notes'));
             echo $form->textarea('comments', $status->getComments(), [
                 'autofocus' => 'autofocus',
                 'rows' => 5,

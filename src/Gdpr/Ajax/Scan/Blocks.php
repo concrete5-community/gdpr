@@ -95,6 +95,7 @@ class Blocks extends AjaxController
     {
         $records = [];
 
+        $ignoreFixedBlocks = (bool) $this->config->get('gdpr.scan.block_types.ignore_fixed_blocks', false);
         $ignoreCoreBlocks = (bool) $this->config->get('gdpr.scan.block_types.ignore_core_blocks', false);
 
         /** @var StatusRepository $statusRepository */
@@ -113,8 +114,17 @@ class Blocks extends AjaxController
             }
 
             $blockTypeFixed = $statusRepository->isBlockTypeFixed($blockType);
+            if ($ignoreFixedBlocks && $blockTypeFixed) {
+                continue;
+            }
 
             foreach ($this->getPagesWhereBlockIsUsed($blockType->getBlockTypeID()) as $page) {
+                $fixed = $blockTypeFixed ? $blockTypeFixed : $statusRepository->isBlockTypeFixedOnPage($blockType, $page->getCollectionID());
+
+                if ($ignoreFixedBlocks && $fixed) {
+                    continue;
+                }
+
                 $records[] = [
                     'page_id' => $page->getCollectionID(),
                     'page_name' => $page->getCollectionName(),
@@ -125,7 +135,7 @@ class Blocks extends AjaxController
                     'block_icon' => $this->getBlockTypeIcon($blockType),
                     'is_core_block' => $isCoreBlock,
                     'why' => $why,
-                    'fixed' => $blockTypeFixed ? $blockTypeFixed : $statusRepository->isBlockTypeFixedOnPage($blockType, $page->getCollectionID()),
+                    'fixed' => $fixed,
                 ];
             }
         }
