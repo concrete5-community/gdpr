@@ -2,6 +2,7 @@
 
 namespace A3020\Gdpr\Entity;
 
+use Concrete\Core\Entity\Block\BlockType\BlockType;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -21,11 +22,6 @@ class BlockScanStatus
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
-    /**
-     * @ORM\Column(type="string", nullable=false)
-     */
-    protected $blockTypeHandle;
 
     /**
      * @ORM\Column(type="integer", nullable=false, options={"unsigned": true})
@@ -52,6 +48,14 @@ class BlockScanStatus
      */
     protected $updatedAt;
 
+    /**
+     * The associated block type object
+     *
+     * @ORM\ManyToOne(targetEntity="\Concrete\Core\Entity\Block\BlockType\BlockType")
+     * @ORM\JoinColumn(name="blockTypeId", referencedColumnName="btID", nullable=false, onDelete="CASCADE")
+     */
+    protected $blockType;
+
     public function __construct()
     {
         $this->updatedAt = new DateTimeImmutable();
@@ -65,21 +69,16 @@ class BlockScanStatus
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getBlockTypeHandle()
+    public function setBlockType(BlockType $blockType)
     {
-        return $this->blockTypeHandle;
+        $this->blockType = $blockType;
     }
 
-    /**
-     * @param string $blockTypeHandle
-     */
-    public function setBlockTypeHandle($blockTypeHandle)
+    public function getBlockType()
     {
-        $this->blockTypeHandle = $blockTypeHandle;
+        return $this->blockType;
     }
+
 
     /**
      * @return int

@@ -3,6 +3,7 @@
 namespace A3020\Gdpr\Scan\Block;
 
 use A3020\Gdpr\Entity\BlockScanStatus;
+use Concrete\Core\Entity\Block\BlockType\BlockType;
 use Doctrine\ORM\EntityManager;
 
 class StatusRepository
@@ -20,20 +21,20 @@ class StatusRepository
     }
 
     /**
-     * @param string $blockType
+     * @param BlockType $blockType
      *
      * @return bool
      */
     public function isBlockTypeFixed($blockType)
     {
         return (bool) $this->repository->findOneBy([
-            'blockTypeHandle' => $blockType,
+            'blockType' => $blockType,
             'isFixedOnAllPages' => true,
         ]);
     }
 
     /**
-     * @param string $blockType
+     * @param BlockType $blockType
      * @param int $pageId
      *
      * @return bool
@@ -41,7 +42,7 @@ class StatusRepository
     public function isBlockTypeFixedOnPage($blockType, $pageId)
     {
         return (bool) $this->repository->findOneBy([
-            'blockTypeHandle' => $blockType,
+            'blockType' => $blockType,
             'pageId' => $pageId,
             'isFixed' => true,
         ]);
@@ -53,7 +54,7 @@ class StatusRepository
     }
 
     /**
-     * @param string $blockType
+     * @param BlockType $blockType
      * @param int $pageId
      *
      * @return BlockScanStatus|null
@@ -61,7 +62,7 @@ class StatusRepository
     public function findBy($blockType, $pageId)
     {
         return $this->repository->findOneBy([
-            'blockTypeHandle' => $blockType,
+            'blockType' => $blockType,
             'pageId' => $pageId,
         ]);
     }
@@ -72,10 +73,15 @@ class StatusRepository
         $this->entityManager->flush();
     }
 
+    /**
+     * @param BlockType $blockType
+     * @param bool $fixedOnAllPages
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function updateFixedOnAllPages($blockType, $fixedOnAllPages)
     {
         $entities = $this->repository->findBy([
-            'blockTypeHandle' => $blockType,
+            'blockType' => $blockType,
         ]);
 
         if (!$entities) {

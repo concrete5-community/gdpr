@@ -3,7 +3,7 @@
 defined('C5_EXECUTE') or die('Access Denied.');
 
 /** @var string $action */
-/** @var string $blockTypeHandle */
+/** @var \Concrete\Core\Entity\Block\BlockType\BlockType $blockType */
 /** @var int $pageId */
 /** @var \A3020\Gdpr\Entity\BlockScanStatus $status */
 ?>
@@ -15,7 +15,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
         echo $token->output('gdpr.scan.blocks.status');
 
         echo $form->hidden('id', $status->getId());
-        echo $form->hidden('blockTypeHandle', $blockTypeHandle);
+        echo $form->hidden('btId', $blockType->getBlockTypeID());
         echo $form->hidden('pageId', $pageId);
         ?>
         <div class="form-group">

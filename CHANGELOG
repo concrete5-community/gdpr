@@ -1,3 +1,7 @@
+1.0.3
+- Add foreign key to the block type in the GdprBlockScanStatus table.
+- Make sure entries are removed when a block type is removed.
+
 1.0.2
 - Make it possible to change the 'status' of blocks on a page. (Blocks scan)
 

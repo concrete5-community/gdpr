@@ -24,8 +24,10 @@ class Blocks extends AjaxController
         return $this->app->make(ResponseFactory::class)->json($json);
     }
 
-    public function status($blockType = null, $pageId = null)
+    public function status($blockTypeHandle = null, $pageId = null)
     {
+        $blockType = BlockType::getByHandle($blockTypeHandle);
+
         /** @var StatusRepository $statusRepository */
         $statusRepository = $this->app->make(StatusRepository::class);
 
@@ -38,7 +40,7 @@ class Blocks extends AjaxController
             'action' => Url::to('/ccm/system/gdpr/scan/block/save'),
             'token' => $this->app->make('token'),
             'form' => $this->app->make('helper/form'),
-            'blockTypeHandle' => $blockType,
+            'blockType' => $blockType,
             'pageId' => $pageId,
             'status' => $status,
         ]);
@@ -52,6 +54,8 @@ class Blocks extends AjaxController
             throw new Exception(t('Invalid form token'));
         }
 
+        $blockType = BlockType::getByID($this->post('btId'));
+
         /** @var StatusRepository $statusRepository */
         $statusRepository = $this->app->make(StatusRepository::class);
 
@@ -62,7 +66,7 @@ class Blocks extends AjaxController
             }
         } else {
             $status = new BlockScanStatus();
-            $status->setBlockTypeHandle($this->post('blockTypeHandle'));
+            $status->setBlockType($blockType);
             $status->setPageId($this->post('pageId'));
         }
 
@@ -73,7 +77,7 @@ class Blocks extends AjaxController
         $statusRepository->save($status);
 
         $statusRepository->updateFixedOnAllPages(
-            $this->post('blockTypeHandle'),
+            $blockType,
             $this->post('fixedOnAllPages')
         );
 
@@ -108,7 +112,7 @@ class Blocks extends AjaxController
                 continue;
             }
 
-            $blockTypeFixed = $statusRepository->isBlockTypeFixed($blockType->getBlockTypeHandle());
+            $blockTypeFixed = $statusRepository->isBlockTypeFixed($blockType);
 
             foreach ($this->getPagesWhereBlockIsUsed($blockType->getBlockTypeID()) as $page) {
                 $records[] = [
@@ -121,7 +125,7 @@ class Blocks extends AjaxController
                     'block_icon' => $this->getBlockTypeIcon($blockType),
                     'is_core_block' => $isCoreBlock,
                     'why' => $why,
-                    'fixed' => $blockTypeFixed ? $blockTypeFixed : $statusRepository->isBlockTypeFixedOnPage($blockType->getBlockTypeHandle(), $page->getCollectionID()),
+                    'fixed' => $blockTypeFixed ? $blockTypeFixed : $statusRepository->isBlockTypeFixedOnPage($blockType, $page->getCollectionID()),
                 ];
             }
         }
