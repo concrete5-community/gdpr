@@ -41,6 +41,13 @@ return [
             'Pages' => [
                 'info' => t('Records are deleted in the %s class.', 'UserInfo'),
             ],
+
+            'Users' => [
+                'info' => t('Records are deleted in the %s class by deleting the User entity.', 'UserInfo'),
+            ],
+            'Files' => [
+                'info' => t('The uID will be set to NULL when a user is deleted. See the %s class. Use the Orphaned Files tool to reassign or delete those files.', 'File Entity'),
+            ],
         ],
     ],
 ];

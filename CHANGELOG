@@ -1,3 +1,8 @@
+1.0.6
+- Make sure the 'Users' table is marked as compliant because when a user is deleted, the
+associated entity will be removed (which is stored in the Users table).
+- Mark the 'Files' table as compliant, as the uID will be set to NULL when a user is deleted.
+
 1.0.5
 - Make it possible to change the 'status' of tables. (Tables scan)
 - Add option to ignore / hide tables that have been marked as GDPR compliant. (Tables scan)
