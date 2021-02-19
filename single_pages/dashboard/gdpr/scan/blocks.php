@@ -151,7 +151,10 @@ $(document).ready(function() {
                 }
             }
         ],
-        order: [[ 4, "asc" ]]
+        order: [[ 4, "asc" ]],
+        language: {
+            emptyTable: '<?php echo t('No blocks have been found that meet the current search criteria.') ?>'
+        }
     });
 
     DataTableElement.on('click', '[data-dialog]', function() {

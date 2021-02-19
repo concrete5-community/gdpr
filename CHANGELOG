@@ -1,3 +1,7 @@
+1.4.1
+- Improve warning when no blocks, packages, or database tables have been found in a scan.
+- Change the 'opt-in' cookie consent: display 'Decline' and 'Allow' buttons instead of 'Dismiss' and 'Allow' buttons.
+
 1.4.0
 - Add 'Data Transfer' page.
 - Add 'Data Transfer > Requests' page.

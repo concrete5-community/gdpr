@@ -90,5 +90,16 @@ class Configuration
         if (!empty($readMoreLinkText)) {
             $this->configuration->set('configuration.content.link', tc('CookieBar', $readMoreLinkText));
         }
+
+        $this->configuration->set('configuration.compliance', $this->getCompliance());
+    }
+
+    private function getCompliance()
+    {
+        return [
+            'info' => '<div class="cc-compliance">{{dismiss}}</div>',
+            'opt-in' => '<div class="cc-compliance cc-highlight">{{deny}}{{allow}}</div>',
+            'opt-out' => '<div class="cc-compliance cc-highlight">{{deny}}{{dismiss}}</div>',
+        ];
     }
 }

@@ -81,7 +81,10 @@ $(document).ready(function() {
                 data: "why"
             }
         ],
-        order: [[ 1, "asc" ]]
+        order: [[ 1, "asc" ]],
+        language: {
+            emptyTable: '<?php echo t('No packages have been found that meet the current search criteria.') ?>'
+        }
     });
 });
 </script>

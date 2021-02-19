@@ -6,8 +6,5 @@ use A3020\Gdpr\Controller\DashboardController;
 
 final class Requests extends DashboardController
 {
-    public function view()
-    {
-
-    }
+    /** @see \A3020\Gdpr\Ajax\DataTransfer\Requests */
 }

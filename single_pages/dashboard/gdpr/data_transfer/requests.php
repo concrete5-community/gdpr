@@ -35,8 +35,8 @@ $(document).ready(function() {
     var DataTable = DataTableElement.DataTable({
         ajax: '<?php echo Url::to('/ccm/system/gdpr/data_transfer/requests') ?>',
         lengthMenu: [[15, 40, 80, -1], [15, 40, 80, '<?php echo t('All') ?>']],
-        "language": {
-            "emptyTable": '<?php echo t('There are no data transfer requests.') ?>'
+        language: {
+            emptyTable: '<?php echo t('There are no data transfer requests.') ?>'
         }
     });
 });

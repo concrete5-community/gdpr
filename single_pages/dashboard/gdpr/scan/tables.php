@@ -165,7 +165,10 @@ $(document).ready(function() {
                 }
             }
         ],
-        order: [[ 3, "asc" ]]
+        order: [[ 3, "asc" ]],
+        language: {
+            emptyTable: '<?php echo t('No database tables have been found that meet the current search criteria.') ?>'
+        }
     });
 
     DataTableElement.on('click', '[data-dialog="preview"]', function() {

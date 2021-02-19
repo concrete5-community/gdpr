@@ -52,13 +52,13 @@ class Installer
             '/dashboard/gdpr/cleanup/express_forms' => t('Express Forms'),
             '/dashboard/gdpr/cleanup/orphaned_files' => t('Orphaned Files'),
             '/dashboard/gdpr/cleanup/logs' => t('Logs'),
-            '/dashboard/gdpr/checklist' => t('Checklist'),
             '/dashboard/gdpr/data_transfer' => t('Data Transfer'),
             '/dashboard/gdpr/data_transfer/requests' => t('Requests'),
             '/dashboard/gdpr/data_breach' => t('Data Breach'),
             '/dashboard/gdpr/data_breach/notify_users' => t('Notify Users'),
             '/dashboard/gdpr/cookies' => t('Cookies'),
             '/dashboard/gdpr/cookies/consent' => t('Consent'),
+            '/dashboard/gdpr/checklist' => t('Checklist'),
             '/dashboard/gdpr/settings' => t('Settings'),
         ];
 

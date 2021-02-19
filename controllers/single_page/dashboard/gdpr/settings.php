@@ -4,7 +4,6 @@ namespace Concrete\Package\Gdpr\Controller\SinglePage\Dashboard\Gdpr;
 
 use A3020\Gdpr\Controller\DashboardController;
 use A3020\Gdpr\Tracking\Code;
-use Concrete\Core\Config\Repository\Repository;
 use Concrete\Core\Routing\Redirect;
 
 final class Settings extends DashboardController
