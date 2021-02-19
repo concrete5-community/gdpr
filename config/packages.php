@@ -33,5 +33,6 @@ return [
         'ec_recaptcha' => t('Because it loads external code from %s.', 'Google'),
         'msv_location_map' => t('Because it loads external code from %s.', 'Google'),
         'hw_store_location' => t('Because it loads external code from %s.', 'Google'),
+        'blog_comments' => t('Because it stores user data.'),
     ],
 ];

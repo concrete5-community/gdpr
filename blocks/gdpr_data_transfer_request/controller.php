@@ -50,15 +50,10 @@ class Controller extends BlockController
         return t('Triggers an event that creates a Data Transfer Request for the current user.');
     }
 
-    public function view()
-    {
-
-    }
-
     public function action_submit($bId = false)
     {
         $user = new User();
-        if (!$user->isLoggedIn()){
+        if (!$user->isRegistered()){
             return $this->view();
         }
 
@@ -87,7 +82,7 @@ class Controller extends BlockController
      */
     private function hasPendingRequest(User $user)
     {
-        if (!$user->isLoggedIn()){
+        if (!$user->isRegistered()){
             return false;
         }
 

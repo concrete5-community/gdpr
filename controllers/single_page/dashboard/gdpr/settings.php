@@ -4,7 +4,6 @@ namespace Concrete\Package\Gdpr\Controller\SinglePage\Dashboard\Gdpr;
 
 use A3020\Gdpr\Controller\DashboardController;
 use A3020\Gdpr\Tracking\Code;
-use Concrete\Core\Routing\Redirect;
 
 final class Settings extends DashboardController
 {
@@ -33,7 +32,7 @@ final class Settings extends DashboardController
         if (!$this->token->validate('a3020.gdpr.settings')) {
             $this->flash('error', $this->token->getErrorMessage());
 
-            return Redirect::to('/dashboard/gdpr/settings');
+            return $this->action('/dashboard/gdpr/settings');
         }
 
         // User logs
@@ -59,7 +58,7 @@ final class Settings extends DashboardController
 
         $this->flash('success', t('Your settings have been saved.'));
 
-        return Redirect::to('/dashboard/gdpr/settings');
+        return $this->action('/dashboard/gdpr/settings');
     }
 
     private function hasTrackingCode()

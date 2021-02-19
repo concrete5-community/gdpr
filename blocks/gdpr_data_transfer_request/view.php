@@ -7,7 +7,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
 /** @var Concrete\Core\Validation\CSRF\Token $token */
 /** @var Concrete\Core\Error\ErrorList\ErrorList $errors */
 
-if (!$user->isLoggedIn()) {
+if (!$user->isRegistered()) {
     return;
 }
 ?>

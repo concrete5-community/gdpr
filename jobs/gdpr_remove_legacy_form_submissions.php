@@ -6,6 +6,7 @@ use A3020\Gdpr\Form\Legacy\DeleteFormEntries;
 use Concrete\Core\Config\Repository\Repository;
 use Concrete\Core\Job\Job;
 use Concrete\Core\Support\Facade\Application;
+use Concrete\Core\Support\Facade\Log;
 use DateTime;
 use Throwable;
 
@@ -30,7 +31,7 @@ final class GdprRemoveLegacyFormSubmissions extends Job
             $helper = $app->make(DeleteFormEntries::class);
             $deletedSubmissions = $helper->delete($this->getOptions());
         } catch (Throwable $e) {
-            \Log::addError($e->getMessage());
+            Log::error($e->getMessage());
 
             return t('Something went wrong. Please check the Logs.');
         }

@@ -5,7 +5,6 @@ namespace Concrete\Package\Gdpr\Controller\SinglePage\Dashboard\Gdpr\DataTransfe
 use A3020\Gdpr\BlockType\BlockTypeInstallService;
 use A3020\Gdpr\Controller\DashboardController;
 use A3020\Gdpr\Job\JobInstallService;
-use Concrete\Core\Routing\Redirect;
 
 final class Settings extends DashboardController
 {
@@ -37,7 +36,7 @@ final class Settings extends DashboardController
         if (!$this->token->validate('a3020.gdpr.data_transfer.settings')) {
             $this->flash('error', $this->token->getErrorMessage());
 
-            return Redirect::to('/dashboard/gdpr/data_transfer/settings');
+            return $this->action('/dashboard/gdpr/data_transfer/settings');
         }
 
         $this->config->save('gdpr.settings.data_transfer.days_valid', (int) $this->post('dataTransferDownloadDaysValid'));
@@ -49,6 +48,6 @@ final class Settings extends DashboardController
 
         $this->flash('success', t('Your settings have been saved.'));
 
-        return Redirect::to('/dashboard/gdpr/data_transfer/settings');
+        return $this->action('/dashboard/gdpr/data_transfer/settings');
     }
 }

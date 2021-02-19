@@ -1,3 +1,9 @@
+1.8.0
+- Add compatibility changes for 8.5.x due to changes in the Logger.
+- Change minimum version required to 8.4.4 to make it easier to apply changes without risking backward compatibility issues.
+- Add remark about storing form submissions on cleanup page.
+- Various code improvements (changing deprecated calls, replacing facades, etc).
+
 1.7.2
 - When a user is deleted, associated logs might also be deleted. This version fixes 3 queries in that event.
 - Use Filesystem class to 'unlink' a file, to fix linter error.

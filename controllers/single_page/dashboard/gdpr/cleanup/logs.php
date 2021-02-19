@@ -5,7 +5,6 @@ namespace Concrete\Package\Gdpr\Controller\SinglePage\Dashboard\Gdpr\Cleanup;
 use A3020\Gdpr\Controller\DashboardController;
 use Concrete\Core\Database\Connection\Connection;
 use Concrete\Core\Logging\LogEntry;
-use Concrete\Core\Routing\Redirect;
 
 final class Logs extends DashboardController
 {
@@ -27,7 +26,7 @@ final class Logs extends DashboardController
         if (!$this->token->validate('a3020.gdpr.cleanup.logs')) {
             $this->flash('error', $this->token->getErrorMessage());
 
-            return Redirect::to('/dashboard/gdpr/cleanup/logs');
+            return $this->action('/dashboard/gdpr/cleanup/logs');
         }
 
         $this->config->save('gdpr.cleanup.logs.block_express_form_submissions', (bool ) $this->post('blockExpressFormSubmissions'));
@@ -35,7 +34,7 @@ final class Logs extends DashboardController
         $this->config->save('gdpr.cleanup.logs.deleted_users', (bool ) $this->post('deletedUsers'));
         $this->config->save('gdpr.cleanup.logs.at_symbol', (bool ) $this->post('atSymbol'));
 
-        return Redirect::to('/dashboard/gdpr/cleanup/logs');
+        return $this->action('/dashboard/gdpr/cleanup/logs');
     }
 
     public function bulk()
@@ -43,7 +42,7 @@ final class Logs extends DashboardController
         if (!$this->token->validate('gdpr.cleanup.logs.bulk')) {
             $this->flash('error', $this->token->getErrorMessage());
 
-            return Redirect::to('/dashboard/gdpr/cleanup/logs');
+            return $this->action('/dashboard/gdpr/cleanup/logs');
         }
 
         if ($this->post('action') === 'delete' && !empty($this->post('logs', []))) {
@@ -52,7 +51,7 @@ final class Logs extends DashboardController
             $this->deleteLogs($this->post('logs', []));
         }
 
-        return Redirect::to('/dashboard/gdpr/cleanup/logs');
+        return $this->action('/dashboard/gdpr/cleanup/logs');
     }
 
     /**

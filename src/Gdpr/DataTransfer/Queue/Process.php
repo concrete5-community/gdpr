@@ -38,7 +38,7 @@ class Process implements ApplicationAwareInterface
             $this->processRequest($body['id']);
         } catch (Throwable $e) {
             $logger = $this->app->make('log');
-            $logger->addDebug($e->getMessage() . $e->getFile() . $e->getLine() . $e->getTraceAsString());
+            $logger->debug($e->getMessage() . $e->getFile() . $e->getLine() . $e->getTraceAsString());
 
             throw new Exception(t('An error occurred during processing. Please check the Logs.'));
         }

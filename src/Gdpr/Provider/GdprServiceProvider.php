@@ -5,7 +5,6 @@ namespace A3020\Gdpr\Provider;
 use Concrete\Core\Application\ApplicationAwareInterface;
 use Concrete\Core\Application\ApplicationAwareTrait;
 use Concrete\Core\Config\Repository\Repository;
-use Concrete\Core\Http\ResponseFactoryInterface;
 use Concrete\Core\Routing\Redirect;
 use Concrete\Core\Routing\RouterInterface;
 

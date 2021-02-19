@@ -4,7 +4,6 @@ namespace Concrete\Package\Gdpr\Controller\SinglePage\Dashboard\Gdpr\DataBreach;
 
 use A3020\Gdpr\Controller\DashboardController;
 use Concrete\Core\Database\Connection\Connection;
-use Concrete\Core\Routing\Redirect;
 use Concrete\Core\User\Group\Group;
 use Concrete\Core\User\Group\GroupList;
 use Exception;
@@ -29,7 +28,7 @@ final class NotifyUsers extends DashboardController
         $group = Group::getByID($this->post('user_group'));
         if (!$group) {
             $this->flash('error', t('Invalid user group'));
-            return Redirect::to('/dashboard/gdpr/data_breach/notify_users');
+            return $this->action('/dashboard/gdpr/data_breach/notify_users');
         }
 
         try {
@@ -53,7 +52,7 @@ final class NotifyUsers extends DashboardController
             $group->getGroupMembersNum()
         ));
 
-        return Redirect::to('/dashboard/gdpr/data_breach/notify_users/sent');
+        return $this->action('/dashboard/gdpr/data_breach/notify_users/sent');
     }
 
     public function sent()

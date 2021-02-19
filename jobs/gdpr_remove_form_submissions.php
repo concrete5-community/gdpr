@@ -6,6 +6,8 @@ use A3020\Gdpr\Form\Express\DeleteFormEntries;
 use Concrete\Core\Config\Repository\Repository;
 use Concrete\Core\Job\Job;
 use Concrete\Core\Support\Facade\Application;
+use Concrete\Core\Support\Facade\Log;
+use DateInterval;
 use DateTime;
 use Throwable;
 
@@ -30,7 +32,7 @@ final class GdprRemoveFormSubmissions extends Job
             $helper = $app->make(DeleteFormEntries::class);
             $deletedSubmissions = $helper->delete($this->getOptions());
         } catch (Throwable $e) {
-            \Log::addError($e->getMessage());
+            Log::error($e->getMessage());
 
             return t('Something went wrong. Please check the Logs.');
         }
@@ -52,7 +54,7 @@ final class GdprRemoveFormSubmissions extends Job
         $now = new DateTime();
 
         return [
-            'created_before' => $now->sub(new \DateInterval('P'.$keepDays.'D')),
+            'created_before' => $now->sub(new DateInterval('P'.$keepDays.'D')),
             'delete_files' => (bool) $config->get('gdpr.settings.express_forms.delete_files', false),
         ];
     }

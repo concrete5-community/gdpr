@@ -4,7 +4,6 @@ namespace Concrete\Package\Gdpr\Controller\SinglePage\Dashboard\Gdpr\Scan;
 
 use A3020\Gdpr\Controller\DashboardController;
 use A3020\Gdpr\Form\Helper;
-use Concrete\Core\Routing\Redirect;
 
 final class Tables extends DashboardController
 {
@@ -24,7 +23,7 @@ final class Tables extends DashboardController
         if (!$this->token->validate('a3020.gdpr.scan.tables')) {
             $this->flash('error', $this->token->getErrorMessage());
 
-            return Redirect::to('/dashboard/gdpr/scan/tables');
+            return $this->action('/dashboard/gdpr/scan/tables');
         }
 
         /** @var Helper $helper */
@@ -35,6 +34,6 @@ final class Tables extends DashboardController
         $this->config->save('gdpr.scan.tables.ignore_core_tables', (bool ) $this->post('ignoreCoreTables'));
         $this->config->save('gdpr.scan.tables.custom', $helper->convertTextArea($this->post('customTableColumns')));
 
-        return Redirect::to('/dashboard/gdpr/scan/tables');
+        return $this->action('/dashboard/gdpr/scan/tables');
     }
 }

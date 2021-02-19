@@ -9,6 +9,7 @@ use Concrete\Core\Application\ApplicationAwareInterface;
 use Concrete\Core\Application\ApplicationAwareTrait;
 use Concrete\Core\File\Service\File;
 use Concrete\Core\Http\ResponseFactory;
+use Concrete\Core\Support\Facade\Log;
 use Exception;
 
 class Download extends \Concrete\Core\Controller\Controller implements ApplicationAwareInterface
@@ -63,7 +64,7 @@ class Download extends \Concrete\Core\Controller\Controller implements Applicati
         try {
             $this->fileRepository->markAsDownloaded($dataTransferFile);
         } catch (Exception $e) {
-            \Log::addError($e->getMessage());
+            Log::error($e->getMessage());
         }
 
         $this->fileService->forceDownload($file);

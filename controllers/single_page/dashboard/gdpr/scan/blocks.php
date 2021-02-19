@@ -4,7 +4,6 @@ namespace Concrete\Package\Gdpr\Controller\SinglePage\Dashboard\Gdpr\Scan;
 
 use A3020\Gdpr\Controller\DashboardController;
 use A3020\Gdpr\Form\Helper;
-use Concrete\Core\Routing\Redirect;
 
 final class Blocks extends DashboardController
 {
@@ -22,7 +21,7 @@ final class Blocks extends DashboardController
         if (!$this->token->validate('a3020.gdpr.scan.blocks')) {
             $this->flash('error', $this->token->getErrorMessage());
 
-            return Redirect::to('/dashboard/gdpr/scan/blocks');
+            return $this->action('/dashboard/gdpr/scan/blocks');
         }
 
         /** @var Helper $helper */
@@ -32,6 +31,6 @@ final class Blocks extends DashboardController
         $this->config->save('gdpr.scan.block_types.ignore_core_blocks', (bool ) $this->post('ignoreCoreBlocks'));
         $this->config->save('gdpr.scan.block_types.custom', $helper->convertTextArea($this->post('customBlockTypes')));
 
-        return Redirect::to('/dashboard/gdpr/scan/blocks');
+        return $this->action('/dashboard/gdpr/scan/blocks');
     }
 }

@@ -17,8 +17,6 @@
     "description": "E.g. linked to from the footer",
     "category": "Privacy Policy"
   },
-
-
   {
     "handle": "custom_code_users_download_data",
     "name": "Users can easily download their data",
@@ -79,7 +77,6 @@
     "description": "",
     "category": "User Data"
   },
-
   {
     "handle": "consent_cookies",
     "name": "Visitors are asked before placing any cookies",
@@ -98,8 +95,6 @@
     "description": "",
     "category": "Consents"
   },
-
-
   {
     "handle": "third_parties_contracts",
     "name": "There is a contract with all data processors",
@@ -112,8 +107,6 @@
     "description": "",
     "category": "Third Parties"
   },
-
-
   {
     "handle": "security_ssl",
     "name": "A secured connection is used to access the website",

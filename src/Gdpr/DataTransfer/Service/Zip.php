@@ -6,6 +6,7 @@ use Concrete\Core\Application\ApplicationAwareInterface;
 use Concrete\Core\Application\ApplicationAwareTrait;
 use Concrete\Core\Utility\Service\Identifier;
 use Illuminate\Filesystem\Filesystem;
+use Psr\Log\LoggerInterface;
 
 class Zip implements ApplicationAwareInterface
 {
@@ -20,16 +21,18 @@ class Zip implements ApplicationAwareInterface
      * @var \Concrete\Core\File\Service\Zip
      */
     private $coreZipService;
+
     /**
-     * @var \Concrete\Core\Logging\Logger
+     * @var \Psr\Log\LoggerInterface
      */
     private $logger;
+
     /**
      * @var Identifier
      */
     private $identifier;
 
-    public function __construct(Filesystem $filesystem, \Concrete\Core\File\Service\Zip $coreZipService, \Concrete\Core\Logging\Logger $logger, Identifier $identifier)
+    public function __construct(Filesystem $filesystem, \Concrete\Core\File\Service\Zip $coreZipService, LoggerInterface $logger, Identifier $identifier)
     {
         $this->filesystem = $filesystem;
         $this->coreZipService = $coreZipService;
@@ -72,7 +75,7 @@ class Zip implements ApplicationAwareInterface
             foreach ($files as $file) {
                 $targetDirectory = $sourceDirectory.'/files/';
                 if (!$this->copy($file['path'], $targetDirectory, basename($file['path']))) {
-                    $this->logger->addError(t("Couldn't copy file from %s to %s.", $file['path'], $targetDirectory));
+                    $this->logger->error(t("Couldn't copy file from %s to %s.", $file['path'], $targetDirectory));
                 }
             }
         }

@@ -7,7 +7,7 @@ use A3020\Gdpr\Form\Express\DeleteFormEntries;
 use A3020\Gdpr\Form\Express\ExpressFormHelper;
 use A3020\Gdpr\Job\JobInstallService;
 use Concrete\Core\Express\EntryList;
-use Concrete\Core\Routing\Redirect;
+use Concrete\Core\Support\Facade\Log;
 use Concrete\Core\Tree\Node\Type\ExpressEntryCategory;
 use Exception;
 
@@ -31,7 +31,7 @@ final class ExpressForms extends DashboardController
             // Express is likely to fail, so we'll catch and log errors
             $formInformation = $this->getFormInformation();
         } catch (Exception $e) {
-            \Log::addError($e->getMessage());
+            Log::error($e->getMessage());
         }
 
         $this->set('formInformation', $formInformation);
@@ -45,7 +45,7 @@ final class ExpressForms extends DashboardController
         if (!$this->token->validate('a3020.gdpr.cleanup.express_forms.settings')) {
             $this->flash('error', $this->token->getErrorMessage());
 
-            return Redirect::to('/dashboard/gdpr/cleanup/express_forms');
+            return $this->action('/dashboard/gdpr/cleanup/express_forms');
         }
 
         $this->jobInstallService->installOrDeinstall('gdpr_remove_form_submissions', $this->post('enableJobToRemoveFormSubmissions'));
@@ -56,7 +56,7 @@ final class ExpressForms extends DashboardController
 
         $this->flash('success', t('Your settings have been saved.'));
 
-        return Redirect::to('/dashboard/gdpr/cleanup/express_forms');
+        return $this->action('/dashboard/gdpr/cleanup/express_forms');
     }
 
     /**
@@ -72,7 +72,7 @@ final class ExpressForms extends DashboardController
         if (!$this->token->validate('gdpr.cleanup.express_forms.delete', $token)) {
             $this->flash('error', $this->token->getErrorMessage());
 
-            return Redirect::to('/dashboard/gdpr/cleanup/express_forms');
+            return $this->action('/dashboard/gdpr/cleanup/express_forms');
         }
 
         try {
@@ -82,23 +82,23 @@ final class ExpressForms extends DashboardController
             if (!$node || !$node instanceof \Concrete\Core\Tree\Node\Type\ExpressEntryResults) {
                 $this->flash('error', t("This Express Entity doesn't exist (anymore)."));
 
-                return Redirect::to('/dashboard/gdpr/cleanup/express_forms');
+                return $this->action('/dashboard/gdpr/cleanup/express_forms');
             }
 
             /** @var DeleteFormEntries $deleteFormEntries */
             $deleteFormEntries = $this->app->make(DeleteFormEntries::class);
             $deleteFormEntries->deleteByNode($node, $this->getOptions());
         } catch (Exception $e) {
-            \Log::addError($e->getMessage());
+            Log::error($e->getMessage());
 
             $this->flash('error', t("Something went wrong. Please check the Logs."));
 
-            return Redirect::to('/dashboard/gdpr/cleanup/express_forms');
+            return $this->action('/dashboard/gdpr/cleanup/express_forms');
         }
 
         $this->flash('success', t("All form submissions have been removed."));
 
-        return Redirect::to('/dashboard/gdpr/cleanup/express_forms');
+        return $this->action('/dashboard/gdpr/cleanup/express_forms');
     }
 
     /**

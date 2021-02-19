@@ -4,9 +4,9 @@ namespace A3020\Gdpr\Listener\OnUserDelete;
 
 use A3020\Gdpr\DataTransfer\File\FileRepository;
 use A3020\Gdpr\Entity\DataTransferFile;
-use Concrete\Core\Logging\Logger;
 use Exception;
 use Illuminate\Filesystem\Filesystem;
+use Psr\Log\LoggerInterface;
 
 class DeleteDataTransferFiles
 {
@@ -16,7 +16,7 @@ class DeleteDataTransferFiles
     private $fileRepository;
 
     /**
-     * @var Logger
+     * @var \Psr\Log\LoggerInterface
      */
     private $logger;
 
@@ -25,7 +25,7 @@ class DeleteDataTransferFiles
      */
     protected $fileSystem;
 
-    public function __construct(FileRepository $fileRepository, Logger $logger, Filesystem $fileSystem)
+    public function __construct(FileRepository $fileRepository, LoggerInterface $logger, Filesystem $fileSystem)
     {
         $this->fileRepository = $fileRepository;
         $this->logger = $logger;
@@ -51,7 +51,7 @@ class DeleteDataTransferFiles
                 $this->deleteFile($dataTransferFile);
             }
         } catch (Exception $e) {
-            $this->logger->addDebug($e->getMessage());
+            $this->logger->debug($e->getMessage());
         }
     }
 

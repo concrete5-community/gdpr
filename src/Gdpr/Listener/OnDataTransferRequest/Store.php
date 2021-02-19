@@ -5,22 +5,22 @@ namespace A3020\Gdpr\Listener\OnDataTransferRequest;
 use A3020\Gdpr\DataTransfer\RequestRepository;
 use A3020\Gdpr\Entity\DataTransferRequest;
 use A3020\Gdpr\Event\DataTransferRequest as DataTransferRequestEvent;
-use Concrete\Core\Logging\Logger;
+use Psr\Log\LoggerInterface;
 use Throwable;
 
 class Store
 {
     /**
-     * @var RequestRepository
+     * @var \A3020\Gdpr\DataTransfer\RequestRepository
      */
     private $requestRepository;
 
     /**
-     * @var Logger
+     * @var \Psr\Log\LoggerInterface
      */
     private $logger;
 
-    public function __construct(RequestRepository $requestRepository, Logger $logger)
+    public function __construct(RequestRepository $requestRepository, LoggerInterface $logger)
     {
         $this->requestRepository = $requestRepository;
         $this->logger = $logger;
@@ -46,7 +46,7 @@ class Store
             $this->requestRepository->save($dataTransferRequest);
             $this->requestRepository->flush();
         } catch (Throwable $e) {
-            $this->logger->addError($e->getMessage());
+            $this->logger->error($e->getMessage());
         }
     }
 }

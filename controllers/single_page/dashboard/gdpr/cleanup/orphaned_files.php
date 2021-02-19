@@ -5,7 +5,6 @@ namespace Concrete\Package\Gdpr\Controller\SinglePage\Dashboard\Gdpr\Cleanup;
 use A3020\Gdpr\Controller\DashboardController;
 use Concrete\Core\File\File;
 use Concrete\Core\File\FileList;
-use Concrete\Core\Routing\Redirect;
 use Concrete\Core\User\User;
 
 final class OrphanedFiles extends DashboardController
@@ -23,7 +22,7 @@ final class OrphanedFiles extends DashboardController
         if (!$this->token->validate('gdpr.cleanup.orphaned_files.bulk')) {
             $this->flash('error', $this->token->getErrorMessage());
 
-            return Redirect::to('/dashboard/gdpr/cleanup/orphaned_files');
+            return $this->action('/dashboard/gdpr/cleanup/orphaned_files');
         }
 
         if ($this->post('action') === 'delete') {
@@ -38,7 +37,7 @@ final class OrphanedFiles extends DashboardController
             $this->reassignFiles($this->post('files', []));
         }
 
-        return Redirect::to('/dashboard/gdpr/cleanup/orphaned_files');
+        return $this->action('/dashboard/gdpr/cleanup/orphaned_files');
     }
 
     /**

@@ -36,7 +36,7 @@ $app->make('help')->display(
 
             <div class="form-group">
                 <label class="control-label launch-tooltip"
-                       title="<?php echo t("Form submissions are always stored. To remove form submissions automatically, you can run and schedule the job via Automated Tasks. If you uncheck this option, the job will be uninstalled.") ?>"
+                       title="<?php echo t("Form submissions may be stored in the database. To remove form submissions automatically, you can run and schedule the job via Automated Tasks. If you uncheck this option, the job will be uninstalled.") ?>"
                        for="enableJobToRemoveFormSubmissions">
                     <?php
                     /** @var bool $enableJobToRemoveFormSubmissions */
@@ -44,6 +44,7 @@ $app->make('help')->display(
                     ?>
                     <?php echo t('Enable an Automated Job that could remove Express Form submissions'); ?>
                 </label>
+                <span class="help-block"><?php echo t('Please note that storing form submissions <a href="%s" target="_blank">can be disabled</a> in concrete5 8.4.4+.', 'https://github.com/concrete5/concrete5/pull/6746') ?></span>
             </div>
 
             <div class="form-group <?php echo $enableJobToRemoveFormSubmissions ? '' : 'hide' ?> express-form-toggle">

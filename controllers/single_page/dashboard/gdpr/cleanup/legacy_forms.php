@@ -5,7 +5,6 @@ namespace Concrete\Package\Gdpr\Controller\SinglePage\Dashboard\Gdpr\Cleanup;
 use A3020\Gdpr\Controller\DashboardController;
 use A3020\Gdpr\Job\JobInstallService;
 use Concrete\Core\Database\Connection\Connection;
-use Concrete\Core\Routing\Redirect;
 
 final class LegacyForms extends DashboardController
 {
@@ -31,7 +30,7 @@ final class LegacyForms extends DashboardController
         if (!$this->token->validate('a3020.gdpr.cleanup.legacy_forms.settings')) {
             $this->flash('error', $this->token->getErrorMessage());
 
-            return Redirect::to('/dashboard/gdpr/cleanup/legacy_forms');
+            return $this->action('/dashboard/gdpr/cleanup/legacy_forms');
         }
 
         $this->jobInstallService->installOrDeinstall('gdpr_remove_legacy_form_submissions', $this->post('enableJobToRemoveLegacyFormSubmissions'));
@@ -41,7 +40,7 @@ final class LegacyForms extends DashboardController
 
         $this->flash('success', t('Your settings have been saved.'));
 
-        return Redirect::to('/dashboard/gdpr/cleanup/legacy_forms');
+        return $this->action('/dashboard/gdpr/cleanup/legacy_forms');
     }
 
     /**

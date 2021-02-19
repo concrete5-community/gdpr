@@ -12,8 +12,8 @@ use Gettext\Translations;
 final class Controller extends Package
 {
     protected $pkgHandle = 'gdpr';
-    protected $appVersionRequired = '8.2.1';
-    protected $pkgVersion = '1.7.2';
+    protected $appVersionRequired = '8.4.4';
+    protected $pkgVersion = '1.8.0';
     protected $pkgAutoloaderRegistries = [
         'src/Gdpr' => '\A3020\Gdpr',
     ];

@@ -4,27 +4,27 @@ namespace A3020\Gdpr\Listener\OnUserDelete;
 
 use Concrete\Core\Config\Repository\Repository;
 use Concrete\Core\Database\Connection\Connection;
-use Concrete\Core\Logging\Logger;
+use Psr\Log\LoggerInterface;
 use Exception;
 
 class DeleteLogs
 {
     /**
-     * @var Connection
+     * @var \Concrete\Core\Database\Connection\Connection
      */
     private $db;
 
     /**
-     * @var Repository
+     * @var \Concrete\Core\Config\Repository\Repository
      */
     private $config;
 
     /**
-     * @var Logger
+     * @var \Psr\Log\LoggerInterface
      */
     private $logger;
 
-    public function __construct(Connection $db, Repository $config, Logger $logger)
+    public function __construct(Connection $db, Repository $config, LoggerInterface $logger)
     {
         $this->db = $db;
         $this->config = $config;
@@ -53,7 +53,7 @@ class DeleteLogs
                 $this->deleteBasedOnEmailAddress($ui->getUserEmail());
             }
         } catch (Exception $e) {
-            $this->logger->addDebug($e->getMessage());
+            $this->logger->debug($e->getMessage());
         }
     }
 
