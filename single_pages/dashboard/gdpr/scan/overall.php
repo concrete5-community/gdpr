@@ -131,18 +131,18 @@ $app->make('help')->display(
     ?>
 
     <?php
-    // TRACKING CODE CONFIGURED?
-    /** @var bool $hasTrackingCode */
-    $trackingCodeDisabled = (bool) $config->get('gdpr.settings.tracking.disabled', false);
-    if ($hasTrackingCode && !$trackingCodeDisabled) {
+    $mailMethod = $config->get('concrete.mail.method');
+    if ($mailMethod === 'smtp') {
+        $smtpServer = $config->get('concrete.mail.methods.smtp.server');
         ?>
         <div class="alert alert-warning">
             <p>
                 <i class="fa fa-warning"></i>
                 <?php
-                echo t("A tracking code is configured. You might need user consent before using tools like %s.", "Google Analytics").' ';
-                echo t("To view the tracking code(s), go to %sTracking Codes%s.", '<a href="'.Url::to('/dashboard/system/seo/codes').'">', '</a>').'<br>';
-                echo t("To temporarily disable tracking codes, go to %sSettings%s.", '<a href="'.Url::to('/dashboard/gdpr/settings').'">', '</a>').' ';
+                echo t("A non-default SMTP server is detected: (%s). Please check if data is sent to e.g. %s, %s, or %s. You might need an agreement with this service.",
+                    $smtpServer, "Mailgun", "SparkPost", "Sendgrid").'<br>'.
+                    t("To view the current settings, go to %sSMTP method%s.",
+                    '<a href="'.Url::to('/dashboard/system/mail/method').'">', '</a>');
                 ?>
             </p>
         </div>
@@ -152,11 +152,42 @@ $app->make('help')->display(
         <div class="alert alert-success">
             <i class="fa fa-check"></i>
             <?php
-            if ($hasTrackingCode === false) {
-                echo t('No tracking code is configured.');
-            } else {
-                echo t('The tracking code is disabled.');
-            }
+            echo t('The default PHP Mail Function is used.');
+            ?>
+        </div>
+        <?php
+    }
+    ?>
+
+    <?php
+    /** @var bool|null $geoPluginStatus */
+    if ($geoPluginStatus === true) {
+        ?>
+        <div class="alert alert-warning">
+            <p>
+                <i class="fa fa-warning"></i>
+                <?php
+                echo t("It seems that the %s geo locator is active and may be used. Please note that this service can send IP addresses to the %s server.",
+                        t('geoPlugin'), "MaxMind"
+                    ).' '.
+
+                    t("A good alternative might be to download the %s database using the free %sGeolocation with MaxMind GeoIP2%s package.",
+                        'MaxMind', '<a href="https://www.concrete5.org/marketplace/addons/maxmind-geoip2-geolocator" target="_blank">', '</a>'
+                    ).' '.
+
+                    t("To review the settings, go to the %sGeolocation page%s.",
+                        '<a href="'.Url::to('/dashboard/system/environment/geolocation').'">', '</a>'
+                    );
+                ?>
+            </p>
+        </div>
+        <?php
+    } else {
+        ?>
+        <div class="alert alert-success">
+            <i class="fa fa-check"></i>
+            <?php
+            echo ($geoPluginStatus === null) ? t('No geolocation service seems to be active.') : t('The geoPlugin is not active.');
             ?>
         </div>
         <?php

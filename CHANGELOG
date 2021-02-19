@@ -1,3 +1,9 @@
+1.0.1
+- Scan for non-default mail method as mails may be sent to an external mail server (e.g. Sendgrid).
+- Scan for geoPlugin geo locator as it can send IP addresses to MaxMind.
+- Add Bugsnag, Auto login, Mollie, Amazon S3, reCaptcha, Location Map, and Dealer Locator packages.
+- Move packages array to a config file. (code cleanup)
+
 1.0
 - Approved by PRB.
 
