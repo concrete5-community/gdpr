@@ -11,13 +11,13 @@ $app->make('help')->display(
 );
 
 
-/** @var bool $sent */
+/** @var bool|null $sent */
 /** @var string $fromName */
 /** @var string $fromEmail */
 /** @var array $userGroups */
 /** @var string $defaultMessage */
 
-if ($sent) {
+if (isset($sent)) {
     return;
 }
 ?>

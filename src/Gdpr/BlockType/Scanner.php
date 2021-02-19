@@ -70,9 +70,11 @@ class Scanner implements ApplicationAwareInterface
      */
     private function add(array &$blockTypes, Finder $files, $message)
     {
+        /** @var \SplFileInfo $file */
         foreach ($files as $file) {
-            /** @var \SplFileInfo $file */
-            $blockTypeHandle = reset(explode('/', $file->getRelativePath()));
+            $pathParts = explode('/', $file->getRelativePath());
+
+            $blockTypeHandle = reset($pathParts);
             if (isset($blockTypes[$blockTypeHandle])) {
                 continue;
             }
