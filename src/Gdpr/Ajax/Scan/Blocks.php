@@ -109,6 +109,10 @@ class Blocks extends AjaxController
         foreach ($scanner->getBlockTypes([
             'custom_block_types' => $this->config->get('gdpr.scan.block_types.custom', []),
         ]) as $handle => $why) {
+            if ($this->isWhitelisted($handle)) {
+                continue;
+            }
+
             /** @var \Concrete\Core\Entity\Block\BlockType\BlockType $blockType */
             $blockType = BlockType::getByHandle($handle);
             if (!$blockType) {
@@ -179,5 +183,15 @@ class Blocks extends AjaxController
         $service = $this->app->make('helper/concrete/urls');
 
         return $service->getBlockTypeIconURL($blockType);
+    }
+
+    /**
+     * @param string $handle
+     *
+     * @return bool
+     */
+    private function isWhitelisted($handle)
+    {
+        return in_array($handle, $this->config->get('gdpr::block_type_scan.whitelist'));
     }
 }

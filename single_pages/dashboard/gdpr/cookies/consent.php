@@ -3,6 +3,7 @@
 defined('C5_EXECUTE') or die('Access Denied.');
 
 use Concrete\Core\Support\Facade\Application;
+use Concrete\Core\Support\Facade\Url;
 
 $app = Application::getFacadeApplication();
 
@@ -84,6 +85,15 @@ $app->make('help')->display(
             echo $pageSelector->selectPage('readMorePage', $config->get('gdpr.cookies.consent.read_more_page'));
             ?>
         </div>
+
+        <p class="alert alert-info">
+            <?php
+            echo t('Do you want to translate the texts below? You can do so via the %sTranslate Site Interface%s.',
+                '<a href="'.Url::to('/dashboard/system/multilingual/translate_interface').'">',
+                '</a>'
+            );
+            ?>
+        </p>
 
         <div class="form-group">
             <?php

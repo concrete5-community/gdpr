@@ -1,3 +1,7 @@
+1.5.6
+- Whitelist GDPR block to request data transfer.
+- Add help text about translating to cookie settings page.
+
 1.5.5
 - Add setting to keep Form Entries for x-days before deleting them.
 
