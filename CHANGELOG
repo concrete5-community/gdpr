@@ -1,3 +1,6 @@
+1.6.8
+- Disable flex for compliance buttons in cookie bar. This fixes an issue with text overflow for longer custom texts.
+
 1.6.7
 - Fix bug that cookie texts couldn't be translated if they were using the default texts.
 
