@@ -7,6 +7,7 @@ use Concrete\Core\Application\ApplicationAwareInterface;
 use Concrete\Core\Application\ApplicationAwareTrait;
 use Concrete\Core\Asset\AssetList;
 use Concrete\Core\Config\Repository\Repository;
+use Concrete\Core\Cookie\CookieJar;
 use Concrete\Core\Http\Request;
 use Concrete\Core\Routing\RouterInterface;
 
@@ -153,6 +154,12 @@ class GdprServiceProvider implements ApplicationAwareInterface
 
         // Disable for AJAX requests
         if ($request->isXmlHttpRequest()) {
+            return false;
+        }
+
+        /** @var CookieJar $jar */
+        $jar = $this->app->make('cookie');
+        if ($jar->has('cookieconsent_status')) {
             return false;
         }
 
