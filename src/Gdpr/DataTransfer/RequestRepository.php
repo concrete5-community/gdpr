@@ -3,6 +3,7 @@
 namespace A3020\Gdpr\DataTransfer;
 
 use A3020\Gdpr\Entity\DataTransferRequest;
+use Concrete\Core\Entity\User\User;
 use Doctrine\ORM\EntityManager;
 
 class RequestRepository
@@ -53,6 +54,19 @@ class RequestRepository
 
             ->getQuery()
             ->getResult();
+    }
+
+    public function hasUnprocessedRequests(User $user)
+    {
+        $qb = $this->entityManager->createQueryBuilder();
+
+        return $qb->select('count(dtr.id)')
+            ->from(DataTransferRequest::class, 'dtr')
+            ->where($qb->expr()->isNull('dtr.mailedAt'))
+            ->andWhere('dtr.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 
     public function save(DataTransferRequest $dataTransferRequest)

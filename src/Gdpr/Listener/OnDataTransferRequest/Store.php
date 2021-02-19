@@ -41,6 +41,7 @@ class Store
 
             $dataTransferRequest = new DataTransferRequest();
             $dataTransferRequest->setUser($user);
+            $dataTransferRequest->setIncludeFiles($event->shouldIncludeFiles());
 
             $this->requestRepository->save($dataTransferRequest);
             $this->requestRepository->flush();

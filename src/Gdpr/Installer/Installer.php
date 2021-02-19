@@ -54,6 +54,7 @@ class Installer
             '/dashboard/gdpr/cleanup/logs' => t('Logs'),
             '/dashboard/gdpr/data_transfer' => t('Data Transfer'),
             '/dashboard/gdpr/data_transfer/requests' => t('Requests'),
+            '/dashboard/gdpr/data_transfer/settings' => t('Settings'),
             '/dashboard/gdpr/data_breach' => t('Data Breach'),
             '/dashboard/gdpr/data_breach/notify_users' => t('Notify Users'),
             '/dashboard/gdpr/cookies' => t('Cookies'),

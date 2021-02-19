@@ -31,12 +31,7 @@ final class Settings extends DashboardController
         $this->set('trackingCodeFound', $this->hasTrackingCode());
         $this->set('disableTrackingCode', (bool) $this->config->get('gdpr.settings.tracking.disabled', false));
 
-        // Data Transfer
-        $this->set('dataTransferDownloadDaysValid', (int) $this->config->get('gdpr.settings.data_transfer.days_valid', 10));
-        $this->set('enableSubmittingDefaultData', (bool) $this->config->get('gdpr.settings.data_transfer.submit_data', true));
-
         $this->set('enableJobToRemoveFormSubmissions', $this->jobInstallService->isInstalled('gdpr_remove_form_submissions'));
-        $this->set('enableJobToProcessDataTransferRequests', $this->jobInstallService->isInstalled('gdpr_process_data_transfer_requests'));
     }
 
     public function save()
@@ -61,13 +56,8 @@ final class Settings extends DashboardController
 
         $this->config->save('gdpr.settings.tracking.disabled', (bool) $this->post('disableTrackingCode'));
 
-        // Data Transfer
-        $this->config->save('gdpr.settings.data_transfer.days_valid', (int) $this->post('dataTransferDownloadDaysValid'));
-        $this->config->save('gdpr.settings.data_transfer.submit_data', (bool) $this->post('enableSubmittingDefaultData'));
-
         // Automated Jobs
         $this->jobInstallService->installOrDeinstall('gdpr_remove_form_submissions', $this->post('enableJobToRemoveFormSubmissions'));
-        $this->jobInstallService->installOrDeinstall('gdpr_process_data_transfer_requests', $this->post('enableJobToProcessDataTransferRequests'));
 
         $this->flash('success', t('Your settings have been saved.'));
 
