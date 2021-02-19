@@ -1,6 +1,6 @@
 <?php
 
-/** @see \Concrete\Core\User\UserInfo delete method **/
+/** @see \Concrete\Core\User\UserInfo::delete **/
 
 return [
     'taken_care_of' => [
@@ -49,48 +49,36 @@ return [
                 'info' => t('The uID will be set to NULL when a user is deleted. See the %s class. Use the Orphaned Files tool to reassign or delete those files.', 'File Entity'),
             ],
             'ConfigStore' => [
-                'fixed' => false,
-                'info' => t('This table is not yet handled by version %s of concrete5. You may be able to update your C5 installation to fix this problem. See also %s.',
-                    '8.4.0RC4',
-                    'https://github.com/concrete5/concrete5/issues/6676'
-                )
+                'fixed' => true,
+                'info' => t('Records are deleted in the %s class.', 'UserInfo'),
+                'c5_version' => '8.4.2', // https://github.com/concrete5/concrete5/commit/f948e4a1927bf44215d774bf3b7463688cc08538
             ],
             'ConversationSubscriptions' => [
-                'fixed' => false,
-                'info' => t('This table is not yet handled by version %s of concrete5. You may be able to update your C5 installation to fix this problem. See also %s.',
-                    '8.4.0RC4',
-                    'https://github.com/concrete5/concrete5/issues/6676'
-                )
+                'fixed' => true,
+                'info' => t('Records are deleted in the %s class.', 'UserInfo'),
+                'c5_version' => '8.4.2', // https://github.com/concrete5/concrete5/commit/f948e4a1927bf44215d774bf3b7463688cc08538
             ],
             'DownloadStatistics' => [
-                'fixed' => false,
-                'info' => t('This table is not yet handled by version %s of concrete5. You may be able to update your C5 installation to fix this problem. See also %s.',
-                    '8.4.0RC4',
-                    'https://github.com/concrete5/concrete5/issues/6676'
-                )
+                'fixed' => true,
+                'info' => t('Records are deleted in the %s class.', 'UserInfo'),
+                'c5_version' => '8.4.2', // https://github.com/concrete5/concrete5/commit/f948e4a1927bf44215d774bf3b7463688cc08538
             ],
             'FileSets' => [
-                'fixed' => false,
-                'info' => t('This table is not yet handled by version %s of concrete5. You may be able to update your C5 installation to fix this problem. See also %s.',
-                    '8.4.0RC4',
-                    'https://github.com/concrete5/concrete5/issues/6676'
-                )
+                'fixed' => true,
+                'info' => t('Records are deleted in the %s class.', 'UserInfo'),
+                'c5_version' => '8.4.2', // https://github.com/concrete5/concrete5/commit/f948e4a1927bf44215d774bf3b7463688cc08538
             ],
             'PermissionAccessEntityUsers' => [
-                'fixed' => false,
-                'info' => t('This table is not yet handled by version %s of concrete5. You may be able to update your C5 installation to fix this problem. See also %s.',
-                    '8.4.0RC4',
-                    'https://github.com/concrete5/concrete5/issues/6676'
-                )
-            ],
-            'NotificationAlerts' => [
-                'fixed' => false,
-                'info' => t('This table is not yet handled by version %s of concrete5. You may be able to update your C5 installation to fix this problem. See also %s.',
-                    '8.4.0RC4',
-                    'https://github.com/concrete5/concrete5/issues/6676'
-                )
+                'fixed' => true,
+                'info' => t('Records are deleted in the %s class.', 'UserInfo'),
+                'c5_version' => '8.4.2', // https://github.com/concrete5/concrete5/commit/f948e4a1927bf44215d774bf3b7463688cc08538
             ],
             'authTypeConcreteCookieMap' => [
+                'fixed' => true,
+                'info' => t('Records are deleted in the %s class.', 'UserInfo'),
+                'c5_version' => '8.4.2', // https://github.com/concrete5/concrete5/commit/f948e4a1927bf44215d774bf3b7463688cc08538
+            ],
+            'NotificationAlerts' => [
                 'fixed' => false,
                 'info' => t('This table is not yet handled by version %s of concrete5. You may be able to update your C5 installation to fix this problem. See also %s.',
                     '8.4.0RC4',
@@ -105,5 +93,9 @@ return [
         // The miUsername and miEmail are used to connect with an SMTP server.
         // Not really personal information per se.
         'MailImporters',
+
+        // The columnsPhone column indicates how many images should be shown
+        // on a mobile phone. It doesn't contain a phone number.
+        'btSimpleGallery',
     ],
 ];
