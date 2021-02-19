@@ -83,7 +83,7 @@ $(document).ready(function() {
         ],
         order: [[ 1, "asc" ]],
         language: {
-            emptyTable: '<?php echo t('No packages have been found that meet the current search criteria.') ?>'
+            emptyTable: '<?php echo t('No add-ons have been found that meet the current search criteria.') ?>'
         }
     });
 });

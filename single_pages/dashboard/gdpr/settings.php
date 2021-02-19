@@ -62,7 +62,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
 
             <div class="form-group alert alert-success">
                 <label class="control-label launch-tooltip"
-                       title="<?php echo t("concrete5 might pull background images from an external server for the /login page. This could leak the visitor's IP address.") ?>"
+                       title="<?php echo t("concrete5 might pull background images from an external server for the login page. This could leak the visitor's IP address.") ?>"
                        for="disableConcreteBackground">
                     <?php
                     /** @var bool $disableConcreteBackground */

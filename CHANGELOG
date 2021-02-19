@@ -1,3 +1,7 @@
+1.5.2
+- Translation fixes.
+- Delete data transfer files (if they exist) if a user is deleted.
+
 1.5.1
 - Add Settings page under Data Transfer.
 - Move Data Transfer related settings to dedicated page.

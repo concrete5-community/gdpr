@@ -70,6 +70,10 @@ class GdprServiceProvider implements ApplicationAwareInterface
             /** @var \A3020\Gdpr\Listener\OnUserDelete\DeleteLogs $listener */
             $listener = $this->app->make(\A3020\Gdpr\Listener\OnUserDelete\DeleteLogs::class);
             $listener->handle($event);
+
+            /** @var \A3020\Gdpr\Listener\OnUserDelete\DeleteDataTransferFiles $listener */
+            $listener = $this->app->make(\A3020\Gdpr\Listener\OnUserDelete\DeleteDataTransferFiles::class);
+            $listener->handle($event);
         });
 
         $this->app['director']->addListener('on_gdpr_data_transfer_request', function($event) {

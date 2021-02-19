@@ -4,6 +4,7 @@ namespace A3020\Gdpr\DataTransfer\File;
 
 use A3020\Gdpr\Entity\DataTransferFile;
 use A3020\Gdpr\Entity\DataTransferRequest;
+use Concrete\Core\Entity\User\User;
 use Doctrine\ORM\EntityManager;
 
 class FileRepository
@@ -28,6 +29,18 @@ class FileRepository
     public function find($id)
     {
         return $this->repository->find($id);
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return DataTransferFile|null
+     */
+    public function findByUser(User $user)
+    {
+        return $this->repository->findBy([
+            'user' => $user,
+        ]);
     }
 
     /**

@@ -12,6 +12,7 @@ class DeleteLogs
      * @var Connection
      */
     private $db;
+
     /**
      * @var Repository
      */
