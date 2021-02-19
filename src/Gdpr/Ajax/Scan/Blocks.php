@@ -2,15 +2,14 @@
 
 namespace A3020\Gdpr\Ajax\Scan;
 
+use A3020\Gdpr\BlockType\Scanner;
+use A3020\Gdpr\BlockType\Usage;
 use A3020\Gdpr\Controller\AjaxController;
 use A3020\Gdpr\Entity\BlockScanStatus;
 use A3020\Gdpr\Scan\Block\StatusRepository;
 use Concrete\Core\Block\BlockType\BlockType;
-use Concrete\Core\Config\Repository\Repository;
-use Concrete\Core\Database\Connection\Connection;
 use Concrete\Core\Http\Response;
 use Concrete\Core\Http\ResponseFactory;
-use Concrete\Core\Page\Page;
 use Concrete\Core\Support\Facade\Url;
 use Concrete\Core\View\View;
 use Exception;
@@ -101,7 +100,15 @@ class Blocks extends AjaxController
         /** @var StatusRepository $statusRepository */
         $statusRepository = $this->app->make(StatusRepository::class);
 
-        foreach ($this->getBlockTypes() as $handle => $why) {
+        /** @var Scanner $scanner */
+        $scanner = $this->app->make(Scanner::class);
+
+        /** @var Usage $usage */
+        $usage = $this->app->make(Usage::class);
+
+        foreach ($scanner->getBlockTypes([
+            'custom_block_types' => $this->config->get('gdpr.scan.block_types.custom', []),
+        ]) as $handle => $why) {
             /** @var \Concrete\Core\Entity\Block\BlockType\BlockType $blockType */
             $blockType = BlockType::getByHandle($handle);
             if (!$blockType) {
@@ -118,7 +125,7 @@ class Blocks extends AjaxController
                 continue;
             }
 
-            foreach ($this->getPagesWhereBlockIsUsed($blockType->getBlockTypeID()) as $page) {
+            foreach ($usage->getPages($blockType->getBlockTypeID()) as $page) {
                 $fixed = $blockTypeFixed ? $blockTypeFixed : $statusRepository->isBlockTypeFixedOnPage($blockType, $page->getCollectionID());
 
                 if ($ignoreFixedBlocks && $fixed) {
@@ -144,58 +151,6 @@ class Blocks extends AjaxController
     }
 
     /**
-     * @param int $blockTypeId
-     *
-     * @return Page[]
-     */
-    private function getPagesWhereBlockIsUsed($blockTypeId)
-    {
-        /** @var Connection $db */
-        $db = $this->app['database']->connection();
-
-        $records = $db->fetchAll('
-            SELECT cv.cID FROM CollectionVersionBlocks cvb
-            INNER JOIN (
-                SELECT cID, MAX(cvID) as cvID FROM CollectionVersions cv
-                WHERE cv.cvIsApproved = 1
-                GROUP BY cID
-            ) as cv
-            ON cv.cID = cvb.cID
-            WHERE cvb.cvID = cv.cvID AND bID IN (
-                SELECT bID FROM Blocks WHERE btID = ?
-            )
-            GROUP BY cv.cID
-        ', [ $blockTypeId]);
-
-        $pageIds = array_column($records, 'cID');
-
-        $pages = [];
-        foreach ($pageIds as $pageId) {
-            $page = Page::getByID($pageId);
-            if (!$page || $page->isError()) {
-                continue;
-            }
-
-            if ($page->isAdminArea()) {
-                continue;
-            }
-
-            if ($page->isSystemPage()) {
-                continue;
-            }
-
-            // Skip e.g. "Page Forbidden"
-            if (empty($page->getCollectionName())) {
-                continue;
-            }
-
-            $pages[] = $page;
-        }
-
-        return $pages;
-    }
-
-    /**
      * @param \Concrete\Core\Entity\Block\BlockType\BlockType $blockType
      *
      * @return bool
@@ -211,26 +166,6 @@ class Blocks extends AjaxController
         }
 
         return true;
-    }
-
-    private function getBlockTypes()
-    {
-        $blockTypes = [
-            'core_conversation' => t('Because the %s and %s are stored.', 'commentRatingIP', 'commentRatingUserID'),
-            'express_form' => t('Because an email address is stored and because certain form fields might store personal data.'),
-            'form' => t('Because the %s and %s are stored and because certain form fields might store personal data.', 'recipientEmail', 'uID'),
-            'd3_mailchimp' => t('Because the email address is sent to MailChimp.'),
-            'mailchimp' => t('Because the email address is sent to MailChimp.'),
-            'survey' => t('Because the %s and %s are stored.', 'uID', 'ipAddress'),
-        ];
-
-        $config = $this->app->make(Repository::class);
-
-        foreach ($config->get('gdpr.scan.block_types.custom', []) as $handle) {
-            $blockTypes[$handle] = '-';
-        }
-
-        return $blockTypes;
     }
 
     /**
