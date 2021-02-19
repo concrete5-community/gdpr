@@ -1,6 +1,6 @@
 <?php
 
-namespace A3020\Gdpr\Express;
+namespace A3020\Gdpr\Form\Express;
 
 use Concrete\Core\Express\EntryList;
 use Concrete\Core\Express\ObjectManager;
@@ -15,7 +15,7 @@ class DeleteFormEntries
     private $manager;
 
     /**
-     * @var ExpressForm
+     * @var ExpressFormHelper
      */
     private $expressForm;
 
@@ -24,7 +24,7 @@ class DeleteFormEntries
      */
     private $entityManager;
 
-    public function __construct(ObjectManager $manager, ExpressForm $expressForm, EntityManager $entityManager)
+    public function __construct(ObjectManager $manager, ExpressFormHelper $expressForm, EntityManager $entityManager)
     {
         $this->manager = $manager;
         $this->expressForm = $expressForm;
@@ -32,15 +32,21 @@ class DeleteFormEntries
     }
 
     /**
-     * @throws \Doctrine\ORM\ORMException
+     * Remove all express form submissions
+     *
+     * We can pass a date, e.g. to only remove submission
+     * that are older than a week. By default all submissions are removed.
      *
      * @return int
+     * @param array $options
+     *
+     * @throws \Doctrine\ORM\ORMException
      */
-    public function delete()
+    public function delete($options = [])
     {
         $deleted = 0;
         foreach ($this->expressForm->getFormResultEntities() as $entity) {
-            $deleted += $this->deleteByEntity($entity);
+            $deleted += $this->deleteByEntity($entity, $options);
         }
 
         return $deleted;
@@ -63,12 +69,19 @@ class DeleteFormEntries
 
     /**
      * @param \Concrete\Core\Entity\Express\Entity $entity
+     * @param array $options
      *
      * @return int
      */
-    public function deleteByEntity(\Concrete\Core\Entity\Express\Entity $entity)
+    public function deleteByEntity(\Concrete\Core\Entity\Express\Entity $entity, $options = [])
     {
         $entryList = new EntryList($entity);
+
+        if (isset($options['created_before'])) {
+            $entryList->getQueryObject()
+                ->andWhere('exEntryDateCreated < :entry_date_created')
+                ->setParameter('entry_date_created', $options['created_before'], \Doctrine\DBAL\Types\Type::DATETIME);
+        }
 
         $deleted = 0;
         foreach ($entryList->getResults() as $entry) {

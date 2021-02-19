@@ -3,8 +3,9 @@
 namespace Concrete\Package\Gdpr\Controller\SinglePage\Dashboard\Gdpr\Cleanup;
 
 use A3020\Gdpr\Controller\DashboardController;
-use A3020\Gdpr\Express\Delete\DeleteFormEntries;
-use A3020\Gdpr\Express\ExpressForm;
+use A3020\Gdpr\Form\Express\DeleteFormEntries;
+use A3020\Gdpr\Form\Express\ExpressFormHelper;
+use A3020\Gdpr\Job\JobInstallService;
 use Concrete\Core\Express\EntryList;
 use Concrete\Core\Routing\Redirect;
 use Concrete\Core\Tree\Node\Type\ExpressEntryCategory;
@@ -12,6 +13,16 @@ use Exception;
 
 final class ExpressForms extends DashboardController
 {
+    /** @var JobInstallService */
+    protected $jobInstallService;
+
+    public function on_start()
+    {
+        parent::on_start();
+
+        $this->jobInstallService = $this->app->make(JobInstallService::class);
+    }
+
     public function view()
     {
         $formInformation = false;
@@ -24,6 +35,26 @@ final class ExpressForms extends DashboardController
         }
 
         $this->set('formInformation', $formInformation);
+        $this->set('enableJobToRemoveFormSubmissions', $this->jobInstallService->isInstalled('gdpr_remove_form_submissions'));
+        $this->set('expressFormsKeepDays', $this->config->get('gdpr.settings.express_forms.keep_days'));
+    }
+
+    public function save()
+    {
+        if (!$this->token->validate('a3020.gdpr.cleanup.express_forms.settings')) {
+            $this->flash('error', $this->token->getErrorMessage());
+
+            return Redirect::to('/dashboard/gdpr/cleanup/express_forms');
+        }
+
+        $this->jobInstallService->installOrDeinstall('gdpr_remove_form_submissions', $this->post('enableJobToRemoveFormSubmissions'));
+
+        $keepDays = $this->post('expressFormsKeepDays');
+        $this->config->save('gdpr.settings.express_forms.keep_days', $keepDays !== '' ? (int) $keepDays : null);
+
+        $this->flash('success', t('Your settings have been saved.'));
+
+        return Redirect::to('/dashboard/gdpr/cleanup/express_forms');
     }
 
     /**
@@ -76,11 +107,11 @@ final class ExpressForms extends DashboardController
      */
     private function getFormInformation()
     {
-        /** @var ExpressForm $form */
-        $form = $this->app->make(ExpressForm::class);
+        /** @var ExpressFormHelper $helper */
+        $helper = $this->app->make(ExpressFormHelper::class);
 
         $forms = [];
-        foreach ($form->getFormResultNodes() as $child) {
+        foreach ($helper->getFormResultNodes() as $child) {
             $entryList = new EntryList($this->getEntity($child));
 
             $forms[] = [

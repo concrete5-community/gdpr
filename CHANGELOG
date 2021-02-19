@@ -1,3 +1,8 @@
+1.6.0
+- Move Express Forms settings to Cleanup > Express Forms page.
+- Add Cleanup > Legacy Forms page.
+- Add an automated job to automatically remove legacy form submissions.
+
 1.5.6
 - Whitelist GDPR block to request data transfer.
 - Add help text about translating to cookie settings page.

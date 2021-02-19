@@ -3,22 +3,11 @@
 namespace Concrete\Package\Gdpr\Controller\SinglePage\Dashboard\Gdpr;
 
 use A3020\Gdpr\Controller\DashboardController;
-use A3020\Gdpr\Job\JobInstallService;
 use A3020\Gdpr\Tracking\Code;
 use Concrete\Core\Routing\Redirect;
 
 final class Settings extends DashboardController
 {
-    /** @var JobInstallService */
-    protected $jobInstallService;
-
-    public function on_start()
-    {
-        parent::on_start();
-
-        $this->jobInstallService = $this->app->make(JobInstallService::class);
-    }
-
     public function view()
     {
         // User logs
@@ -30,9 +19,6 @@ final class Settings extends DashboardController
         $this->set('disableConcreteBackground', (bool) $this->config->get('concrete.white_label.background_url'));
         $this->set('trackingCodeFound', $this->hasTrackingCode());
         $this->set('disableTrackingCode', (bool) $this->config->get('gdpr.settings.tracking.disabled', false));
-
-        $this->set('enableJobToRemoveFormSubmissions', $this->jobInstallService->isInstalled('gdpr_remove_form_submissions'));
-        $this->set('expressFormsKeepDays', $this->config->get('gdpr.settings.express_forms.keep_days'));
     }
 
     public function save()
@@ -56,12 +42,6 @@ final class Settings extends DashboardController
         }
 
         $this->config->save('gdpr.settings.tracking.disabled', (bool) $this->post('disableTrackingCode'));
-
-        // Automated Jobs
-        $this->jobInstallService->installOrDeinstall('gdpr_remove_form_submissions', $this->post('enableJobToRemoveFormSubmissions'));
-
-        $keepDays = $this->post('expressFormsKeepDays');
-        $this->config->save('gdpr.settings.express_forms.keep_days', $keepDays !== '' ? (int) $keepDays : null);
 
         $this->flash('success', t('Your settings have been saved.'));
 

@@ -50,6 +50,7 @@ class Installer
             '/dashboard/gdpr/scan/packages' => t('Add-ons'),
             '/dashboard/gdpr/cleanup' => t('Cleanup'),
             '/dashboard/gdpr/cleanup/express_forms' => t('Express Forms'),
+            '/dashboard/gdpr/cleanup/legacy_forms' => t('Legacy Forms'),
             '/dashboard/gdpr/cleanup/orphaned_files' => t('Orphaned Files'),
             '/dashboard/gdpr/cleanup/logs' => t('Logs'),
             '/dashboard/gdpr/data_transfer' => t('Data Transfer'),

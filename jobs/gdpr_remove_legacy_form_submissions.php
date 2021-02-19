@@ -2,23 +2,23 @@
 
 namespace Concrete\Package\Gdpr\Job;
 
-use A3020\Gdpr\Form\Express\DeleteFormEntries;
+use A3020\Gdpr\Form\Legacy\DeleteFormEntries;
 use Concrete\Core\Config\Repository\Repository;
 use Concrete\Core\Job\Job;
 use Concrete\Core\Support\Facade\Application;
 use DateTime;
 use Throwable;
 
-final class GdprRemoveFormSubmissions extends Job
+final class GdprRemoveLegacyFormSubmissions extends Job
 {
     public function getJobName()
     {
-        return t('GDPR - Remove express form submissions');
+        return t('GDPR - Remove legacy form submissions');
     }
 
     public function getJobDescription()
     {
-        return t('Automatically remove express form submissions stored in Form Results. Important: there is no way to restore form submissions once they are removed!');
+        return t('Automatically remove legacy form submissions stored in Form Results. Important: there is no way to restore form submissions once they are removed!');
     }
 
     public function run()
@@ -26,7 +26,7 @@ final class GdprRemoveFormSubmissions extends Job
         $app = Application::getFacadeApplication();
 
         try {
-            /** @var \A3020\Gdpr\Form\Express\DeleteFormEntries $helper */
+            /** @var \A3020\Gdpr\Form\Legacy\DeleteFormEntries $helper */
             $helper = $app->make(DeleteFormEntries::class);
             $deletedSubmissions = $helper->delete($this->getOptions());
         } catch (Throwable $e) {
@@ -47,9 +47,14 @@ final class GdprRemoveFormSubmissions extends Job
         $app = Application::getFacadeApplication();
         $config = $app->make(Repository::class);
 
-        $keepDays = (int) $config->get('gdpr.settings.express_forms.keep_days', 0);
+        $keepDays = (int) $config->get('gdpr.settings.legacy_forms.keep_days', 0);
+
+        if (!$keepDays) {
+            return [];
+        }
 
         $now = new DateTime();
+
         return [
             'created_before' => $now->sub(new \DateInterval('P'.$keepDays.'D')),
         ];

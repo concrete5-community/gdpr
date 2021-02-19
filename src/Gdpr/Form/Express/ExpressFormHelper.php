@@ -1,12 +1,12 @@
 <?php
 
-namespace A3020\Gdpr\Express;
+namespace A3020\Gdpr\Form\Express;
 
 use Concrete\Core\Tree\Node\Type\ExpressEntryCategory;
 use Concrete\Core\Tree\Node\Type\ExpressEntryResults;
 use Doctrine\ORM\EntityManager;
 
-class ExpressForm
+class ExpressFormHelper
 {
     /**
      * @var EntityManager
