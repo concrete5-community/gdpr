@@ -1,3 +1,6 @@
+1.1.5
+- Add check for "Log Database Queries".
+
 1.1.4
 - Don't load cookie consent on login page.
 - Move 'Send Email' button to form-actions wrapper.

@@ -62,7 +62,34 @@ $app->make('help')->display(
         ?>
         <div class="alert alert-success">
             <i class="fa fa-check"></i>
-            <?php echo t("Emails won't be logged in concrete5"); ?>
+            <?php echo t("Sent emails are not logged."); ?>
+        </div>
+        <?php
+    }
+    ?>
+
+    <?php
+    // ARE DATABASE QUERIES LOGGED?
+    $queriesLogged = $config->get('concrete.log.queries.log');
+    if ($queriesLogged) {
+        ?>
+        <div class="alert alert-warning">
+            <p>
+                <i class="fa fa-warning"></i>
+                <?php
+                echo t("Database queries are logged in concrete5. You probably want this to be disabled on production as it slows down each request and because the queries might contain personal data.").' '.
+                    t("Consider disabling this the logging via the %sLogging Settings%s.",
+                        '<a href="'.Url::to('/dashboard/system/environment/logging').'">', '</a>'
+                    );
+                ?>
+            </p>
+        </div>
+        <?php
+    } else {
+        ?>
+        <div class="alert alert-success">
+            <i class="fa fa-check"></i>
+            <?php echo t("Database queries are not logged."); ?>
         </div>
         <?php
     }
