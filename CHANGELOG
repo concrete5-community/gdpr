@@ -1,3 +1,7 @@
+1.1.3
+- Use a separate CookieServiceProvider.
+- Make sure the cookie assets are loaded when full page caching is enabled.
+
 1.1.2
 - Don't load cookie consent assets if consent has been given.
 

@@ -4,7 +4,6 @@ namespace Concrete\Package\Gdpr;
 
 use A3020\Gdpr\Installer\Installer;
 use A3020\Gdpr\Installer\Uninstaller;
-use A3020\Gdpr\Provider\GdprServiceProvider;
 use Concrete\Core\Config\Repository\Repository;
 use Concrete\Core\Package\Package;
 use Concrete\Core\Support\Facade\Package as PackageFacade;
@@ -14,7 +13,7 @@ final class Controller extends Package
 {
     protected $pkgHandle = 'gdpr';
     protected $appVersionRequired = '8.2.1';
-    protected $pkgVersion = '1.1.2';
+    protected $pkgVersion = '1.1.3';
     protected $pkgAutoloaderRegistries = [
         'src/Gdpr' => '\A3020\Gdpr',
     ];
@@ -31,7 +30,12 @@ final class Controller extends Package
 
     public function on_start()
     {
-        $provider = $this->app->make(GdprServiceProvider::class);
+        /** @var @var \A3020\Gdpr\Provider\GdprServiceProvider $provider */
+        $provider = $this->app->make(\A3020\Gdpr\Provider\GdprServiceProvider::class);
+        $provider->register();
+
+        /** @var @var \A3020\Gdpr\Provider\CookieServiceProvider $provider */
+        $provider = $this->app->make(\A3020\Gdpr\Provider\CookieServiceProvider::class);
         $provider->register();
     }
 
