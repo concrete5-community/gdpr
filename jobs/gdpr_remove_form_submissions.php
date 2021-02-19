@@ -50,8 +50,10 @@ final class GdprRemoveFormSubmissions extends Job
         $keepDays = (int) $config->get('gdpr.settings.express_forms.keep_days', 0);
 
         $now = new DateTime();
+
         return [
             'created_before' => $now->sub(new \DateInterval('P'.$keepDays.'D')),
+            'delete_files' => (bool) $config->get('gdpr.settings.express_forms.delete_files', true),
         ];
     }
 }

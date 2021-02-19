@@ -35,7 +35,19 @@ $app->make('help')->display(
                 </label>
             </div>
 
-            <div class="form-group alert alert-success <?php echo $enableJobToRemoveFormSubmissions ? '' : 'hide' ?>" id="container-express-forms-keep-days">
+            <div class="form-group alert alert-warning <?php echo $enableJobToRemoveFormSubmissions ? '' : 'hide' ?> express-form-toggle">
+                <label class="control-label launch-tooltip"
+                       title="<?php echo t("In case your form has an upload field, you may want to delete the associated files as well. Please note that these files might be used elsewhere in the system.") ?>"
+                       for="deleteAssociatedFiles">
+                    <?php
+                    /** @var bool $deleteAssociatedFiles */
+                    echo $form->checkbox('deleteAssociatedFiles', 1, $deleteAssociatedFiles);
+                    ?>
+                    <?php echo t('Delete associated files from these form submissions'); ?>
+                </label>
+            </div>
+
+            <div class="form-group alert alert-success <?php echo $enableJobToRemoveFormSubmissions ? '' : 'hide' ?> express-form-toggle">
                 <label class="control-label launch-tooltip"
                        title="<?php echo t("You can control how long Express Form submission may be stored before they are deleted.") ?>"
                        for="expressFormsKeepDays">
@@ -119,7 +131,7 @@ $(document).ready(function() {
 
     function toggleFormSubmissions()
     {
-        $('#container-express-forms-keep-days').toggleClass('hide',
+        $('.express-form-toggle').toggleClass('hide',
             !$('#enableJobToRemoveFormSubmissions').is(':checked')
         );
     }

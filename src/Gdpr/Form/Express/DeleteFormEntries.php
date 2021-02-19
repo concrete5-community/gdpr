@@ -56,14 +56,15 @@ class DeleteFormEntries
      * Delete by results folder, like on /dashboard/reports/forms/view/xxx
      *
      * @param ExpressEntryResults $node
+     * @param array $options
      *
      * @throws \Doctrine\ORM\ORMException
      */
-    public function deleteByNode(ExpressEntryResults $node)
+    public function deleteByNode(ExpressEntryResults $node, $options = [])
     {
         $entity = $this->expressForm->getFormResultEntityByNode($node);
         if ($entity) {
-            $this->deleteByEntity($entity);
+            $this->deleteByEntity($entity, $options);
         }
     }
 
@@ -85,10 +86,42 @@ class DeleteFormEntries
 
         $deleted = 0;
         foreach ($entryList->getResults() as $entry) {
+            if (isset($options['delete_files']) && $options['delete_files']) {
+                $this->deleteFiles($entry);
+            }
+
             $this->manager->deleteEntry($entry);
             $deleted++;
         }
 
         return $deleted;
+    }
+
+    /**
+     * @param \Concrete\Core\Entity\Express\Entry $entry
+     */
+    private function deleteFiles($entry)
+    {
+        // Go through the submission attributes
+        foreach ($entry->getAttributes() as $attribute) {
+            /** @var \Concrete\Core\Entity\Attribute\Value\ExpressValue $attribute */
+
+            /** @var \Concrete\Core\Entity\Attribute\Type $type */
+            $type = $attribute->getAttributeTypeObject();
+
+            // Skip all attributes that are not a file upload attribute
+            if ($type->getAttributeTypeHandle() !== 'image_file') {
+                continue;
+            }
+
+            /** @var \Concrete\Core\Entity\File\File $file */
+            $file = $attribute->getValue();
+
+            if (!is_object($file)) {
+                continue;
+            }
+
+            $file->delete();
+        }
     }
 }

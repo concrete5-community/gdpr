@@ -36,6 +36,7 @@ final class ExpressForms extends DashboardController
 
         $this->set('formInformation', $formInformation);
         $this->set('enableJobToRemoveFormSubmissions', $this->jobInstallService->isInstalled('gdpr_remove_form_submissions'));
+        $this->set('deleteAssociatedFiles', $this->config->get('gdpr.settings.express_forms.delete_files', true));
         $this->set('expressFormsKeepDays', $this->config->get('gdpr.settings.express_forms.keep_days'));
     }
 
@@ -51,6 +52,7 @@ final class ExpressForms extends DashboardController
 
         $keepDays = $this->post('expressFormsKeepDays');
         $this->config->save('gdpr.settings.express_forms.keep_days', $keepDays !== '' ? (int) $keepDays : null);
+        $this->config->save('gdpr.settings.express_forms.delete_files', (bool) $this->post('deleteAssociatedFiles'));
 
         $this->flash('success', t('Your settings have been saved.'));
 
@@ -85,7 +87,7 @@ final class ExpressForms extends DashboardController
 
             /** @var DeleteFormEntries $deleteFormEntries */
             $deleteFormEntries = $this->app->make(DeleteFormEntries::class);
-            $deleteFormEntries->deleteByNode($node);
+            $deleteFormEntries->deleteByNode($node, $this->getOptions());
         } catch (Exception $e) {
             \Log::addError($e->getMessage());
 
@@ -140,5 +142,12 @@ final class ExpressForms extends DashboardController
         return $this->entityManager
             ->getRepository('Concrete\Core\Entity\Express\Entity')
             ->findOneByResultsNode($parent);
+    }
+
+    private function getOptions()
+    {
+        return [
+            'delete_files' => (bool) $this->config->get('gdpr.settings.express_forms.delete_files', true),
+        ];
     }
 }

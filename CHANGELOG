@@ -1,3 +1,6 @@
+1.6.2
+- Add settings to also remove associated files from express form submissions.
+
 1.6.1
 - Make "Opt-in" the default compliant type.
 - Add a route to 'reset' the cookie status.
