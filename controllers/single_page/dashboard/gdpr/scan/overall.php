@@ -2,9 +2,9 @@
 
 namespace Concrete\Package\Gdpr\Controller\SinglePage\Dashboard\Gdpr\Scan;
 
-use Concrete\Core\Geolocator\GeolocatorService;
 use A3020\Gdpr\Controller\DashboardController;
 use A3020\Gdpr\Tracking\Code;
+use Concrete\Core\Geolocator\GeolocatorService;
 use Concrete\Core\Http\Request;
 
 final class Overall extends DashboardController

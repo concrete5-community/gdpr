@@ -61,6 +61,9 @@ class GdprServiceProvider implements ApplicationAwareInterface
             '/ccm/system/gdpr/data_transfer/requests' => [
                 '\A3020\Gdpr\Ajax\DataTransfer\Requests::view',
             ],
+            '/ccm/system/gdpr/foundation/dismiss_review' => [
+                '\A3020\Gdpr\Ajax\Foundation\DismissReview::view',
+            ],
         ]);
     }
 

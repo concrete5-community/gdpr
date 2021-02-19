@@ -16,6 +16,10 @@ $app->make('help')->display(
 
 <div class="ccm-dashboard-content-inner page-scan-overall">
     <?php
+    $this->element('/dashboard/review_notification', [], 'gdpr');
+    ?>
+
+    <?php
     // SECURE CONNECTION ACTIVE?
     /** @var bool $isConnectionSecure */
     if (!$isConnectionSecure) {
