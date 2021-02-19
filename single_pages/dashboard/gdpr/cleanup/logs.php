@@ -61,7 +61,7 @@ $app->make('help')->display(
                     echo $form->checkbox('deletedUsers', 1, $deletedUsers);
                     ?>
 
-                    <?php echo t("Include Log entries from deleted users"); ?>
+                    <?php echo t("Include log entries from deleted users"); ?>
                 </label><br>
             </div>
 
@@ -74,7 +74,7 @@ $app->make('help')->display(
                     echo $form->checkbox('atSymbol', 1, $atSymbol);
                     ?>
 
-                    <?php echo t('Include Log entries that contain an @-symbol'); ?>
+                    <?php echo t('Include log entries that contain an @-symbol'); ?>
                 </label><br>
             </div>
 
@@ -104,7 +104,7 @@ $app->make('help')->display(
             <hr>
 
             <?php
-            echo '<p class="text-muted">'.t2('%s record found that match the search criteria', '%s records found that match the search criteria', count($logs));
+            echo '<p class="text-muted">'.t2('%s result found that match the search criteria', '%s results found that match the search criteria', count($logs));
 
             /** @var int $maxResults */
             if (count($logs) === $maxResults) {

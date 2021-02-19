@@ -51,7 +51,11 @@ final class NotifyUsers extends DashboardController
             return $this->view();
         }
 
-        $this->flash('success', t2('Your notification has been sent to %s user.', 'Your notification has been sent to %s users.', $group->getGroupMembersNum()));
+        $this->flash('success', t2(
+            'The notification has been sent to %s user.',
+            'The notification has been sent to %s users.',
+            $group->getGroupMembersNum()
+        ));
 
         return Redirect::to('/dashboard/gdpr/data_breach/notify_users/sent');
     }

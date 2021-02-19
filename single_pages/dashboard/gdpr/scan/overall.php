@@ -113,7 +113,7 @@ $app->make('help')->display(
                 <?php
                 echo t('To add a checkbox to the registration form:').' ';
 
-                echo t("Go to %s/dashboard/users/attributes%s, choose 'Add Attribute' and choose 'Checkbox'. Use 'accept_terms' as attribute handle and add a description like 'I have read and understood the terms of use and agree to them' and make it shown and required on the Registration Form.",
+                echo t("Go to %sUser Attributes%s, choose 'Add Attribute' and choose 'Checkbox'. Use 'accept_terms' as attribute handle and add a description like 'I have read and understood the terms of use and agree to them' and make it shown and required on the Registration Form.",
                     '<a href="'.Url::to('/dashboard/users/attributes').'">', '</a>'
                 );
                 ?>

@@ -1,3 +1,9 @@
+1.1.0
+- Implement a cookie consent solution. (beta)
+
+1.0.7
+- Simplify / improve translations.
+
 1.0.6
 - Make sure the 'Users' table is marked as compliant because when a user is deleted, the
 associated entity will be removed (which is stored in the Users table).

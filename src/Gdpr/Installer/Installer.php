@@ -55,6 +55,8 @@ class Installer
             '/dashboard/gdpr/checklist' => t('Checklist'),
             '/dashboard/gdpr/data_breach' => t('Data Breach'),
             '/dashboard/gdpr/data_breach/notify_users' => t('Notify Users'),
+            '/dashboard/gdpr/cookies' => t('Cookies'),
+            '/dashboard/gdpr/cookies/consent' => t('Consent'),
             '/dashboard/gdpr/settings' => t('Settings'),
         ];
 

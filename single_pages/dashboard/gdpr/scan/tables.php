@@ -17,7 +17,7 @@ $app->make('help')->display(
         implode(', ', $searchFor)
     ).'<br><br>'.
 
-    t('The search columns can be extended via the settings on this page.')
+    t('The search terms can be extended via the settings on this page.')
 );
 ?>
 

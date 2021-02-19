@@ -38,7 +38,7 @@ $app->make('help')->display(
             echo $form->select('action', [
                 '' => t('-- Please select --'),
                 'delete' => t('Delete'),
-                'reassign' => t('Reassign to super user'),
+                'reassign' => t('Assign to super user'),
             ]);
             ?>
             <hr>
