@@ -47,7 +47,7 @@ class Installer
             '/dashboard/gdpr/scan/overall' => t('Overall'),
             '/dashboard/gdpr/scan/blocks' => t('Blocks'),
             '/dashboard/gdpr/scan/tables' => t('Tables'),
-            '/dashboard/gdpr/scan/packages' => t('Packages'),
+            '/dashboard/gdpr/scan/packages' => t('Add-ons'),
             '/dashboard/gdpr/cleanup' => t('Cleanup'),
             '/dashboard/gdpr/cleanup/express_forms' => t('Express Forms'),
             '/dashboard/gdpr/cleanup/orphaned_files' => t('Orphaned Files'),
@@ -63,14 +63,15 @@ class Installer
         foreach ($pages as $path => $name) {
             /** @var Page $page */
             $page = Page::getByPath($path);
-            if ($page && !$page->isError()) {
-                continue;
+            if (!$page) {
+                $page = Single::add($path, $pkg);
             }
 
-            $singlePage = Single::add($path, $pkg);
-            $singlePage->update([
-                'cName' => $name
-            ]);
+            if ($page->getCollectionName() !== $name) {
+                $page->update([
+                    'cName' => $name
+                ]);
+            }
         }
     }
 

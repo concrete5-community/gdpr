@@ -96,6 +96,22 @@ defined('C5_EXECUTE') or die('Access Denied.');
             </div>
         </section>
 
+        <section class="settings-section">
+            <header><?php echo t('Express Forms'); ?></header>
+
+            <div class="form-group alert alert-success">
+                <label class="control-label launch-tooltip"
+                       title="<?php echo t("Form submissions are always stored. To remove form submissions automatically, you can run and schedule the job via Automated Tasks. If you uncheck this option, the job will be uninstalled.") ?>"
+                       for="enableJobToRemoveFormSubmissions">
+                    <?php
+                    /** @var bool $enableJobToRemoveFormSubmissions */
+                    echo $form->checkbox('enableJobToRemoveFormSubmissions', 1, $enableJobToRemoveFormSubmissions);
+                    ?>
+                    <?php echo t('Enable an Automated Job that could remove Express Form submissions'); ?>
+                </label>
+            </div>
+        </section>
+
         <div class="ccm-dashboard-form-actions-wrapper">
             <div class="ccm-dashboard-form-actions">
                 <button class="pull-right btn btn-primary" type="submit"><?php echo t('Save') ?></button>

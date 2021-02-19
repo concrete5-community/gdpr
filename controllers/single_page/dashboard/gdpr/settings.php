@@ -9,13 +9,18 @@ use Concrete\Core\Routing\Redirect;
 
 final class Settings extends DashboardController
 {
-    /** @var Repository $config */
-    protected $config;
+    /** @var \A3020\Gdpr\Job\FormSubmissions\Service */
+    protected $formSubmissionsService;
+
+    public function on_start()
+    {
+        parent::on_start();
+
+        $this->formSubmissionsService = $this->app->make(\A3020\Gdpr\Job\FormSubmissions\Service::class);
+    }
 
     public function view()
     {
-        $this->config = $this->app->make(Repository::class);
-
         // User logs
         $this->set('removeBasedOnUserId', (bool) $this->config->get('gdpr.settings.logs.remove_based_on_user_id', true));
         $this->set('removeBasedOnUsername', (bool) $this->config->get('gdpr.settings.logs.remove_based_on_username', false));
@@ -25,6 +30,9 @@ final class Settings extends DashboardController
         $this->set('disableConcreteBackground', (bool) $this->config->get('concrete.white_label.background_url'));
         $this->set('trackingCodeFound', $this->hasTrackingCode());
         $this->set('disableTrackingCode', (bool) $this->config->get('gdpr.settings.tracking.disabled', false));
+
+
+        $this->set('enableJobToRemoveFormSubmissions', $this->formSubmissionsService->isInstalled());
     }
 
     public function save()
@@ -35,22 +43,22 @@ final class Settings extends DashboardController
             return Redirect::to('/dashboard/gdpr/settings');
         }
 
-        /** @var Repository $config */
-        $config = $this->app->make(Repository::class);
-
         // User logs
-        $config->save('gdpr.settings.logs.remove_based_on_user_id', (bool) $this->post('removeBasedOnUserId'));
-        $config->save('gdpr.settings.logs.remove_based_on_username', (bool) $this->post('removeBasedOnUsername'));
-        $config->save('gdpr.settings.logs.remove_based_on_email_address', (bool) $this->post('removeBasedOnEmailAddress'));
+        $this->config->save('gdpr.settings.logs.remove_based_on_user_id', (bool) $this->post('removeBasedOnUserId'));
+        $this->config->save('gdpr.settings.logs.remove_based_on_username', (bool) $this->post('removeBasedOnUsername'));
+        $this->config->save('gdpr.settings.logs.remove_based_on_email_address', (bool) $this->post('removeBasedOnEmailAddress'));
 
         // Tracking
         if ((bool) $this->post('disableConcreteBackground')) {
-            $config->save('concrete.white_label.background_url', 'none');
+            $this->config->save('concrete.white_label.background_url', 'none');
         } else {
-            $config->save('concrete.white_label.background_url', false);
+            $this->config->save('concrete.white_label.background_url', false);
         }
 
-        $config->save('gdpr.settings.tracking.disabled', (bool) $this->post('disableTrackingCode'));
+        // Express Forms
+        $this->formSubmissionsService->installOrDeinstall($this->post('enableJobToRemoveFormSubmissions'));
+
+        $this->config->save('gdpr.settings.tracking.disabled', (bool) $this->post('disableTrackingCode'));
 
         $this->flash('success', t('Your settings have been saved.'));
 

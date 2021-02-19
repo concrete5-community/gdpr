@@ -198,7 +198,7 @@ $app->make('help')->display(
                         t('geoPlugin'), "MaxMind"
                     ).' '.
 
-                    t("A good alternative might be to download the %s database using the free %sGeolocation with MaxMind GeoIP2%s package.",
+                    t("A good alternative might be to download the %s database using the free %sGeolocation with MaxMind GeoIP2%s add-on.",
                         'MaxMind', '<a href="https://www.concrete5.org/marketplace/addons/maxmind-geoip2-geolocator" target="_blank">', '</a>'
                     ).' '.
 

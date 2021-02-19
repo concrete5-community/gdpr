@@ -7,8 +7,8 @@ use Concrete\Core\Support\Facade\Url;
 $app = Application::getFacadeApplication();
 
 $app->make('help')->display(
-    t("This page shows a list of packages that need to be manually reviewed as they might process user data.").'<br><br>' .
-    t('The GDPR comes with a list of packages that certainly process user data. You may extend this list via the settings on this page. '.
+    t("This page shows a list of add-ons that need to be manually reviewed as they might process user data.").'<br><br>' .
+    t('The GDPR comes with a list of add-ons that certainly process user data. You may extend this list via the settings on this page. '.
         'However, this is probably only interesting if you manage many websites and you are copying the configuration files.
     ').'<br><br>'.
 
@@ -30,15 +30,15 @@ $app->make('help')->display(
 
             <div class="form-group">
                 <label class="control-label launch-tooltip"
-                       title="<?php echo t("Here you can specify custom packages to scan for. Use one package handle per line."); ?>"
+                       title="<?php echo t("Here you can specify custom add-ons to scan for. Use one package handle per line."); ?>"
                        for="customPackages">
-                    <?php echo t('Custom packages'); ?>
+                    <?php echo t('Custom add-ons'); ?>
                 </label>
 
                 <?php
                 /** @var string $customPackages */
                 echo $form->textarea('customPackages', $customPackages, [
-                    'placeholder' => t('Leave blank to only use the default packages'),
+                    'placeholder' => t('Leave blank to only use the default add-ons'),
                     'style' => 'min-height: 100px; max-width: 400px',
                 ]);
                 ?>

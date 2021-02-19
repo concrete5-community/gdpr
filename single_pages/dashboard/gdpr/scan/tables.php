@@ -11,7 +11,7 @@ $app = Application::getFacadeApplication();
 
 $app->make('help')->display(
     t("This page shows a list of database tables that contain columns that might contain user data.") .'<br><br>'.
-    t("If you are using custom code / packages, you may have to deal with personal data that is stored in those tables.").'<br><br>'.
+    t("If you are using custom code / add-ons, you may have to deal with personal data that is stored in those tables.").'<br><br>'.
 
     t('To find table columns the following search terms are used: %s',
         implode(', ', $searchFor)

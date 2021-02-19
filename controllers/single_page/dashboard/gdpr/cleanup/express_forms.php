@@ -3,8 +3,9 @@
 namespace Concrete\Package\Gdpr\Controller\SinglePage\Dashboard\Gdpr\Cleanup;
 
 use A3020\Gdpr\Controller\DashboardController;
+use A3020\Gdpr\Express\DeleteFormEntries;
+use A3020\Gdpr\Express\ExpressForm;
 use Concrete\Core\Express\EntryList;
-use Concrete\Core\Express\ObjectManager;
 use Concrete\Core\Routing\Redirect;
 use Concrete\Core\Tree\Node\Type\ExpressEntryCategory;
 use Exception;
@@ -41,9 +42,6 @@ final class ExpressForms extends DashboardController
             return Redirect::to('/dashboard/gdpr/cleanup/express_forms');
         }
 
-        /** @var ObjectManager $objectManager */
-        $objectManager = $this->app->make(ObjectManager::class);
-
         try {
             /** @var \Concrete\Core\Tree\Node\Node $child */
             $node = ExpressEntryCategory::getByID($nodeId);
@@ -54,14 +52,11 @@ final class ExpressForms extends DashboardController
                 return Redirect::to('/dashboard/gdpr/cleanup/express_forms');
             }
 
-            $entryList = new EntryList($this->getEntity($node));
-
-            foreach ($entryList->getResults() as $entry) {
-                $objectManager->deleteEntry($entry);
-            }
+            /** @var DeleteFormEntries $deleteFormEntries */
+            $deleteFormEntries = $this->app->make(DeleteFormEntries::class);
+            $deleteFormEntries->deleteByNode($node);
         } catch (Exception $e) {
             \Log::addError($e->getMessage());
-
 
             $this->flash('error', t("Something went wrong. Please check the Logs."));
 
@@ -81,23 +76,11 @@ final class ExpressForms extends DashboardController
      */
     private function getFormInformation()
     {
-        /** @var \Concrete\Core\Tree\Node\Node $node */
-        $node = ExpressEntryCategory::getNodeByName(\Concrete\Block\ExpressForm\Controller::FORM_RESULTS_CATEGORY_NAME);
-        if (!$node) {
-            return [];
-        }
-
-        // Once we have the category 'Form Results', let's grab all the entries
-        $node->populateDirectChildrenOnly();
+        /** @var ExpressForm $form */
+        $form = $this->app->make(ExpressForm::class);
 
         $forms = [];
-
-        foreach ($node->getChildNodes() as $child) {
-            /** @var \Concrete\Core\Tree\Node\Node $child */
-            if (!$child instanceof \Concrete\Core\Tree\Node\Type\ExpressEntryResults) {
-                continue;
-            }
-
+        foreach ($form->getFormResultNodes() as $child) {
             $entryList = new EntryList($this->getEntity($child));
 
             $forms[] = [
