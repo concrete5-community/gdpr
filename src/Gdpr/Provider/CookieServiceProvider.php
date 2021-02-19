@@ -9,6 +9,7 @@ use Concrete\Core\Asset\AssetList;
 use Concrete\Core\Config\Repository\Repository;
 use Concrete\Core\Cookie\CookieJar;
 use Concrete\Core\Http\Request;
+use Concrete\Core\Page\Page;
 use Concrete\Core\Routing\RouterInterface;
 
 class CookieServiceProvider implements ApplicationAwareInterface
@@ -115,12 +116,16 @@ class CookieServiceProvider implements ApplicationAwareInterface
         $request = $this->app->make(Request::class);
 
         // Disable in admin area
-        if (strpos($request->getRequestUri(), '/dashboard') !== false) {
+        if (stripos($request->getRequestUri(), '/dashboard') !== false) {
             return false;
         }
 
         // Disable for AJAX requests
         if ($request->isXmlHttpRequest()) {
+            return false;
+        }
+
+        if ($this->isWhitelisted($request)) {
             return false;
         }
 
@@ -139,5 +144,27 @@ class CookieServiceProvider implements ApplicationAwareInterface
         }
 
         return true;
+    }
+
+    /**
+     * Whitelisted pages don't have the cookie consent bar
+     *
+     * E.g. on the /login page
+     *
+     * @param Request $request
+     *
+     * @return bool
+     */
+    private function isWhitelisted(Request $request)
+    {
+        $disabledPages = $this->config->get('gdpr::cookie_consent.disabled_pages', []);
+        if (empty($disabledPages)) {
+            return false;
+        }
+
+        $requestUri = str_replace('/index.php', '', $request->getRequestUri());
+        $requestUri = rtrim($requestUri, '/');
+
+        return in_array($requestUri, $disabledPages);
     }
 }

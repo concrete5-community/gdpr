@@ -69,7 +69,15 @@ if ($sent) {
             ?>
         </div>
 
-        <button class="btn btn-primary" type="submit"><?php echo t('Send Email') ?></button>
+        <div class="ccm-dashboard-form-actions-wrapper">
+            <div class="ccm-dashboard-form-actions">
+                <?php
+                echo $form->submit('submit', t('Send Email'), [
+                    'class' => 'btn-primary pull-right'
+                ]);
+                ?>
+            </div>
+        </div
     </form>
 </div>
 

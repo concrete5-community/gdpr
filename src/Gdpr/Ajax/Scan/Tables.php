@@ -125,6 +125,7 @@ class Tables extends AjaxController
         $ignoreFixedTables = (bool) $this->config->get('gdpr.scan.tables.ignore_fixed_tables', false);
         $ignoreEmptyTables = (bool) $this->config->get('gdpr.scan.tables.ignore_empty_tables', true);
         $ignoreCoreTables = (bool) $this->config->get('gdpr.scan.tables.ignore_core_tables', false);
+        $whitelist = $this->config->get('gdpr::database_tables.whitelist');
 
         /** @var StatusRepository $statusRepository */
         $statusRepository = $this->app->make(StatusRepository::class);
@@ -143,6 +144,10 @@ class Tables extends AjaxController
 
             $status = $this->getStatus($table->getName(), $statusRepository, $takenCareOf);
             if ($ignoreFixedTables && $status->isFixed()) {
+                continue;
+            }
+
+            if (in_array($table->getName(), $whitelist)) {
                 continue;
             }
 
@@ -209,7 +214,6 @@ class Tables extends AjaxController
             $this->coreTables[] = $name;
         }
 
-
         $entityManager = $this->app->make(EntityManager::class);
         $structureManager = new DatabaseStructureManager($entityManager);
         $entities = $structureManager->getMetadatas();
@@ -218,7 +222,6 @@ class Tables extends AjaxController
             return strpos($entity->getName(), 'Concrete\Core\Entity') !== false;
         });
         $schemaTool = new \Doctrine\ORM\Tools\SchemaTool($entityManager);
-
 
         foreach ($schemaTool->getSchemaFromMetadata($coreEntities)->getTables() as $table) {
             $this->coreTables[] = $table->getName();
@@ -279,9 +282,14 @@ class Tables extends AjaxController
         }
 
         $key = $takenCareOf[$tableName];
+        $status->setFixed(true);
 
         if (isset($key['info'])) {
             $status->setNotes($key['info']);
+        }
+
+        if (isset($key['fixed']) && !$key['fixed']) {
+            $status->setFixed(false);
         }
 
         if (isset($key['c5_version'])) {
@@ -291,8 +299,6 @@ class Tables extends AjaxController
 
             return $status;
         }
-
-        $status->setFixed(true);
 
         return $status;
     }
