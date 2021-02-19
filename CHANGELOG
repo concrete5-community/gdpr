@@ -1,0 +1,78 @@
+0.9.16
+- Fix https detection bug on Forge installs.
+- Check if a tracking code is used.
+
+0.9.15
+- Fix double 'index.php' in link to block type.
+- Make 'Show / Hide Settings' buttons blue / more apparent.
+
+0.9.14
+- Fix preview database table bug when using pagination.
+
+0.9.13
+- Check for a secure connection.
+- Check for email log setting.
+
+0.9.12
+- Add setting to disable loading the concrete5 background on the login page.
+- Add Scan > Overall page with general suggestions / scans.
+
+0.9.11
+- Fix icon in post install screen.
+- Add Data Breach page.
+- Add Data Breach > Notify Users page.
+
+0.9.10
+- Add help icon to post install screen to inform user about the help system.
+- Add help to Checklist page.
+- Move default database columns to package config.
+- Improve help on Scan > Blocks page.
+- Improve help on Scan > Tables page.
+- Improve help on Scan > Packages page.
+
+0.9.9
+- Allow files to be reassigned to the super user.
+
+0.9.8
+- Add a page to search and remove Log entries.
+- Sort Express Form submissions descending.
+
+0.9.7
+- Add a setting to disable tracking codes.
+
+0.9.6
+- Add dialog to preview the contents of a database table.
+
+0.9.5
+- Add page to remove Orphaned Files.
+
+0.9.4
+- Add Cleanup page.
+- Add Cleanup > Express Forms page.
+- Add functionality to clean up Express Form submissions.
+
+0.9.3
+- Add button to toggle settings for scan pages.
+- Add block type handle under the name. (Scan > Blocks page)
+- Use regex for table column matching.
+
+0.9.2
+- Simplify translations.
+- Remove core_conversation_message from blocks.
+- Combine columns in Table scan.
+- Add help text to various columns on the Scan pages.
+
+0.9.1
+- Show number of records per table.
+- Move help texts to dashboard help launcher.
+- Move tables settings to Scan > Tables page.
+- Move blocks settings to Scan > Blocks page.
+- Move packages settings to Scan > Packages page.
+- Add setting to ignore core tables.
+- Add setting to ignore empty tables.
+- Add setting to ignore core blocks.
+- Use Block Type name instead of handle.
+- Add package and block icons.
+
+0.9.0
+- Initial PRB submission.

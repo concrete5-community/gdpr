@@ -1,0 +1,52 @@
+.dataTables_length {
+    margin-bottom: 10px;
+}
+
+.ccm-ui .dataTables_length label {
+    font-weight: normal;
+}
+
+.m-b-20 {
+    margin-bottom: 20px;
+}
+
+.m-b-none {
+    margin-bottom: 0 !important;
+}
+
+.fa-check {
+    color: #009688;
+}
+
+.fa-warning {
+    color: #dc9944;
+}
+
+.settings {
+    padding: 20px;
+    border: 1px solid #eee;
+    margin-bottom: 20px;
+}
+
+.settings-section {
+    margin-bottom: 20px;
+}
+
+.settings-section header {
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    border-bottom: 1px solid #eee;
+}
+
+.ccm-ui .page-scan-packages .package-icon,
+.ccm-ui .page-scan-blocks .block-icon
+{
+    display: block;
+    margin: 0 auto;
+}
+
+.orphaned-files-table tbody tr,
+.logs-table tbody tr {
+    cursor: pointer;
+}

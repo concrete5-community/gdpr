@@ -1,0 +1,123 @@
+[
+  {
+    "handle": "privacy_policy_page",
+    "name": "A privacy page exists",
+    "description": "",
+    "category": "Privacy Policy"
+  },
+  {
+    "handle": "privacy_policy_understandable",
+    "name": "The document is clear and understandable",
+    "description": "",
+    "category": "Privacy Policy"
+  },
+  {
+    "handle": "privacy_policy_accessible",
+    "name": "The document is accessible",
+    "description": "E.g. linked to from the footer",
+    "category": "Privacy Policy"
+  },
+
+
+  {
+    "handle": "custom_code_users_download_data",
+    "name": "Users can easily download their data",
+    "description": "",
+    "category": "User Data"
+  },
+  {
+    "handle": "custom_code_users_modify_data",
+    "name": "Users can easily modify their data",
+    "description": "",
+    "category": "User Data"
+  },
+  {
+    "handle": "custom_code_users_can_delete_account",
+    "name": "Users can delete their account",
+    "description": "",
+    "category": "User Data"
+  },
+  {
+    "handle": "custom_code_user_form_data",
+    "name": "Form records that relate to the user are taken care of",
+    "description": "",
+    "category": "User Data"
+  },
+  {
+    "handle": "custom_code_user_files",
+    "name": "Files that relate to the user are taken care of",
+    "description": "",
+    "category": "User Data"
+  },
+  {
+    "handle": "custom_code_user_express",
+    "name": "Express records that relate to the user are taken care of",
+    "description": "",
+    "category": "User Data"
+  },
+  {
+    "handle": "custom_code_user_logs",
+    "name": "Log records that relate to the user are taken care of",
+    "description": "",
+    "category": "User Data"
+  },
+  {
+    "handle": "custom_code_packages",
+    "name": "All packages have been reviewed",
+    "description": "",
+    "category": "User Data"
+  },
+  {
+    "handle": "custom_code_blocks",
+    "name": "All blocks have been reviewed",
+    "description": "",
+    "category": "User Data"
+  },
+  {
+    "handle": "custom_code_tables",
+    "name": "All database tables have been reviewed",
+    "description": "",
+    "category": "User Data"
+  },
+
+  {
+    "handle": "consent_cookies",
+    "name": "Visitors are asked before placing any cookies",
+    "description": "",
+    "category": "Consents"
+  },
+  {
+    "handle": "consent_terms",
+    "name": "New users need to accept terms during registration",
+    "description": "",
+    "category": "Consents"
+  },
+  {
+    "handle": "consent_terms_existing_users",
+    "name": "Existing users have been asked to accept the terms",
+    "description": "",
+    "category": "Consents"
+  },
+
+
+  {
+    "handle": "third_parties_contracts",
+    "name": "There is a contract with all data processors",
+    "description": "",
+    "category": "Third Parties"
+  },
+  {
+    "handle": "third_parties_policy",
+    "name": "If data is processed, it's mentioned in the Privacy Policy",
+    "description": "",
+    "category": "Third Parties"
+  },
+
+
+  {
+    "handle": "security_ssl",
+    "name": "A secured connection is used to access the website",
+    "description": "",
+    "category": "Security"
+  }
+]
