@@ -20,6 +20,7 @@ final class Settings extends DashboardController
         $this->set('disableTrackingCode', (bool) $this->config->get('gdpr.settings.tracking.disabled', false));
 
         // concrete5.org
+        $this->set('redirectWelcomePage', (bool) $this->config->get('gdpr.settings.redirect_welcome_page'));
         $this->set('disableMarketplaceIntegration', !(bool) $this->config->get('concrete.marketplace.enabled'));
         $this->set('disableMarketplaceIntelligentSearch', !(bool) $this->config->get('concrete.marketplace.intelligent_search'));
         $this->set('disableExternalIntelligentSearchHelp', !(bool) $this->config->get('concrete.external.intelligent_search_help'));
@@ -44,6 +45,7 @@ final class Settings extends DashboardController
         $this->config->save('gdpr.settings.tracking.disabled', (bool) $this->post('disableTrackingCode'));
 
         // concrete5.org
+        $this->config->save('gdpr.settings.redirect_welcome_page', (bool) $this->post('redirectWelcomePage'));
         $this->config->save('concrete.marketplace.enabled', !(bool) $this->post('disableMarketplaceIntegration'));
         $this->config->save('concrete.marketplace.intelligent_search', !(bool) $this->post('disableMarketplaceIntelligentSearch'));
         $this->config->save('concrete.external.intelligent_search_help', !(bool) $this->post('disableExternalIntelligentSearchHelp'));

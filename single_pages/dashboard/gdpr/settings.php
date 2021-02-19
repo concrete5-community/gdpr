@@ -90,6 +90,18 @@ defined('C5_EXECUTE') or die('Access Denied.');
 
             <div class="form-group">
                 <label class="control-label launch-tooltip"
+                       title="<?php echo t("The welcome page aggregates various remote data. Not requesting it would improve privacy. By enabling this setting, the user is redirected to the '%s' page.", t('Waiting for Me')) ?>"
+                       for="redirectWelcomePage">
+                    <?php
+                    /** @var bool $redirectWelcomePage */
+                    echo $form->checkbox('redirectWelcomePage', 1, $redirectWelcomePage);
+                    ?>
+                    <?php echo t('Redirect Welcome page'); ?>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label launch-tooltip"
                        title="<?php echo t("When disabled, the site won't try to connect to the external marketplace and won't be able to '%s'.", t('Connect to the Community')) ?>"
                        for="disableMarketplaceIntegration">
                     <?php
@@ -138,7 +150,8 @@ defined('C5_EXECUTE') or die('Access Denied.');
                     echo t('Note: there is %sa bug%s in concrete5 that ignores this setting.',
                         '<a target="_blank" href="https://github.com/concrete5/concrete5/issues/6933">',
                         ' <i class="fa fa-external-link"></i></a>'
-                    ); ?></small>
+                    ); ?>
+                </small>
             </div>
 
             <div class="form-group">

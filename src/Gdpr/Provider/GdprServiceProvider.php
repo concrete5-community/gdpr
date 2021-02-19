@@ -5,6 +5,8 @@ namespace A3020\Gdpr\Provider;
 use Concrete\Core\Application\ApplicationAwareInterface;
 use Concrete\Core\Application\ApplicationAwareTrait;
 use Concrete\Core\Config\Repository\Repository;
+use Concrete\Core\Http\ResponseFactoryInterface;
+use Concrete\Core\Routing\Redirect;
 use Concrete\Core\Routing\RouterInterface;
 
 class GdprServiceProvider implements ApplicationAwareInterface
@@ -65,6 +67,13 @@ class GdprServiceProvider implements ApplicationAwareInterface
                 '\A3020\Gdpr\Ajax\Foundation\DismissReview::view',
             ],
         ]);
+
+        // Redirect 'Welcome' page to 'Waiting for Me'
+        if ((bool) $this->config->get('gdpr.settings.redirect_welcome_page')) {
+            $router->register('/dashboard/welcome', function() {
+                return Redirect::to('/dashboard/welcome/me');
+            });
+        }
     }
 
     private function registerListeners()

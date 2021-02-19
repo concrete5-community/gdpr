@@ -1,3 +1,6 @@
+1.7.1
+- Add redirect setting for Welcome page to improve privacy.
+
 1.7.0
 - Add settings to control connections to concrete5.org.
 - Use help-blocks to improve UI.
