@@ -23,6 +23,18 @@ $app->make('help')->display(
         ?>
 
         <section class="settings-section">
+            <div class="form-group alert alert-warning">
+                <label class="control-label launch-tooltip"
+                       title="<?php echo t("In case your form has an upload field, you may want to delete the associated files as well. Please note that these files might be used elsewhere in the system.") ?>"
+                       for="deleteAssociatedFiles">
+                    <?php
+                    /** @var bool $deleteAssociatedFiles */
+                    echo $form->checkbox('deleteAssociatedFiles', 1, $deleteAssociatedFiles);
+                    ?>
+                    <?php echo t('When deleting form submissions, also delete associated files'); ?>
+                </label>
+            </div>
+
             <div class="form-group alert alert-success">
                 <label class="control-label launch-tooltip"
                        title="<?php echo t("Form submissions are always stored. To remove form submissions automatically, you can run and schedule the job via Automated Tasks. If you uncheck this option, the job will be uninstalled.") ?>"
@@ -32,18 +44,6 @@ $app->make('help')->display(
                     echo $form->checkbox('enableJobToRemoveFormSubmissions', 1, $enableJobToRemoveFormSubmissions);
                     ?>
                     <?php echo t('Enable an Automated Job that could remove Express Form submissions'); ?>
-                </label>
-            </div>
-
-            <div class="form-group alert alert-warning <?php echo $enableJobToRemoveFormSubmissions ? '' : 'hide' ?> express-form-toggle">
-                <label class="control-label launch-tooltip"
-                       title="<?php echo t("In case your form has an upload field, you may want to delete the associated files as well. Please note that these files might be used elsewhere in the system.") ?>"
-                       for="deleteAssociatedFiles">
-                    <?php
-                    /** @var bool $deleteAssociatedFiles */
-                    echo $form->checkbox('deleteAssociatedFiles', 1, $deleteAssociatedFiles);
-                    ?>
-                    <?php echo t('Delete associated files from these form submissions'); ?>
                 </label>
             </div>
 

@@ -36,7 +36,7 @@ final class ExpressForms extends DashboardController
 
         $this->set('formInformation', $formInformation);
         $this->set('enableJobToRemoveFormSubmissions', $this->jobInstallService->isInstalled('gdpr_remove_form_submissions'));
-        $this->set('deleteAssociatedFiles', $this->config->get('gdpr.settings.express_forms.delete_files', true));
+        $this->set('deleteAssociatedFiles', $this->config->get('gdpr.settings.express_forms.delete_files', false));
         $this->set('expressFormsKeepDays', $this->config->get('gdpr.settings.express_forms.keep_days'));
     }
 
@@ -147,7 +147,7 @@ final class ExpressForms extends DashboardController
     private function getOptions()
     {
         return [
-            'delete_files' => (bool) $this->config->get('gdpr.settings.express_forms.delete_files', true),
+            'delete_files' => (bool) $this->config->get('gdpr.settings.express_forms.delete_files', false),
         ];
     }
 }
