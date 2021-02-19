@@ -1,5 +1,5 @@
 (function() {
-    var consentRoute = CCM_REL + CCM_DISPATCHER_FILENAME + '/ccm/system/gdpr/consent';
+    var consentRoute = CCM_DISPATCHER_FILENAME + '/ccm/system/gdpr/consent';
 
     var GdprCookie = {
         reset: function() {

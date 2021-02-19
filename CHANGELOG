@@ -1,3 +1,6 @@
+1.6.4
+- Fix bug that consent route was incorrect on installations loaded from a sub directory.
+
 1.6.3
 - Make deleting associated files disabled by default.
 - Don't toggle the setting depending on automated job.
