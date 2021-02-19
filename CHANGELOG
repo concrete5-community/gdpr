@@ -1,3 +1,9 @@
+1.0.5
+- Make it possible to change the 'status' of tables. (Tables scan)
+- Add option to ignore / hide tables that have been marked as GDPR compliant. (Tables scan)
+- Change "Core table" to "Default table", otherwise e.g. SearchIndex tables were not labelled OK.
+- Check whether default tables are handled, meaning that user data is deleted when a user is deleted.
+
 1.0.4
 - Add option to ignore / hide blocks that have been marked as GDPR compliant. (Blocks scan)
 - Change 'Comments' field to 'Notes'.

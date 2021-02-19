@@ -39,17 +39,23 @@ class GdprServiceProvider implements ApplicationAwareInterface
             '/ccm/system/gdpr/scan/blocks' => [
                 '\A3020\Gdpr\Ajax\Scan\Blocks::view',
             ],
-            '/ccm/system/gdpr/scan/packages' => [
-                '\A3020\Gdpr\Ajax\Scan\Packages::view',
-            ],
-            '/ccm/system/gdpr/scan/table/{tableName}' => [
-                '\A3020\Gdpr\Ajax\Scan\Tables::peek',
-            ],
             '/ccm/system/gdpr/scan/block/{blockTypeHandle}/{pageId}' => [
                 '\A3020\Gdpr\Ajax\Scan\Blocks::status',
             ],
             '/ccm/system/gdpr/scan/block/save' => [
                 '\A3020\Gdpr\Ajax\Scan\Blocks::saveStatus',
+            ],
+            '/ccm/system/gdpr/scan/packages' => [
+                '\A3020\Gdpr\Ajax\Scan\Packages::view',
+            ],
+            '/ccm/system/gdpr/scan/table/preview/{tableName}' => [
+                '\A3020\Gdpr\Ajax\Scan\Tables::peek',
+            ],
+            '/ccm/system/gdpr/scan/table/status/save' => [
+                '\A3020\Gdpr\Ajax\Scan\Tables::saveStatus',
+            ],
+            '/ccm/system/gdpr/scan/table/status/{tableName}' => [
+                '\A3020\Gdpr\Ajax\Scan\Tables::status',
             ],
         ]);
     }

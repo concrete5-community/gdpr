@@ -34,6 +34,17 @@ $app->make('help')->display(
             ?>
 
             <div class="form-group">
+                <label class="control-label" for="ignoreFixedTables">
+                    <?php
+                    /** @var $ignoreFixedTables bool */
+                    echo $form->checkbox('ignoreFixedTables', 1, $ignoreFixedTables);
+                    ?>
+
+                    <?php echo t("Ignore tables that are marked as compliant"); ?>
+                </label>
+            </div>
+
+            <div class="form-group">
                 <label class="control-label" for="ignoreEmptyTables">
                     <?php
                     /** @var $ignoreEmptyTables bool */
@@ -90,11 +101,20 @@ $app->make('help')->display(
                 </th>
                 <th>
                     <?php
-                    echo t('Core');
+                    echo t('Status');
                     ?>
 
                     <i class="text-muted launch-tooltip fa fa-question-circle"
-                       title="<?php echo t("Whether this is part of the concrete5 core."); ?>">
+                       title="<?php echo t("Mark your own custom tables once they are GDPR compliant. Some default tables might already be checked, because the related user data is deleted when a user is deleted."); ?>">
+                    </i>
+                </th>
+                <th>
+                    <?php
+                    echo t('Default table');
+                    ?>
+
+                    <i class="text-muted launch-tooltip fa fa-question-circle"
+                       title="<?php echo t("A default table is present on a fresh installation."); ?>">
                     </i>
                 </th>
             </tr>
@@ -104,15 +124,15 @@ $app->make('help')->display(
 
 <script>
 $(document).ready(function() {
-    var DataTable = $('#tbl-tables');
-    DataTable.DataTable({
+    var DataTableElement = $('#tbl-tables');
+    var DataTable = DataTableElement.DataTable({
         ajax: '<?php echo Url::to('/ccm/system/gdpr/scan/tables') ?>',
         lengthMenu: [[15, 40, 80, -1], [15, 40, 80, '<?php echo t('All') ?>']],
         columns: [
             {
                 data: function(row, type, val) {
                     var html = '';
-                    html += '<a href="#" title="<?php echo t('Open table preview') ?>" data-dialog="table-preview" data-table-name="'+row.table_name+'">';
+                    html += '<a href="#" title="<?php echo t('Open table preview') ?>" data-dialog="preview" data-table-name="'+row.table_name+'">';
                     html += row.table_name + ' ('+row.table_row_total+')';
                     html += '</a>';
 
@@ -126,22 +146,52 @@ $(document).ready(function() {
             },
             {
                 data: function(row, type, val) {
+                    var html = '<a href="#"  data-dialog="status" data-table-name="'+row.table_name+'" class="btn btn-default">';
+
+                    if (row.status.fixed) {
+                        html += '<i class="fa fa-check">';
+                    } else {
+                        html += '<i class="fa fa-warning">';
+                    }
+
+                    html += '</i></a>';
+
+                    return html;
+                }
+            },
+            {
+                data: function(row, type, val) {
                     return row.is_core_table === true ? '<?php echo t('Yes') ?>' : '<?php echo t('No') ?>';
                 }
             }
         ],
-        order: [[ 2, "asc" ]]
+        order: [[ 3, "asc" ]]
     });
 
-    DataTable.on('click', '[data-dialog]', function() {
+    DataTableElement.on('click', '[data-dialog="preview"]', function() {
         var tableName = $(this).data('table-name');
 
         jQuery.fn.dialog.open({
-            href: '<?php echo Url::to('/ccm/system/gdpr/scan/table') ?>/'+tableName,
+            href: '<?php echo Url::to('/ccm/system/gdpr/scan/table/preview') ?>/'+tableName,
             modal: true,
             width: 960,
             height: 600,
             title: '<?php echo t('Table preview') ?>: '+ tableName
+        });
+    });
+
+    DataTableElement.on('click', '[data-dialog="status"]', function() {
+        var tableName = $(this).data('table-name');
+
+        jQuery.fn.dialog.open({
+            href: '<?php echo Url::to('/ccm/system/gdpr/scan/table/status') ?>/'+tableName,
+            modal: true,
+            width: 650,
+            height: 350,
+            title: '<?php echo t('Change table status') ?>',
+            onClose: function() {
+                DataTable.ajax.reload();
+            }
         });
     });
 });

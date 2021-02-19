@@ -3,14 +3,18 @@
 namespace A3020\Gdpr\Ajax\Scan;
 
 use A3020\Gdpr\Controller\AjaxController;
+use A3020\Gdpr\Entity\TableScanStatus;
+use A3020\Gdpr\Scan\Table\StatusRepository;
 use Concrete\Core\Block\BlockType\BlockTypeList;
 use Concrete\Core\Config\Repository\Repository;
 use Concrete\Core\Database\Connection\Connection;
 use Concrete\Core\Database\DatabaseStructureManager;
 use Concrete\Core\Http\Response;
 use Concrete\Core\Http\ResponseFactory;
+use Concrete\Core\Support\Facade\Url;
 use Concrete\Core\View\View;
 use Doctrine\ORM\EntityManager;
+use Exception;
 
 class Tables extends AjaxController
 {
@@ -36,6 +40,56 @@ class Tables extends AjaxController
         ]);
 
         return Response::create($view->render());
+    }
+
+    public function status($tableName = null)
+    {
+        /** @var StatusRepository $statusRepository */
+        $statusRepository = $this->app->make(StatusRepository::class);
+
+        $status = $statusRepository->findByTableName($tableName);
+        $status = $status ? $status : $this->getSystemStatus($tableName, $this->config->get('gdpr::database_tables.taken_care_of.default'));
+
+        $view = new View('scan/tables/status');
+        $view->setPackageHandle('gdpr');
+        $view->addScopeItems([
+            'action' => Url::to('/ccm/system/gdpr/scan/table/status/save'),
+            'token' => $this->app->make('token'),
+            'form' => $this->app->make('helper/form'),
+            'tableName' => $tableName,
+            'status' => $status,
+        ]);
+
+        return Response::create($view->render());
+    }
+
+    public function saveStatus()
+    {
+        if (!$this->app->make('token')->validate('gdpr.scan.tables.status')) {
+            throw new Exception(t('Invalid form token'));
+        }
+
+        /** @var StatusRepository $statusRepository */
+        $statusRepository = $this->app->make(StatusRepository::class);
+
+        if ($this->post('id')) {
+            $status = $statusRepository->find($this->post('id'));
+            if (!$status) {
+                throw new Exception('Invalid request');
+            }
+        } else {
+            $status = new TableScanStatus();
+            $status->setTableName($this->post('tableName'));
+        }
+
+        $status->setFixed($this->post('fixed'));
+        $status->setNotes($this->post('notes'));
+
+        $statusRepository->save($status);
+
+        return $this->app->make(ResponseFactory::class)->json([
+            'success' => true,
+        ]);
     }
 
     /**
@@ -67,8 +121,13 @@ class Tables extends AjaxController
         $searchFor = $this->getSearchFor();
         $searchForRegex = implode('|', $searchFor);
 
+        $takenCareOf = $this->config->get('gdpr::database_tables.taken_care_of.default');
+        $ignoreFixedTables = (bool) $this->config->get('gdpr.scan.tables.ignore_fixed_tables', false);
         $ignoreEmptyTables = (bool) $this->config->get('gdpr.scan.tables.ignore_empty_tables', true);
         $ignoreCoreTables = (bool) $this->config->get('gdpr.scan.tables.ignore_core_tables', false);
+
+        /** @var StatusRepository $statusRepository */
+        $statusRepository = $this->app->make(StatusRepository::class);
 
         $records = [];
         foreach ($this->getSchemaManager()->listTables() as $table) {
@@ -82,10 +141,16 @@ class Tables extends AjaxController
                 continue;
             }
 
+            $status = $this->getStatus($table->getName(), $statusRepository, $takenCareOf);
+            if ($ignoreFixedTables && $status->isFixed()) {
+                continue;
+            }
+
             $record = [
                 'table_name' => $table->getName(),
                 'table_row_total' => t2('%s row', '%s rows', $totalRows),
                 'is_core_table' => $isCoreTable,
+                'status' => $status,
             ];
 
             $columns = [];
@@ -202,5 +267,50 @@ class Tables extends AjaxController
         $connection = $this->app['database']->connection();
 
         return $connection->getSchemaManager();
+    }
+
+    private function getSystemStatus($tableName, $takenCareOf)
+    {
+        $status = new TableScanStatus();
+        $status->isSystemStatus(true);
+
+        if (!isset($takenCareOf[$tableName])) {
+            return $status;
+        }
+
+        $key = $takenCareOf[$tableName];
+
+        if (isset($key['info'])) {
+            $status->setNotes($key['info']);
+        }
+
+        if (isset($key['c5_version'])) {
+            // If currently installed version is lower than the version needed
+            // then it's not fixed. The user should upgrade the core.
+            $status->setFixed(!(version_compare($this->config->get('concrete.version_installed'), $key['c5_version']) === -1));
+
+            return $status;
+        }
+
+        $status->setFixed(true);
+
+        return $status;
+    }
+
+    /**
+     * @param string $tableName
+     * @param StatusRepository $statusRepository
+     * @param array $takenCareOf
+     *
+     * @return TableScanStatus
+     */
+    private function getStatus($tableName, $statusRepository, $takenCareOf)
+    {
+        $userStatus = $statusRepository->findByTableName($tableName);
+        if ($userStatus) {
+            return $userStatus;
+        }
+
+        return $this->getSystemStatus($tableName, $takenCareOf);
     }
 }

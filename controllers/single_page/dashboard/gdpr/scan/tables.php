@@ -12,6 +12,7 @@ final class Tables extends DashboardController
 
     public function view()
     {
+        $this->set('ignoreFixedTables', (bool) $this->config->get('gdpr.scan.tables.ignore_fixed_tables', false));
         $this->set('ignoreEmptyTables', (bool) $this->config->get('gdpr.scan.tables.ignore_empty_tables', true));
         $this->set('ignoreCoreTables', (bool) $this->config->get('gdpr.scan.tables.ignore_core_tables', false));
         $this->set('customTableColumns', implode("\n", $this->config->get('gdpr.scan.tables.custom', [])));
@@ -29,6 +30,7 @@ final class Tables extends DashboardController
         /** @var Helper $helper */
         $helper = $this->app->make(Helper::class);
 
+        $this->config->save('gdpr.scan.tables.ignore_fixed_tables', (bool) $this->post('ignoreFixedTables'));
         $this->config->save('gdpr.scan.tables.ignore_empty_tables', (bool) $this->post('ignoreEmptyTables'));
         $this->config->save('gdpr.scan.tables.ignore_core_tables', (bool ) $this->post('ignoreCoreTables'));
         $this->config->save('gdpr.scan.tables.custom', $helper->convertTextArea($this->post('customTableColumns')));
