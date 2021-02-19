@@ -82,8 +82,8 @@ $app->make('help')->display(
                 <i class="fa fa-warning"></i>
                 <?php
                 echo t("Database queries are logged in concrete5. You probably want this to be disabled on production as it slows down each request and because the queries might contain personal data.").' '.
-                    t("Consider disabling this via the %sLogging Settings%s.",
-                        '<a href="'.Url::to('/dashboard/system/environment/logging').'">', '</a>'
+                    t(/*i18n: %s is the name of a page*/ 'Consider disabling this via the %s.',
+                        sprintf('<a href="' . Url::to('/dashboard/system/environment/logging') . '">%s</a>', t('Logging Settings'))
                     );
                 ?>
             </p>
@@ -170,7 +170,7 @@ $app->make('help')->display(
             <p>
                 <i class="fa fa-warning"></i>
                 <?php
-                echo t("A non-default SMTP server is detected: (%s). Please check if data is sent to e.g. %s, %s, or %s. You might need an agreement with this service.",
+                echo t("A non-default SMTP server is detected: %s. Please check if data is sent to e.g. %s, %s, or %s. You might need an agreement with this service.",
                     $smtpServer, "Mailgun", "SparkPost", "Sendgrid").'<br>'.
                     t("To view the current settings, go to %sSMTP method%s.",
                     '<a href="'.Url::to('/dashboard/system/mail/method').'">', '</a>');
@@ -198,15 +198,15 @@ $app->make('help')->display(
             <p>
                 <i class="fa fa-warning"></i>
                 <?php
-                echo t("It seems that the %s geo locator is active and may be used. Please note that this service can send IP addresses to the %s server.",
-                        t('geoPlugin'), "MaxMind"
-                    ).' '.
+                echo t('It seems that the %s geo locator is active and may be used. Please note that this service can send IP addresses to the %s server.',
+                        tc('GeolocatorName', 'geoPlugin'), t('MaxMind')
+                    ) . ' ' .
 
-                    t("A good alternative might be to download the %s database using the free %sGeolocation with MaxMind GeoIP2%s add-on.",
+                    t('A good alternative might be to download the %s database using the free %sGeolocation with MaxMind GeoIP2%s add-on.',
                         'MaxMind', '<a href="https://www.concrete5.org/marketplace/addons/maxmind-geoip2-geolocator" target="_blank">', '</a>'
-                    ).' '.
+                    ) . ' ' .
 
-                    t("To review the settings, go to the %sGeolocation page%s.",
+                    t('To review the settings, go to the %sGeolocation page%s.',
                         '<a href="'.Url::to('/dashboard/system/environment/geolocation').'">', '</a>'
                     );
                 ?>

@@ -16,7 +16,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
 
             <div class="form-group alert alert-success">
                 <label class="control-label launch-tooltip"
-                       title="<?php echo t('This will automatically remove associated user logs when a user is deleted. This is done based on the uID column in the Logs table.'); ?>"
+                       title="<?php echo t('This will automatically remove associated user logs when a user is deleted. This is done based on the %1$s column in the %2$s table.', 'uID', 'Logs'); ?>"
                        for="removeBasedOnUserId">
                     <?php
                     /** @var bool $removeBasedOnUserId */

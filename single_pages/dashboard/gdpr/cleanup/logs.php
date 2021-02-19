@@ -41,7 +41,7 @@ $app->make('help')->display(
 
             <div class="form-group">
                 <label class="control-label launch-tooltip"
-                       title="<?php echo t("The channel 'LOG_TYPE_EMAILS' will be used to search for emails.") ?>"
+                       title="<?php echo t(/*i18n: %s is the name of a channel*/"The channel '%s' will be used to search for emails.", "LOG_TYPE_EMAILS") ?>"
                        for="sentEmails">
                     <?php
                     /** @var $sentEmails bool */
@@ -120,7 +120,7 @@ $app->make('help')->display(
                         <th style="width: 20px;"><input type="checkbox" id="inp-check-all-logs"></th>
                         <th style="width: 200px;"><?php echo t('Created at'); ?></th>
                         <th style="width: 180px;"><?php echo t('Username'); ?></th>
-                        <th><?php echo t('Log message'); ?></th>
+                        <th><?php echo tc('Message of the log', 'Log message'); ?></th>
                     </tr>
                 </thead>
                 <tbody>

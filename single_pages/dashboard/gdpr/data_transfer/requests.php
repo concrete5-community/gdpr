@@ -20,7 +20,7 @@ $app->make('help')->display(
     <table class="table" id="tbl-requests">
         <thead>
             <tr>
-                <th><?php echo t('Requested at') ?></th>
+                <th><?php echo tc('Describes a date value', 'Requested at') ?></th>
                 <th><?php echo t('User') ?></th>
                 <th><?php echo t('Mailed at') ?></th>
             </tr>
