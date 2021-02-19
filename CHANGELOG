@@ -1,3 +1,6 @@
+1.0
+- Approved by PRB.
+
 0.9.16
 - Fix https detection bug on Forge installs.
 - Check if a tracking code is used.
