@@ -16,9 +16,15 @@ final class Settings extends DashboardController
         $this->set('removeBasedOnEmailAddress', (bool) $this->config->get('gdpr.settings.logs.remove_based_on_email_address', false));
 
         // Tracking
-        $this->set('disableConcreteBackground', (bool) $this->config->get('concrete.white_label.background_url'));
         $this->set('trackingCodeFound', $this->hasTrackingCode());
         $this->set('disableTrackingCode', (bool) $this->config->get('gdpr.settings.tracking.disabled', false));
+
+        // concrete5.org
+        $this->set('disableMarketplaceIntegration', !(bool) $this->config->get('concrete.marketplace.enabled'));
+        $this->set('disableMarketplaceIntelligentSearch', !(bool) $this->config->get('concrete.marketplace.intelligent_search'));
+        $this->set('disableExternalIntelligentSearchHelp', !(bool) $this->config->get('concrete.external.intelligent_search_help'));
+        $this->set('disableExternalNews', !(bool) $this->config->get('concrete.external.news'));
+        $this->set('disableConcreteBackground', (bool) $this->config->get('concrete.white_label.background_url'));
     }
 
     public function save()
@@ -35,13 +41,19 @@ final class Settings extends DashboardController
         $this->config->save('gdpr.settings.logs.remove_based_on_email_address', (bool) $this->post('removeBasedOnEmailAddress'));
 
         // Tracking
+        $this->config->save('gdpr.settings.tracking.disabled', (bool) $this->post('disableTrackingCode'));
+
+        // concrete5.org
+        $this->config->save('concrete.marketplace.enabled', !(bool) $this->post('disableMarketplaceIntegration'));
+        $this->config->save('concrete.marketplace.intelligent_search', !(bool) $this->post('disableMarketplaceIntelligentSearch'));
+        $this->config->save('concrete.external.intelligent_search_help', !(bool) $this->post('disableExternalIntelligentSearchHelp'));
+        $this->config->save('concrete.external.news', !(bool) $this->post('disableExternalNews'));
+
         if ((bool) $this->post('disableConcreteBackground')) {
             $this->config->save('concrete.white_label.background_url', 'none');
         } else {
             $this->config->save('concrete.white_label.background_url', false);
         }
-
-        $this->config->save('gdpr.settings.tracking.disabled', (bool) $this->post('disableTrackingCode'));
 
         $this->flash('success', t('Your settings have been saved.'));
 

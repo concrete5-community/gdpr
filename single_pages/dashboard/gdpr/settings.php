@@ -47,7 +47,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
                     <?php echo t('Enable removing user logs in which the username is present'); ?>
                 </label><br>
 
-                <small>
+                <small class="help-block">
                     <?php
                     echo t("Make sure you know what you're doing when changing this option.");
                     ?>
@@ -57,18 +57,6 @@ defined('C5_EXECUTE') or die('Access Denied.');
 
         <section class="settings-section">
             <header><?php echo t('Tracking'); ?></header>
-
-            <div class="form-group">
-                <label class="control-label launch-tooltip"
-                       title="<?php echo t("concrete5 might pull background images from an external server for the login page. This could leak the visitor's IP address.") ?>"
-                       for="disableConcreteBackground">
-                    <?php
-                    /** @var bool $disableConcreteBackground */
-                    echo $form->checkbox('disableConcreteBackground', 1, $disableConcreteBackground);
-                    ?>
-                    <?php echo t('Disable concrete5 background on Login page'); ?>
-                </label>
-            </div>
 
             <div class="form-group">
                 <label class="control-label launch-tooltip"
@@ -86,11 +74,83 @@ defined('C5_EXECUTE') or die('Access Denied.');
                 <?php
                 /** @var bool $trackingCodeFound */
                 if ($trackingCodeFound) {
-                    echo '<small>'.t('There is a tracking code configured.').'</small>';
+                    echo '<small class="help-block">'.t('There is a tracking code configured.').'</small>';
                 } else {
-                    echo '<small>'.t('No tracking code is currently installed.').'</small>';
+                    echo '<small class="help-block">'.t('No tracking code is currently installed.').'</small>';
                 }
                 ?>
+            </div>
+        </section>
+
+        <section class="settings-section">
+            <header><?php echo t('Connections with concrete5.org'); ?></header>
+            <small class="help-block">
+                <?php echo t('It may be needed to logout / login in order to see the effect of the settings below.'); ?>
+            </small>
+
+            <div class="form-group">
+                <label class="control-label launch-tooltip"
+                       title="<?php echo t("When disabled, the site won't try to connect to the external marketplace and won't be able to '%s'.", t('Connect to the Community')) ?>"
+                       for="disableMarketplaceIntegration">
+                    <?php
+                    /** @var bool $disableMarketplaceIntegration */
+                    echo $form->checkbox('disableMarketplaceIntegration', 1, $disableMarketplaceIntegration);
+                    ?>
+                    <?php echo t('Disable marketplace integration'); ?>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label launch-tooltip"
+                       title="<?php echo t("When disabled, themes and add-ons that match the search criteria won't be shown in intelligent search.") ?>"
+                       for="disableMarketplaceIntelligentSearch">
+                    <?php
+                    /** @var bool $disableMarketplaceIntelligentSearch */
+                    echo $form->checkbox('disableMarketplaceIntelligentSearch', 1, $disableMarketplaceIntelligentSearch);
+                    ?>
+                    <?php echo t('Disable marketplace intelligent search'); ?>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label launch-tooltip"
+                       title="<?php echo t("When disabled, the documentation site won't be queried.") ?>"
+                       for="disableExternalIntelligentSearchHelp">
+                    <?php
+                    /** @var bool $disableExternalIntelligentSearchHelp */
+                    echo $form->checkbox('disableExternalIntelligentSearchHelp', 1, $disableExternalIntelligentSearchHelp);
+                    ?>
+                    <?php echo t('Disable external intelligent search help'); ?>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label launch-tooltip"
+                       title="<?php echo t("When disabled, external news and updates won't be shown in the news flow.") ?>"
+                       for="disableExternalNews">
+                    <?php
+                    /** @var bool $disableExternalNews */
+                    echo $form->checkbox('disableExternalNews', 1, $disableExternalNews);
+                    ?>
+                    <?php echo t('Disable external news'); ?>
+                </label>
+                <small class="help-block"><?php
+                    echo t('Note: there is %sa bug%s in concrete5 that ignores this setting.',
+                        '<a target="_blank" href="https://github.com/concrete5/concrete5/issues/6933">',
+                        ' <i class="fa fa-external-link"></i></a>'
+                    ); ?></small>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label launch-tooltip"
+                       title="<?php echo t("concrete5 might pull background images from an external server for the login page. This could leak the visitor's IP address.") ?>"
+                       for="disableConcreteBackground">
+                    <?php
+                    /** @var bool $disableConcreteBackground */
+                    echo $form->checkbox('disableConcreteBackground', 1, $disableConcreteBackground);
+                    ?>
+                    <?php echo t('Disable concrete5 background on login page'); ?>
+                </label>
             </div>
         </section>
 
@@ -101,3 +161,4 @@ defined('C5_EXECUTE') or die('Access Denied.');
         </div>
     </form>
 </div>
+

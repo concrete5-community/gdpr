@@ -1,3 +1,7 @@
+1.7.0
+- Add settings to control connections to concrete5.org.
+- Use help-blocks to improve UI.
+
 1.6.13
 - Update database scan for 8.4.2 release. More tables are now GDPR compliant.
 - Simplify package scan translations.

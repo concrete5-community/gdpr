@@ -9,7 +9,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
 <div class="ccm-ui">
     <?php
     if (count($rows) === $maxResults) {
-        echo '<small>'.t('Note: Only %s records are shown.', $maxResults).'</small>';
+        echo '<small class="help-block">'.t('Note: Only %s records are shown.', $maxResults).'</small>';
     }
     ?>
 
