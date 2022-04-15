@@ -73,7 +73,7 @@ if (isset($sent)) {
             <div class="ccm-dashboard-form-actions">
                 <?php
                 echo $form->submit('submit', t('Send Email'), [
-                    'class' => 'btn-primary pull-right'
+                    'class' => 'btn-primary pull-right float-end'
                 ]);
                 ?>
             </div>
