@@ -50,3 +50,32 @@
 .logs-table tbody tr {
     cursor: pointer;
 }
+
+.ccm-ui .pagination > .disabled > a, .ccm-ui .pagination > .disabled > a:hover, .ccm-ui .pagination > .disabled > a:focus {
+    color: #777777;
+    cursor: not-allowed;
+    background-color: #ffffff;
+    border-color:#dddddd
+}
+
+.ccm-ui .pagination > li > a, .ccm-ui .pagination > li > span {
+    position: relative;
+    float: left;
+    padding: 8px 16px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #3f9edc;
+    text-decoration: none;
+    background-color: #ffffff;
+    border:1px solid #dddddd
+}
+
+.ccm-ui .hide {
+    display:none !important
+}
+
+.ccm-ui h3 {
+    font-size:28px;
+    margin-top: 22px;
+    margin-bottom:11px;
+}
