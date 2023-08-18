@@ -9,15 +9,8 @@ $app = Application::getFacadeApplication();
 /** @var \Concrete\Core\Localization\Service\Date $dh */
 $dh = $app->make('helper/date');
 
-$app->make('help')->display(
-    t("Orphaned files don't have an author (anymore). The original author / uploader probably has been removed. " .
-        "However, by default files remain in the file manager when a user is deleted."
-    )
-    . ' <br><br>' .
-    t("The reason this is GDPR related is because files could contain sensitive information. " .
-        "On this page you can reassign or delete the orphaned files."
-    )
-);
+/** @var \A3020\Gdpr\Html\FontAwesomeIcon $iconHelper */
+$iconHelper = $app->make(\A3020\Gdpr\Html\FontAwesomeIcon::class);
 ?>
 
 <div class="ccm-dashboard-content-inner">
@@ -75,7 +68,7 @@ $app->make('help')->display(
                             <td>
                                 <a href="<?php echo $file['url'] ?>" target="_blank">
                                     <?php echo e($file['name']); ?>
-                                    <i class="fa fa-external-link"></i>
+                                    <?php echo $iconHelper->externalLink() ?>
                                 </a>
                             </td>
                             <td>

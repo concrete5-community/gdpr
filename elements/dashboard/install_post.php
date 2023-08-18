@@ -13,7 +13,7 @@ $package = Package::getByHandle('gdpr');
 
 <p>
     <strong><?php echo t('You can find the add-on here:'); ?></strong><br>
-    <a class="btn btn-default" href="<?php echo Url::to('/dashboard/gdpr') ?>">
+    <a class="btn btn-default btn-primary" href="<?php echo Url::to('/dashboard/gdpr') ?>">
         <?php
         echo t('Dashboard / GDPR');
         ?>

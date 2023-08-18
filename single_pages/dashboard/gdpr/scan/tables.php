@@ -7,18 +7,8 @@ use Concrete\Core\Support\Facade\Url;
 
 $app = Application::getFacadeApplication();
 
-/** @var array $searchFor */
-
-$app->make('help')->display(
-    t("This page shows a list of database tables that contain columns that might contain user data.") .'<br><br>'.
-    t("If you are using custom code / add-ons, you may have to deal with personal data that is stored in those tables.").'<br><br>'.
-
-    t('To find table columns the following search terms are used: %s',
-        implode(', ', $searchFor)
-    ).'<br><br>'.
-
-    t('The search terms can be extended via the settings on this page.')
-);
+/** @var \A3020\Gdpr\Html\FontAwesomeIcon $iconHelper */
+$iconHelper = $app->make(\A3020\Gdpr\Html\FontAwesomeIcon::class);
 ?>
 
 <div class="ccm-dashboard-header-buttons btn-group">
@@ -94,28 +84,19 @@ $app->make('help')->display(
                     <?php
                     echo t('Columns');
                     ?>
-
-                    <i class="text-muted launch-tooltip fa fa-question-circle"
-                       title="<?php echo t("These columns may contain personal information. If a user is deleted, you may have to remove or anonymize this data."); ?>">
-                    </i>
+                    <?php echo $iconHelper->question(t("These columns may contain personal information. If a user is deleted, you may have to remove or anonymize this data.")) ?>
                 </th>
                 <th>
                     <?php
                     echo t('Status');
                     ?>
-
-                    <i class="text-muted launch-tooltip fa fa-question-circle"
-                       title="<?php echo t("Mark your own custom tables once they are GDPR compliant. Some default tables might already be checked, because the related user data is deleted when a user is deleted."); ?>">
-                    </i>
+                    <?php echo $iconHelper->question(t("Mark your own custom tables once they are GDPR compliant. Some default tables might already be checked, because the related user data is deleted when a user is deleted.")) ?>
                 </th>
                 <th>
                     <?php
                     echo t('Default table');
                     ?>
-
-                    <i class="text-muted launch-tooltip fa fa-question-circle"
-                       title="<?php echo t("A default table is present on a fresh installation."); ?>">
-                    </i>
+                    <?php echo $iconHelper->question(t("A default table is present on a fresh installation.")) ?>
                 </th>
             </tr>
         </thead>
@@ -149,9 +130,9 @@ $(document).ready(function() {
                     var html = '<a href="#"  data-dialog="status" data-table-name="'+row.table_name+'" class="btn btn-default">';
 
                     if (row.status.fixed) {
-                        html += '<i class="fa fa-check">';
+                        html += '<?php echo $iconHelper->check() ?>';
                     } else {
-                        html += '<i class="fa fa-warning">';
+                        html += '<?php echo $iconHelper->warning() ?>';
                     }
 
                     html += '</i></a>';

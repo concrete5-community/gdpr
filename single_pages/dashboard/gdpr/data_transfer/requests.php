@@ -6,14 +6,6 @@ use Concrete\Core\Support\Facade\Application;
 use Concrete\Core\Support\Facade\Url;
 
 $app = Application::getFacadeApplication();
-
-$app->make('help')->display(
-    t('A user has the right to request his/her data. This page shows all data transfer requests.').'<br><br>'.
-    t("Data transfer requests can be created via the %s event or by using the '%s' block that can be installed via the Settings page.",
-        'on_gdpr_process_data_transfer_request',
-        t('GDPR - Data Transfer Request')
-    )
-);
 ?>
 
 <div class="ccm-dashboard-content-inner">

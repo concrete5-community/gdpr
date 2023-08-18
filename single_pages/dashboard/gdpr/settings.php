@@ -1,5 +1,9 @@
 <?php
 defined('C5_EXECUTE') or die('Access Denied.');
+
+$app = \Concrete\Core\Support\Facade\Application::getFacadeApplication();
+/** @var \A3020\Gdpr\Html\FontAwesomeIcon $iconHelper */
+$iconHelper = $app->make(\A3020\Gdpr\Html\FontAwesomeIcon::class);
 ?>
 
 <div class="ccm-dashboard-content-inner">
@@ -149,7 +153,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
                 <small class="help-block"><?php
                     echo t('Note: there is %sa bug%s in concrete5 that ignores this setting.',
                         '<a target="_blank" href="https://github.com/concrete5/concrete5/issues/6933">',
-                        ' <i class="fa fa-external-link"></i></a>'
+                        ' ' . $iconHelper->externalLink() . '</a>'
                     ); ?>
                 </small>
             </div>

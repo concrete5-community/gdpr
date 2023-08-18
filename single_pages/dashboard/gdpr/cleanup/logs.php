@@ -8,10 +8,6 @@ $app = Application::getFacadeApplication();
 
 /** @var \Concrete\Core\Localization\Service\Date $dh */
 $dh = $app->make('helper/date');
-
-$app->make('help')->display(
-    t('Logs could contain personal information. This page allows you to bulk remove log entries that match certain criteria.')
-);
 ?>
 
 <div class="ccm-dashboard-header-buttons btn-group">

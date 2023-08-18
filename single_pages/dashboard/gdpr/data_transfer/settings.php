@@ -1,5 +1,6 @@
 <?php
 defined('C5_EXECUTE') or die('Access Denied.');
+$isVersion9 = $isVersion9 ?? false;
 ?>
 
 <div class="ccm-dashboard-content-inner">
@@ -11,13 +12,24 @@ defined('C5_EXECUTE') or die('Access Denied.');
 
         <div class="form-group">
             <label class="control-label launch-tooltip"
-                   title="<?php echo t("This will install an Automated Job. The job will build a ZIP file and sends the download link to the user.") ?>"
+                   title="<?php
+                   if ($isVersion9) {
+                       echo t("This will install a Task. The task will build a ZIP file and sends the download link to the user.");
+                   } else {
+                       echo t("This will install an Automated Job. The job will build a ZIP file and sends the download link to the user.");
+                   }
+                   ?>"
                    for="enableJobToProcessDataTransferRequests">
                 <?php
                 /** @var bool $enableJobToProcessDataTransferRequests */
                 echo $form->checkbox('enableJobToProcessDataTransferRequests', 1, $enableJobToProcessDataTransferRequests);
                 ?>
-                <?php echo t('Enable an Automated Job that can process Data Transfer Requests'); ?>
+                <?php
+                if ($isVersion9) {
+                    echo t('Enable a Task that can process Data Transfer Requests');
+                } else {
+                    echo t('Enable an Automated Job that can process Data Transfer Requests');
+                }?>
             </label>
         </div>
 

@@ -5,7 +5,9 @@ namespace Concrete\Package\Gdpr\Controller\SinglePage\Dashboard\Gdpr\Cleanup;
 use A3020\Gdpr\Controller\DashboardController;
 use A3020\Gdpr\Form\Express\DeleteFormEntries;
 use A3020\Gdpr\Form\Express\ExpressFormHelper;
+use A3020\Gdpr\Installer\TaskInstaller;
 use A3020\Gdpr\Job\JobInstallService;
+use A3020\Gdpr\Traits\PackageTrait;
 use Concrete\Core\Express\EntryList;
 use Concrete\Core\Support\Facade\Log;
 use Concrete\Core\Tree\Node\Type\ExpressEntryCategory;
@@ -13,14 +15,20 @@ use Exception;
 
 final class ExpressForms extends DashboardController
 {
+    use PackageTrait;
+
     /** @var JobInstallService */
     protected $jobInstallService;
+
+    /** @var TaskInstaller */
+    protected $taskInstaller;
 
     public function on_start()
     {
         parent::on_start();
 
         $this->jobInstallService = $this->app->make(JobInstallService::class);
+        $this->taskInstaller = $this->app->make(TaskInstaller::class, ['package' => $this->getPackage()]);
     }
 
     public function view()
@@ -35,9 +43,14 @@ final class ExpressForms extends DashboardController
         }
 
         $this->set('formInformation', $formInformation);
-        $this->set('enableJobToRemoveFormSubmissions', $this->jobInstallService->isInstalled('gdpr_remove_form_submissions'));
+        if ($this->isVersion9()) {
+            $this->set('enableJobToRemoveFormSubmissions', $this->taskInstaller->isInstalled('gdpr_remove_form_submissions'));
+        } else {
+            $this->set('enableJobToRemoveFormSubmissions', $this->jobInstallService->isInstalled('gdpr_remove_form_submissions'));
+        }
         $this->set('deleteAssociatedFiles', $this->config->get('gdpr.settings.express_forms.delete_files', false));
         $this->set('expressFormsKeepDays', $this->config->get('gdpr.settings.express_forms.keep_days'));
+        $this->set('isVersion9', $this->isVersion9());
     }
 
     public function save()
@@ -48,7 +61,15 @@ final class ExpressForms extends DashboardController
             return $this->action('/dashboard/gdpr/cleanup/express_forms');
         }
 
-        $this->jobInstallService->installOrDeinstall('gdpr_remove_form_submissions', $this->post('enableJobToRemoveFormSubmissions'));
+        if ($this->isVersion9()) {
+            if ($this->post('enableJobToRemoveFormSubmissions')) {
+                $this->taskInstaller->install('gdpr_remove_form_submissions');
+            } else {
+                $this->taskInstaller->uninstall('gdpr_remove_form_submissions');
+            }
+        } else {
+            $this->jobInstallService->installOrDeinstall('gdpr_remove_form_submissions', $this->post('enableJobToRemoveFormSubmissions'));
+        }
 
         $keepDays = $this->post('expressFormsKeepDays');
         $this->config->save('gdpr.settings.express_forms.keep_days', $keepDays !== '' ? (int) $keepDays : null);

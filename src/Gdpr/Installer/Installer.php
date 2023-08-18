@@ -4,6 +4,7 @@ namespace A3020\Gdpr\Installer;
 
 use A3020\Gdpr\Check\CheckRepository;
 use A3020\Gdpr\Entity\Check;
+use A3020\Gdpr\Traits\PackageTrait;
 use Concrete\Core\Config\Repository\Repository;
 use Concrete\Core\Database\DatabaseStructureManager;
 use Concrete\Core\Page\Page;

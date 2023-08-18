@@ -7,11 +7,8 @@ use Concrete\Core\Support\Facade\Url;
 
 $app = Application::getFacadeApplication();
 
-$app->make('help')->display(
-    t("This page shows a list of pages that contain blocks that might process user data. Please check the pages manually to verify they are GDPR compliant.") .'<br><br>'.
-    t("A hand crafted list of block types is used for this, but you can also add your own block type handles in the settings.").'<br><br>'.
-    t('Also the block folders are scanned for certain keywords. E.g. whether mail is sent, and whether form-tags are used in template files.')
-);
+/** @var \A3020\Gdpr\Html\FontAwesomeIcon $iconHelper */
+$iconHelper = $app->make(\A3020\Gdpr\Html\FontAwesomeIcon::class);
 ?>
 
 <div class="ccm-dashboard-header-buttons btn-group">
@@ -75,10 +72,7 @@ $app->make('help')->display(
                 <th><?php echo t('Name'); ?></th>
                 <th>
                     <?php echo t('Where') ?>
-
-                    <i class="text-muted launch-tooltip fa fa-question-circle"
-                       title="<?php echo t("The block has been found on this page. As it may process personal data, make sure it complies to GDPR."); ?>">
-                    </i>
+                    <?php echo $iconHelper->question(t("The block has been found on this page. As it may process personal data, make sure it complies to GDPR.")) ?>
                 </th>
                 <th><?php echo t('Why') ?></th>
                 <th>
@@ -90,10 +84,7 @@ $app->make('help')->display(
                     <?php
                     echo t('Core');
                     ?>
-
-                    <i class="text-muted launch-tooltip fa fa-question-circle"
-                       title="<?php echo t("Whether this is part of the concrete5 core."); ?>">
-                    </i>
+                    <?php echo $iconHelper->question(t("Whether this is part of the concrete5 core.")) ?>
                 </th>
             </tr>
         </thead>
@@ -135,9 +126,9 @@ $(document).ready(function() {
                     var html = '<a href="#"  data-dialog="status" data-page-id="'+row.page_id+'" data-block-type="'+row.block_type_handle+'" class="btn btn-default">';
 
                     if (row.fixed) {
-                        html += '<i class="fa fa-check">';
+                        html += '<?php echo $iconHelper->check() ?>';
                     } else {
-                        html += '<i class="fa fa-warning">';
+                        html += '<?php echo $iconHelper->warning() ?>';
                     }
 
                     html += '</i></a>';

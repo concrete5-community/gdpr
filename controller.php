@@ -2,8 +2,15 @@
 
 namespace Concrete\Package\Gdpr;
 
+use A3020\Gdpr\DataTransfer\Task\ProcessDataTransferRequestsController;
+use A3020\Gdpr\Form\Task\DeleteExpressFormEntriesController;
+use A3020\Gdpr\Form\Task\DeleteLegacyFormEntriesController;
+use A3020\Gdpr\Help\HelpServiceProvider;
 use A3020\Gdpr\Installer\Installer;
+use A3020\Gdpr\Installer\TaskInstaller;
 use A3020\Gdpr\Installer\Uninstaller;
+use A3020\Gdpr\Job\JobInstallService;
+use Concrete\Core\Command\Task\Manager as TaskManager;
 use Concrete\Core\Config\Repository\Repository;
 use Concrete\Core\Package\Package;
 use Concrete\Core\Support\Facade\Package as PackageFacade;
@@ -13,7 +20,7 @@ final class Controller extends Package
 {
     protected $pkgHandle = 'gdpr';
     protected $appVersionRequired = '8.4.4';
-    protected $pkgVersion = '1.8.3';
+    protected $pkgVersion = '1.9.0';
     protected $pkgAutoloaderRegistries = [
         'src/Gdpr' => '\A3020\Gdpr',
     ];
@@ -30,13 +37,39 @@ final class Controller extends Package
 
     public function on_start()
     {
+        $app = $this->app;
+
         /** @var @var \A3020\Gdpr\Provider\GdprServiceProvider $provider */
-        $provider = $this->app->make(\A3020\Gdpr\Provider\GdprServiceProvider::class);
+        $provider = $app->make(\A3020\Gdpr\Provider\GdprServiceProvider::class);
         $provider->register();
 
         /** @var @var \A3020\Gdpr\Provider\CookieServiceProvider $provider */
-        $provider = $this->app->make(\A3020\Gdpr\Provider\CookieServiceProvider::class);
+        $provider = $app->make(\A3020\Gdpr\Provider\CookieServiceProvider::class);
         $provider->register();
+
+        /** @var HelpServiceProvider $helpServiceProvider */
+        $helpServiceProvider = $app->make(HelpServiceProvider::class);
+        $helpServiceProvider->register();
+
+        /** @var TaskManager $taskManager */
+        $taskManager = $app->make(TaskManager::class);
+        /** @var TaskInstaller $taskInstaller */
+        $taskInstaller = $app->make(TaskInstaller::class, ['package' => $this->getPackageEntity()]);
+        if ($taskInstaller->isInstalled('gdpr_process_data_transfer_requests')) {
+            $taskManager->extend('gdpr_process_data_transfer_requests', static function() use ($app) {
+                return $app->make(ProcessDataTransferRequestsController::class);
+            });
+        }
+        if ($taskInstaller->isInstalled('gdpr_remove_form_submissions')) {
+            $taskManager->extend('gdpr_remove_form_submissions', static function() use ($app) {
+                return $app->make(DeleteExpressFormEntriesController::class);
+            });
+        }
+        if ($taskInstaller->isInstalled('gdpr_remove_legacy_form_submissions')) {
+            $taskManager->extend('gdpr_remove_legacy_form_submissions', static function() use ($app) {
+                return $app->make(DeleteLegacyFormEntriesController::class);
+            });
+        }
     }
 
     public function install()
@@ -56,6 +89,25 @@ final class Controller extends Package
 
         $installer = $this->app->make(Installer::class);
         $installer->install($pkg);
+
+        if (class_exists(TaskManager::class)) {
+            /** @var JobInstallService $jobInstaller */
+            $jobInstaller = $this->app->make(JobInstallService::class);
+            /** @var TaskInstaller $taskInstaller */
+            $taskInstaller = $this->app->make(TaskInstaller::class, ['package' => $this->getPackageEntity()]);
+            if ($jobInstaller->isInstalled('gdpr_process_data_transfer_requests')) {
+                $jobInstaller->installOrDeinstall('gdpr_process_data_transfer_requests', false);
+                $taskInstaller->install('gdpr_process_data_transfer_requests');
+            }
+            if ($jobInstaller->isInstalled('gdpr_remove_form_submissions')) {
+                $jobInstaller->installOrDeinstall('gdpr_remove_form_submissions', false);
+                $taskInstaller->install('gdpr_remove_form_submissions');
+            }
+            if ($jobInstaller->isInstalled('gdpr_remove_legacy_form_submissions')) {
+                $jobInstaller->installOrDeinstall('gdpr_remove_legacy_form_submissions', false);
+                $taskInstaller->install('gdpr_remove_legacy_form_submissions');
+            }
+        }
     }
 
     public function uninstall()
