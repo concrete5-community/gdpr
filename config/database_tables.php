@@ -85,6 +85,24 @@ return [
                     'https://github.com/concretecms/concretecms/issues/6676'
                 )
             ],
+
+            'UserSignups' => [
+                'fixed' => true,
+                'info' => t('Records are deleted in the %s class.', 'UserInfo'),
+                'c5_version' => '8.5.0', // https://github.com/concretecms/concretecms/commit/60800f46af43975a4f61a5a0801b82a939459f5a
+            ],
+
+            'ExpressEntityEntries' => [
+                'fixed' => true,
+                'info' => t('Records are deleted in the %s class.', 'UserInfo'),
+                'c5_version' => '8.5.2', // https://github.com/concretecms/concretecms/commit/863d6e8fa4dbea05f1c38e017f3b42901802e44a
+            ],
+
+            'GroupSignups' => [
+                'fixed' => true,
+                'info' => t('Records are deleted in the %s class.', 'UserInfo'),
+                'c5_version' => '9.1.0', // https://github.com/concretecms/concretecms/commit/31d0146ade133118797d65c4bbf9a03228e505f7
+            ]
         ],
     ],
 
