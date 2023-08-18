@@ -11,13 +11,13 @@ class HelpServiceProvider extends Provider
     {
         $this->app['help/dashboard']->registerMessageString(
             '/dashboard/gdpr/cleanup/express_forms',
-            t("Form submissions often contain personal data. Most likely you've been sending the submissions to an email address. However, the data might still be in concrete5.")
+            t("Form submissions often contain personal data. Most likely you've been sending the submissions to an email address. However, the data might still be in Concrete CMS.")
             . ' ' .
-            t("Because not all concrete5 versions support bulk deletion of Express Form Results, you can do that here.")
+            t("Because not all Concrete CMS versions support bulk deletion of Express Form Results, you can do that here.")
         );
         $this->app['help/dashboard']->registerMessageString(
             '/dashboard/gdpr/cleanup/legacy_forms',
-            t("Form submissions often contain personal data. Most likely you've been sending the submissions to an email address. However, the data might still be in concrete5.")
+            t("Form submissions often contain personal data. Most likely you've been sending the submissions to an email address. However, the data might still be in Concrete CMS.")
             . ' ' .
             t("On this page you can install a job that automatically removes legacy form submissions.")
         );

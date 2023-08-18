@@ -87,7 +87,7 @@ $iconHelper = $app->make(\A3020\Gdpr\Html\FontAwesomeIcon::class);
         </section>
 
         <section class="settings-section">
-            <header><?php echo t('Connections with concrete5.org'); ?></header>
+            <header><?php echo t('Connections with concretecms.org'); ?></header>
             <small class="help-block">
                 <?php echo t('It may be needed to logout / login in order to see the effect of the settings below.'); ?>
             </small>
@@ -151,8 +151,8 @@ $iconHelper = $app->make(\A3020\Gdpr\Html\FontAwesomeIcon::class);
                     <?php echo t('Disable external news'); ?>
                 </label>
                 <small class="help-block"><?php
-                    echo t('Note: there is %sa bug%s in concrete5 that ignores this setting.',
-                        '<a target="_blank" href="https://github.com/concrete5/concrete5/issues/6933">',
+                    echo t('Note: there is %sa bug%s in Concrete CMS that ignores this setting.',
+                        '<a target="_blank" href="https://github.com/concretecms/concretecms/issues/6933">',
                         ' ' . $iconHelper->externalLink() . '</a>'
                     ); ?>
                 </small>
@@ -160,13 +160,13 @@ $iconHelper = $app->make(\A3020\Gdpr\Html\FontAwesomeIcon::class);
 
             <div class="form-group">
                 <label class="control-label launch-tooltip"
-                       title="<?php echo t("concrete5 might pull background images from an external server for the login page. This could leak the visitor's IP address.") ?>"
+                       title="<?php echo t("Concrete CMS might pull background images from an external server for the login page. This could leak the visitor's IP address.") ?>"
                        for="disableConcreteBackground">
                     <?php
                     /** @var bool $disableConcreteBackground */
                     echo $form->checkbox('disableConcreteBackground', 1, $disableConcreteBackground);
                     ?>
-                    <?php echo t('Disable concrete5 background on login page'); ?>
+                    <?php echo t('Disable Concrete CMS background on login page'); ?>
                 </label>
             </div>
         </section>

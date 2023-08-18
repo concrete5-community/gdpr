@@ -84,7 +84,7 @@ $iconHelper = $app->make(\A3020\Gdpr\Html\FontAwesomeIcon::class);
                     <?php
                     echo t('Core');
                     ?>
-                    <?php echo $iconHelper->question(t("Whether this is part of the concrete5 core.")) ?>
+                    <?php echo $iconHelper->question(t("Whether this is part of the Concrete CMS core.")) ?>
                 </th>
             </tr>
         </thead>

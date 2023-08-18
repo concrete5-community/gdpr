@@ -50,7 +50,7 @@ $dh = $app->make('helper/date');
 
             <div class="form-group">
                 <label class="control-label launch-tooltip"
-                       title="<?php echo t("In concrete5 versions before 8.4.0 logs where not automatically deleted when a user was deleted.") ?>"
+                       title="<?php echo t("In Concrete CMS versions before 8.4.0 logs where not automatically deleted when a user was deleted.") ?>"
                        for="deletedUsers">
                     <?php
                     /** @var $deletedUsers bool */

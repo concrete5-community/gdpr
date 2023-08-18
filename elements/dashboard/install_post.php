@@ -30,7 +30,7 @@ $package = Package::getByHandle('gdpr');
     </div>
 
     <?php
-    echo t('Tip: all pages use the internal concrete5 help system.');
+    echo t('Tip: all pages use the internal Concrete CMS help system.');
     echo t("You can open the help by clicking on the help icon.");
     ?>
 </div>

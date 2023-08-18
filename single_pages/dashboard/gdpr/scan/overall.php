@@ -48,7 +48,7 @@ $iconHelper = $app->make(\A3020\Gdpr\Html\FontAwesomeIcon::class);
             <p>
                 <?php echo $iconHelper->warning() ?>
                 <?php
-                echo t("Emails are logged in concrete5. In case an email is sent, e.g. if someone submits a form, a copy of the email will be stored in %sLogs%s.",
+                echo t("Emails are logged in Concrete CMS. In case an email is sent, e.g. if someone submits a form, a copy of the email will be stored in %sLogs%s.",
                         '<a href="'.Url::to('/dashboard/reports/logs').'">', '</a>').' '.
                     t("Because emails often contain personal data, you might consider disabling this behavior via the %sLogging Settings%s.",
                         '<a href="'.Url::to('/dashboard/system/environment/logging').'">', '</a>'
@@ -76,7 +76,7 @@ $iconHelper = $app->make(\A3020\Gdpr\Html\FontAwesomeIcon::class);
             <p>
                 <?php echo $iconHelper->warning() ?>
                 <?php
-                echo t("Database queries are logged in concrete5. You probably want this to be disabled on production as it slows down each request and because the queries might contain personal data.").' '.
+                echo t("Database queries are logged in Concrete CMS. You probably want this to be disabled on production as it slows down each request and because the queries might contain personal data.").' '.
                     t(/*i18n: %s is the name of a page*/ 'Consider disabling this via the %s.',
                         sprintf('<a href="' . Url::to('/dashboard/system/environment/logging') . '">%s</a>', t('Logging Settings'))
                     );
@@ -103,7 +103,7 @@ $iconHelper = $app->make(\A3020\Gdpr\Html\FontAwesomeIcon::class);
             <p>
                 <?php echo $iconHelper->warning() ?>
                 <?php
-                echo t("The login page loads an external image from the concrete5 server. This could leak the visitor's IP address.").' ';
+                echo t("The login page loads an external image from the Concrete CMS server. This could leak the visitor's IP address.").' ';
                 echo t('Disable the background via the %sSettings page%s.', '<a href="'.Url::to('/dashboard/gdpr/settings').'">', '</a>');
                 ?>
             </p>
@@ -113,7 +113,7 @@ $iconHelper = $app->make(\A3020\Gdpr\Html\FontAwesomeIcon::class);
         ?>
         <div class="alert alert-success">
             <?php echo $iconHelper->check() ?>
-            <?php echo t("The login page doesn't load an image from the concrete5 servers."); ?>
+            <?php echo t("The login page doesn't load an image from the Concrete CMS servers."); ?>
         </div>
         <?php
     }
@@ -198,7 +198,7 @@ $iconHelper = $app->make(\A3020\Gdpr\Html\FontAwesomeIcon::class);
                     ) . ' ' .
 
                     t('A good alternative might be to download the %s database using the free %sGeolocation with MaxMind GeoIP2%s add-on.',
-                        'MaxMind', '<a href="https://www.concrete5.org/marketplace/addons/maxmind-geoip2-geolocator" target="_blank">', '</a>'
+                        'MaxMind', '<a href="https://marketplace.concretecms.com/marketplace/addons/maxmind-geoip2-geolocator" target="_blank">', '</a>'
                     ) . ' ' .
 
                     t('To review the settings, go to the %sGeolocation page%s.',

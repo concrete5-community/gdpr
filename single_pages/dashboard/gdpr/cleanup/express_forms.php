@@ -54,7 +54,7 @@ $isVersion9 = $isVersion9 ?? false;
                     }
                     ?>
                 </label>
-                <span class="help-block"><?php echo t('Please note that storing form submissions <a href="%s" target="_blank">can be disabled</a> in concrete5 8.4.4+.', 'https://github.com/concrete5/concrete5/pull/6746') ?></span>
+                <span class="help-block"><?php echo t('Please note that storing form submissions <a href="%s" target="_blank">can be disabled</a> in Concrete CMS 8.4.4+.', 'https://github.com/concretecms/concretecms/pull/6746') ?></span>
             </div>
 
             <div class="form-group <?php echo $enableJobToRemoveFormSubmissions ? '' : 'hide' ?> express-form-toggle">
