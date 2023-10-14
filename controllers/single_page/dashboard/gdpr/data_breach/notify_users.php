@@ -58,6 +58,7 @@ final class NotifyUsers extends DashboardController
     public function sent()
     {
         $this->set('sent', true);
+        $this->view();
     }
 
     /**

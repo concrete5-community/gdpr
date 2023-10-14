@@ -1,6 +1,7 @@
 <?php
 defined('C5_EXECUTE') or die('Access Denied.');
 $isVersion9 = $isVersion9 ?? false;
+$enableJobToProcessDataTransferRequests = $enableJobToProcessDataTransferRequests ?? null;
 ?>
 
 <div class="ccm-dashboard-content-inner">
