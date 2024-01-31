@@ -4,6 +4,16 @@ defined('C5_EXECUTE') or die('Access Denied.');
 $app = \Concrete\Core\Support\Facade\Application::getFacadeApplication();
 /** @var \A3020\Gdpr\Html\FontAwesomeIcon $iconHelper */
 $iconHelper = $app->make(\A3020\Gdpr\Html\FontAwesomeIcon::class);
+$removeBasedOnUserId = $removeBasedOnUserId ?? false;
+$removeBasedOnEmailAddress = $removeBasedOnEmailAddress ?? false;
+$removeBasedOnUsername = $removeBasedOnUsername ?? false;
+$disableTrackingCode = $disableTrackingCode ?? false;
+$redirectWelcomePage = $redirectWelcomePage ?? false;
+$disableMarketplaceIntegration = $disableMarketplaceIntegration ?? false;
+$disableMarketplaceIntelligentSearch = $disableMarketplaceIntelligentSearch ?? false;
+$disableExternalIntelligentSearchHelp = $disableExternalIntelligentSearchHelp ?? false;
+$disableExternalNews = $disableExternalNews ?? false;
+$disableConcreteBackground = $disableConcreteBackground ?? false;
 ?>
 
 <div class="ccm-dashboard-content-inner">
