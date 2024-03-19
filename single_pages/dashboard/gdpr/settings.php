@@ -8,6 +8,7 @@ $removeBasedOnUserId = $removeBasedOnUserId ?? false;
 $removeBasedOnEmailAddress = $removeBasedOnEmailAddress ?? false;
 $removeBasedOnUsername = $removeBasedOnUsername ?? false;
 $disableTrackingCode = $disableTrackingCode ?? false;
+$trackingCodeFound = $trackingCodeFound ?? false;
 $redirectWelcomePage = $redirectWelcomePage ?? false;
 $disableMarketplaceIntegration = $disableMarketplaceIntegration ?? false;
 $disableMarketplaceIntelligentSearch = $disableMarketplaceIntelligentSearch ?? false;
