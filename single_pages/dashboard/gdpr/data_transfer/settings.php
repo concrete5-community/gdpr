@@ -1,7 +1,9 @@
 <?php
 defined('C5_EXECUTE') or die('Access Denied.');
+/** @var \Concrete\Core\Form\Service\Form $form */
 $isVersion9 = $isVersion9 ?? false;
 $enableJobToProcessDataTransferRequests = $enableJobToProcessDataTransferRequests ?? null;
+$enableInstallBlock = $enableInstallBlock ?? null;
 ?>
 
 <div class="ccm-dashboard-content-inner">
