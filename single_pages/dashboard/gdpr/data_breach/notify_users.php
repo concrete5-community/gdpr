@@ -6,11 +6,6 @@ use Concrete\Core\Support\Facade\Application;
 
 $app = Application::getFacadeApplication();
 
-$app->make('help')->display(
-    t("In case of a data breach, you may want to notify your users.")
-);
-
-
 /** @var bool|null $sent */
 /** @var string $fromName */
 /** @var string $fromEmail */

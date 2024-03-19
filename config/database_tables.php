@@ -15,7 +15,7 @@ return [
 
             'Logs' => [
                 'info' => t('Records are deleted in the %s class.', 'UserInfo'),
-                'c5_version' => '8.4.0', // https://github.com/concrete5/concrete5/commit/177429e792c471faa8c3225d20431279930c0bd0
+                'c5_version' => '8.4.0', // https://github.com/concretecms/concretecms/commit/177429e792c471faa8c3225d20431279930c0bd0
             ],
 
             'UserSearchIndexAttributes' => [
@@ -51,40 +51,58 @@ return [
             'ConfigStore' => [
                 'fixed' => true,
                 'info' => t('Records are deleted in the %s class.', 'UserInfo'),
-                'c5_version' => '8.4.2', // https://github.com/concrete5/concrete5/commit/f948e4a1927bf44215d774bf3b7463688cc08538
+                'c5_version' => '8.4.2', // https://github.com/concretecms/concretecms/commit/f948e4a1927bf44215d774bf3b7463688cc08538
             ],
             'ConversationSubscriptions' => [
                 'fixed' => true,
                 'info' => t('Records are deleted in the %s class.', 'UserInfo'),
-                'c5_version' => '8.4.2', // https://github.com/concrete5/concrete5/commit/f948e4a1927bf44215d774bf3b7463688cc08538
+                'c5_version' => '8.4.2', // https://github.com/concretecms/concretecms/commit/f948e4a1927bf44215d774bf3b7463688cc08538
             ],
             'DownloadStatistics' => [
                 'fixed' => true,
                 'info' => t('Records are deleted in the %s class.', 'UserInfo'),
-                'c5_version' => '8.4.2', // https://github.com/concrete5/concrete5/commit/f948e4a1927bf44215d774bf3b7463688cc08538
+                'c5_version' => '8.4.2', // https://github.com/concretecms/concretecms/commit/f948e4a1927bf44215d774bf3b7463688cc08538
             ],
             'FileSets' => [
                 'fixed' => true,
                 'info' => t('Records are deleted in the %s class.', 'UserInfo'),
-                'c5_version' => '8.4.2', // https://github.com/concrete5/concrete5/commit/f948e4a1927bf44215d774bf3b7463688cc08538
+                'c5_version' => '8.4.2', // https://github.com/concretecms/concretecms/commit/f948e4a1927bf44215d774bf3b7463688cc08538
             ],
             'PermissionAccessEntityUsers' => [
                 'fixed' => true,
                 'info' => t('Records are deleted in the %s class.', 'UserInfo'),
-                'c5_version' => '8.4.2', // https://github.com/concrete5/concrete5/commit/f948e4a1927bf44215d774bf3b7463688cc08538
+                'c5_version' => '8.4.2', // https://github.com/concretecms/concretecms/commit/f948e4a1927bf44215d774bf3b7463688cc08538
             ],
             'authTypeConcreteCookieMap' => [
                 'fixed' => true,
                 'info' => t('Records are deleted in the %s class.', 'UserInfo'),
-                'c5_version' => '8.4.2', // https://github.com/concrete5/concrete5/commit/f948e4a1927bf44215d774bf3b7463688cc08538
+                'c5_version' => '8.4.2', // https://github.com/concretecms/concretecms/commit/f948e4a1927bf44215d774bf3b7463688cc08538
             ],
             'NotificationAlerts' => [
                 'fixed' => false,
-                'info' => t('This table is not yet handled by version %s of concrete5. You may be able to update your C5 installation to fix this problem. See also %s.',
+                'info' => t('This table is not yet handled by version %s of Concrete CMS. You may be able to update your C5 installation to fix this problem. See also %s.',
                     '8.4.0RC4',
-                    'https://github.com/concrete5/concrete5/issues/6676'
+                    'https://github.com/concretecms/concretecms/issues/6676'
                 )
             ],
+
+            'UserSignups' => [
+                'fixed' => true,
+                'info' => t('Records are deleted in the %s class.', 'UserInfo'),
+                'c5_version' => '8.5.0', // https://github.com/concretecms/concretecms/commit/60800f46af43975a4f61a5a0801b82a939459f5a
+            ],
+
+            'ExpressEntityEntries' => [
+                'fixed' => true,
+                'info' => t('Records are deleted in the %s class.', 'UserInfo'),
+                'c5_version' => '8.5.2', // https://github.com/concretecms/concretecms/commit/863d6e8fa4dbea05f1c38e017f3b42901802e44a
+            ],
+
+            'GroupSignups' => [
+                'fixed' => true,
+                'info' => t('Records are deleted in the %s class.', 'UserInfo'),
+                'c5_version' => '9.1.0', // https://github.com/concretecms/concretecms/commit/31d0146ade133118797d65c4bbf9a03228e505f7
+            ]
         ],
     ],
 

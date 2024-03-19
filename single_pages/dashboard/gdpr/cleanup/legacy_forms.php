@@ -7,11 +7,9 @@ use Concrete\Core\Support\Facade\Url;
 
 $app = Application::getFacadeApplication();
 
-$app->make('help')->display(
-    t("Form submissions often contain personal data. Most likely you've been sending the submissions to an email address. However, the data might still be in concrete5.")
-    . ' ' .
-    t("On this page you can install a job that automatically removes legacy form submissions.")
-);
+/** @var \A3020\Gdpr\Html\FontAwesomeIcon $iconHelper */
+$iconHelper = $app->make(\A3020\Gdpr\Html\FontAwesomeIcon::class);
+$isVersion9 = $isVersion9 ?? false;
 ?>
 
 <div class="ccm-dashboard-content-inner">
@@ -24,13 +22,25 @@ $app->make('help')->display(
         <section class="settings-section">
             <div class="form-group">
                 <label class="control-label launch-tooltip"
-                       title="<?php echo t("Form submissions are always stored. To remove form submissions automatically, you can run and schedule the job via Automated Tasks. If you uncheck this option, the job will be uninstalled.") ?>"
+                       title="<?php
+                       if ($isVersion9) {
+                           echo t("Form submissions are always stored. To remove form submissions automatically, you can run and schedule the task via System & Settings > Automation > Tasks. If you uncheck this option, the task will be uninstalled.");
+                       } else {
+                           echo t("Form submissions are always stored. To remove form submissions automatically, you can run and schedule the job via Automated Tasks. If you uncheck this option, the job will be uninstalled.");
+                       }
+                       ?>"
                        for="enableJobToRemoveLegacyFormSubmissions">
                     <?php
                     /** @var bool $enableJobToRemoveLegacyFormSubmissions */
                     echo $form->checkbox('enableJobToRemoveLegacyFormSubmissions', 1, $enableJobToRemoveLegacyFormSubmissions);
                     ?>
-                    <?php echo t('Enable an Automated Job that could remove Legacy Form submissions'); ?>
+                    <?php
+                    if ($isVersion9) {
+                        echo t('Enable an Automated Task that could remove Legacy Form submissions');
+                    } else {
+                        echo t('Enable an Automated Job that could remove Legacy Form submissions');
+                    }
+                    ?>
                 </label>
             </div>
 
@@ -70,7 +80,7 @@ $app->make('help')->display(
             <?php
             echo t('Legacy form submissions can be deleted via the %sForm Results%s page.',
                 '<a target="_blank" href="'.Url::to('/dashboard/reports/forms/legacy').'">',
-                ' <i class="fa fa-external-link"></i></a>'
+                ' ' . $iconHelper->externalLink() . '</a>'
             );
             ?>
         </p>

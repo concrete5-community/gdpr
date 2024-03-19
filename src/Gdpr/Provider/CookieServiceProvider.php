@@ -79,7 +79,7 @@ class CookieServiceProvider implements ApplicationAwareInterface
     /**
      * @return bool
      */
-    private function shouldDisableTrackingCode()
+    public function shouldDisableTrackingCode()
     {
         // If tracking is disabled, we disable the tracking code
         if ((bool) $this->config->get('gdpr.settings.tracking.disabled', false)) {
@@ -117,7 +117,7 @@ class CookieServiceProvider implements ApplicationAwareInterface
      *
      * @return bool
      */
-    private function shouldShowCookieConsent()
+    public function shouldShowCookieConsent()
     {
         if (!$this->config->get('gdpr.cookies.consent.enabled', false)) {
             return false;
@@ -153,7 +153,7 @@ class CookieServiceProvider implements ApplicationAwareInterface
      *
      * @return bool
      */
-    private function isWhitelisted(Request $request)
+    public function isWhitelisted(Request $request)
     {
         $disabledPages = $this->config->get('gdpr::cookie_consent.disabled_pages', []);
         if (empty($disabledPages)) {
@@ -177,7 +177,7 @@ class CookieServiceProvider implements ApplicationAwareInterface
      *
      * @return bool
      */
-    private function shouldLoadCookieJavaScript()
+    public function shouldLoadCookieJavaScript()
     {
         if ($this->disableForCurrentRequest()) {
             return false;

@@ -8,10 +8,6 @@ $app = Application::getFacadeApplication();
 
 /** @var \Concrete\Core\Localization\Service\Date $dh */
 $dh = $app->make('helper/date');
-
-$app->make('help')->display(
-    t('Logs could contain personal information. This page allows you to bulk remove log entries that match certain criteria.')
-);
 ?>
 
 <div class="ccm-dashboard-header-buttons btn-group">
@@ -54,7 +50,7 @@ $app->make('help')->display(
 
             <div class="form-group">
                 <label class="control-label launch-tooltip"
-                       title="<?php echo t("In concrete5 versions before 8.4.0 logs where not automatically deleted when a user was deleted.") ?>"
+                       title="<?php echo t("In Concrete CMS versions before 8.4.0 logs where not automatically deleted when a user was deleted.") ?>"
                        for="deletedUsers">
                     <?php
                     /** @var $deletedUsers bool */

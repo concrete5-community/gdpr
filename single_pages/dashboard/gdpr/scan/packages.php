@@ -5,13 +5,6 @@ defined('C5_EXECUTE') or die('Access Denied.');
 use Concrete\Core\Support\Facade\Application;
 use Concrete\Core\Support\Facade\Url;
 $app = Application::getFacadeApplication();
-
-$app->make('help')->display(
-    t("This page shows a list of add-ons that need to be manually reviewed as they might process user data.") . '<br><br>' .
-    t('The GDPR comes with a list of add-ons that certainly process user data. You may extend this list via the settings on this page. '.
-        'However, this is probably only interesting if you manage many websites and you are copying the configuration files.') . '<br><br>'.
-    t('In the future this page might actually scan the packages directory for certain keywords.')
-);
 ?>
 
 <div class="ccm-dashboard-header-buttons btn-group">
