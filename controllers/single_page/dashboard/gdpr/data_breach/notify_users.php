@@ -27,32 +27,32 @@ final class NotifyUsers extends DashboardController
     {
         $group = Group::getByID($this->post('user_group'));
         if (!$group) {
-            $this->flash('error', t('Invalid user group'));
-            return $this->action('/dashboard/gdpr/data_breach/notify_users');
+            $this->error->add(t('Invalid user group'));
         }
 
-        try {
-            $userEmails = $this->getUserEmails($group->getGroupMemberIDs());
-            $this->sendEmail(
-                $this->post('fromName'),
-                $this->post('fromEmail'),
-                $this->post('subject'),
-                $this->post('message'),
-                $userEmails
-            );
-        } catch (Exception $e) {
-            $this->error = t('Something went wrong: '.$e->getMessage());
+        if (!$this->error->has()) {
+            try {
+                $userEmails = $this->getUserEmails($group->getGroupMemberIDs());
+                $this->sendEmail(
+                    $this->post('fromName'),
+                    $this->post('fromEmail'),
+                    $this->post('subject'),
+                    $this->post('message'),
+                    $userEmails
+                );
+                $this->flash('success', t2(
+                    'The notification has been sent to %s user.',
+                    'The notification has been sent to %s users.',
+                    $group->getGroupMembersNum()
+                ));
 
-            return $this->view();
+                return $this->buildRedirect('/dashboard/gdpr/data_breach/notify_users/sent');
+            } catch (Exception $e) {
+                $this->error->add(t('Something went wrong: ' . $e->getMessage()));
+            }
         }
 
-        $this->flash('success', t2(
-            'The notification has been sent to %s user.',
-            'The notification has been sent to %s users.',
-            $group->getGroupMembersNum()
-        ));
-
-        return $this->action('/dashboard/gdpr/data_breach/notify_users/sent');
+        $this->view();
     }
 
     public function sent()
@@ -81,7 +81,7 @@ final class NotifyUsers extends DashboardController
                 continue;
             }
 
-            $groups[$group->getGroupID()] = $group->getGroupDisplayName() .' ('.t2('%s user', '%s users', $numberOfUsers).')';
+            $groups[$group->getGroupID()] = $group->getGroupDisplayName(false) .' ('.t2('%s user', '%s users', $numberOfUsers).')';
         }
 
         return $groups;
