@@ -2,6 +2,7 @@
 - Fix interface style fit to version 9 (Bootstrap 5)
 - Remove license check (from this version, this package changed to MIT license and maintained by concrete community.)
 - Add Tasks for version 9
+- Fix some PHP8 related issues
 
 1.8.3
 - Fix cookie consent check. Formerly this only worked based on the session cookie. Now it also inspects the cookieconsent_status cookie.
